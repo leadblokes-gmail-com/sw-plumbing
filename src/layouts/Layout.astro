@@ -4,6 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import MobileCallBar from '../components/MobileCallBar.astro';
 import IntroOverlay from '../components/IntroOverlay.astro';
+import { ViewTransitions } from 'astro:transitions';
 import { business, suburbs } from '../data/site';
 
 interface Props {
@@ -89,11 +90,13 @@ const allSchema = [localBusiness, ...schema];
     </script>
 
     <script type="application/ld+json" set:html={JSON.stringify(allSchema)} />
+
+    <ViewTransitions />
   </head>
   <body>
     {intro && <IntroOverlay />}
 
-    <div class="grain" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true" transition:persist></div>
     <div id="swp-progress" class="scroll-progress"></div>
     <div id="swp-cursor" class="swp-cursor"></div>
     <div id="swp-cursor-dot" class="swp-cursor-dot"></div>
@@ -102,8 +105,8 @@ const allSchema = [localBusiness, ...schema];
     <main id="top">
       <slot />
     </main>
-    <Footer />
-    <MobileCallBar />
+    <Footer transition:persist />
+    <MobileCallBar transition:persist />
 
     <script>
       import '../lib/motion.ts';

@@ -176,6 +176,92 @@ h3 {
   white-space: nowrap;
 }
 
+/* --- Cursor-tracking spotlight on cards (Linear/HighLevel style) ---
+   A soft lime light follows the cursor inside the card. JS sets --mx/--my. */
+.card,
+.creds__card,
+.gallery__item,
+.detail,
+.why__card,
+.values__card,
+.promise__stat {
+  position: relative;
+  isolation: isolate;
+}
+.card::before,
+.creds__card::before,
+.gallery__item::before,
+.detail::before,
+.why__card::before,
+.values__card::before,
+.promise__stat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(182, 255, 60, 0.16),
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-quint);
+  pointer-events: none;
+  z-index: 0;
+}
+.card:hover::before,
+.creds__card:hover::before,
+.gallery__item:hover::before,
+.detail:hover::before,
+.why__card:hover::before,
+.values__card:hover::before,
+.promise__stat:hover::before {
+  opacity: 1;
+}
+/* keep card content above the glow */
+.card > *,
+.creds__card > *,
+.gallery__item > *,
+.detail > *,
+.why__card > *,
+.values__card > *,
+.promise__stat > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Kinetic shimmer on accent words (moving lime sheen) --- */
+.kinetic {
+  background: linear-gradient(100deg, var(--lime) 18%, #e4ffae 50%, var(--lime) 82%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: kineticSheen 5.5s linear infinite;
+}
+@keyframes kineticSheen {
+  to {
+    background-position: -220% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kinetic {
+    animation: none;
+    -webkit-text-fill-color: var(--lime);
+    color: var(--lime);
+  }
+  .card::before,
+  .creds__card::before,
+  .gallery__item::before,
+  .detail::before,
+  .why__card::before,
+  .values__card::before,
+  .promise__stat::before {
+    display: none;
+  }
+}
+
 /* --- Film grain overlay (subtle premium texture, static, GPU-cheap) --- */
 .grain {
   position: fixed;

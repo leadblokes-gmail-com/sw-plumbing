@@ -27,6 +27,12 @@ declare global {
 
 const EASE = 'expo.out';
 
+// Teardown registry — every subsystem registers how to unwind itself so that,
+// with View Transitions, navigating away kills rAF loops / listeners cleanly
+// before the next page initialises (no leaks, no detached-canvas CPU burn).
+let cleanups: Array<() => void> = [];
+const onCleanup = (fn: () => void) => cleanups.push(fn);
+
 function intro(): boolean {
   const ov = document.getElementById('swp-intro');
   if (!ov) return false;
@@ -74,6 +80,7 @@ function navCondense() {
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  onCleanup(() => window.removeEventListener('scroll', onScroll));
 }
 
 function progressBar() {
@@ -86,6 +93,7 @@ function progressBar() {
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  onCleanup(() => window.removeEventListener('scroll', onScroll));
 }
 
 /** Cinematic drifting canvas (the soft lime blobs behind hero / CTA). */
@@ -104,6 +112,7 @@ function startCanvas(id: string) {
   };
   resize();
   window.addEventListener('resize', resize);
+  onCleanup(() => window.removeEventListener('resize', resize));
 
   const blobs = [
     { x: 0.3, y: 0.42, r: 0.62, c: [127, 203, 0], a: 0.16, sx: 0.000045, sy: 0.000061, ph: 0 },
@@ -163,6 +172,11 @@ function startCanvas(id: string) {
     { threshold: 0.01 }
   );
   io.observe(canvas);
+  onCleanup(() => {
+    running = false;
+    cancelAnimationFrame(raf);
+    io.disconnect();
+  });
 }
 
 /** Magnetic buttons + custom cursor + card tilt (desktop pointer:fine only). */
@@ -205,10 +219,12 @@ function pointerFx() {
       ry = my,
       dx = mx,
       dy = my;
-    window.addEventListener('mousemove', (e) => {
+    const onMove = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
-    });
+    };
+    window.addEventListener('mousemove', onMove);
+    let cursorRaf = 0;
     const loop = () => {
       rx += (mx - rx) * 0.35;
       ry += (my - ry) * 0.35;
@@ -216,9 +232,13 @@ function pointerFx() {
       dy += (my - dy) * 0.16;
       ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
       dot.style.transform = `translate(${dx}px,${dy}px) translate(-50%,-50%)`;
-      requestAnimationFrame(loop);
+      cursorRaf = requestAnimationFrame(loop);
     };
-    requestAnimationFrame(loop);
+    cursorRaf = requestAnimationFrame(loop);
+    onCleanup(() => {
+      window.removeEventListener('mousemove', onMove);
+      cancelAnimationFrame(cursorRaf);
+    });
     document.querySelectorAll('a,button,[data-tilt]').forEach((el) => {
       el.addEventListener('mouseenter', () => {
         ring.style.width = '52px';
@@ -257,6 +277,19 @@ function serviceExpanders() {
         e.preventDefault();
         toggle();
       }
+    });
+  });
+}
+
+/** Cursor-tracking spotlight: feed --mx/--my to cards so the CSS glow follows the pointer. */
+function spotlight() {
+  if (reduce) return;
+  const sel = '.card,.creds__card,.gallery__item,.detail,.why__card,.values__card,.promise__stat';
+  document.querySelectorAll<HTMLElement>(sel).forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', e.clientX - r.left + 'px');
+      card.style.setProperty('--my', e.clientY - r.top + 'px');
     });
   });
 }
@@ -336,12 +369,15 @@ function initGsap(introPlaying: boolean) {
       el.style.transform = 'none';
     });
   };
-  window.setTimeout(snapHeroVisible, 2800);
+  const heroTimer = window.setTimeout(snapHeroVisible, 2800);
+  onCleanup(() => window.clearTimeout(heroTimer));
   // When a tab that loaded hidden becomes visible, re-evaluate scroll triggers
   // so above-the-fold reveals that were frozen catch up immediately.
-  document.addEventListener('visibilitychange', () => {
+  const onVis = () => {
     if (document.visibilityState === 'visible') ScrollTrigger.refresh();
-  });
+  };
+  document.addEventListener('visibilitychange', onVis);
+  onCleanup(() => document.removeEventListener('visibilitychange', onVis));
 
   // hero water line
   const wl = document.getElementById('swp-waterline');
@@ -455,13 +491,48 @@ function init() {
   startCanvas('swp-hero-canvas');
   startCanvas('swp-cta-canvas');
   pointerFx();
+  spotlight();
   serviceExpanders();
   initGsap(introPlaying);
   window.__swpMotionReady = true;
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init, { once: true });
-} else {
-  init();
+/** Unwind everything before a View Transition swaps the DOM. */
+function teardown() {
+  cleanups.forEach((fn) => {
+    try {
+      fn();
+    } catch {
+      /* ignore */
+    }
+  });
+  cleanups = [];
+  try {
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+  } catch {
+    /* ignore */
+  }
+  try {
+    window.__swpLenis?.destroy();
+    window.__swpLenis = undefined;
+  } catch {
+    /* ignore */
+  }
+  window.__swpMotionReady = false;
 }
+
+// With <ViewTransitions/>, astro:page-load fires on the initial load AND after
+// every client-side navigation — so this is the single source of truth for
+// (re)initialising motion. astro:before-swap tears the previous page down first.
+document.addEventListener('astro:before-swap', teardown);
+document.addEventListener('astro:page-load', init);
+
+// Belt-and-suspenders: if View Transitions ever isn't active (so astro:page-load
+// never fires), still initialise once on first paint.
+let __vtInit = false;
+document.addEventListener('astro:page-load', () => {
+  __vtInit = true;
+});
+window.setTimeout(() => {
+  if (!__vtInit && !window.__swpMotionReady) init();
+}, 0);
