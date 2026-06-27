@@ -147,7 +147,7 @@ node -e "require('sharp')('public/images/about-founder.png').resize(720,900,{fit
 | **ABN** | `src/data/site.ts → abn` | ⛔ TODO — placeholder hidden until provided |
 | **Google/Facebook reviews** (name + suburb + text) | `src/data/site.ts → reviews` | ⛔ TODO — block hidden until provided |
 | **Google rating + count** | `src/data/site.ts → googleRating` | ⛔ TODO (needs Google Business Profile) |
-| **Job / before-after photos** | `public/images/` + `jobs[]` | ⛔ TODO — gallery hidden until provided |
+| **Job / before-after photos** | `public/images/` + `jobs[]` | ⚠️ Stock placeholders in place (work-1/2/3.webp) — swap for real S&W photos |
 | **Form endpoint** (Formspree or CRM) | `.env → PUBLIC_FORMSPREE_ENDPOINT` | ⛔ TODO — form falls back to "call us" until set |
 | **Production domain** | `astro.config.mjs → site` + `robots.txt` | ⛔ TODO — currently placeholder |
 | Founder/van photo | `public/images/about-founder.*` | ✅ Done (from supplied photo) |

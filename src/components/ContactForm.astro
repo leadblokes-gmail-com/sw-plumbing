@@ -58,6 +58,11 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
     grid-template-columns: 1fr 1fr;
     gap: 16px;
   }
+  @media (max-width: 480px) {
+    .form__row {
+      grid-template-columns: 1fr;
+    }
+  }
   .form {
     display: flex;
     flex-direction: column;

@@ -302,17 +302,46 @@ function initGsap(introPlaying: boolean) {
 
   // HERO masked lines (line-mask reveal, rise out from behind an edge)
   const heroLines = gsap.utils.toArray<HTMLElement>('.hero-mask .reveal-line > span');
-  if (heroLines.length) {
-    gsap.set(heroLines, { yPercent: 120 });
-    gsap.to(heroLines, { yPercent: 0, duration: 1.1, ease: EASE, stagger: 0.09, delay: dly });
-  }
+  const heroLineTween = heroLines.length
+    ? (gsap.set(heroLines, { yPercent: 120 }),
+      gsap.to(heroLines, { yPercent: 0, duration: 1.1, ease: EASE, stagger: 0.09, delay: dly }))
+    : null;
 
   // hero supporting elements
   const heroEls = gsap.utils.toArray<HTMLElement>('[data-hero]');
-  if (heroEls.length) {
-    gsap.set(heroEls, { opacity: 0, y: 24 });
-    gsap.to(heroEls, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: EASE, delay: dly + 0.35 });
-  }
+  const heroElTween = heroEls.length
+    ? (gsap.set(heroEls, { opacity: 0, y: 24 }),
+      gsap.to(heroEls, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: EASE, delay: dly + 0.35 }))
+    : null;
+
+  // ── Hero visibility safety net ───────────────────────────────────────────
+  // A backgrounded/throttled tab pauses requestAnimationFrame, which freezes
+  // GSAP's clock — so the delayed hero reveal can get stuck at its hidden start
+  // and the headline never appears. setTimeout still fires in background tabs,
+  // so by ~2.8s (after the longest hero entrance would have finished on a
+  // visible tab) we hard-snap the hero to its final visible state. This is a
+  // no-op on a normal load and a guaranteed reveal on a throttled one.
+  const snapHeroVisible = () => {
+    // Kill the GSAP tweens, then write plain inline styles. We deliberately do
+    // NOT use gsap.set here — if GSAP's clock is what's frozen, plain DOM writes
+    // still win (inline beats the CSS hidden-state floor).
+    if (heroLineTween) heroLineTween.kill();
+    if (heroElTween) heroElTween.kill();
+    heroLines.forEach((el) => {
+      el.style.transform = 'translateY(0)';
+      el.style.willChange = 'auto';
+    });
+    heroEls.forEach((el) => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
+  };
+  window.setTimeout(snapHeroVisible, 2800);
+  // When a tab that loaded hidden becomes visible, re-evaluate scroll triggers
+  // so above-the-fold reveals that were frozen catch up immediately.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') ScrollTrigger.refresh();
+  });
 
   // hero water line
   const wl = document.getElementById('swp-waterline');

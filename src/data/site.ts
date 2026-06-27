@@ -232,8 +232,12 @@ export const googleRating: { rating: number; count: number } | null = null; // T
  * Shape: { title: string, before?: string, after: string, alt: string }
  */
 export const jobs: { title: string; before?: string; after: string; alt: string }[] = [
-  // TODO: add real job photos, e.g.
-  // { title: 'Hot water swap — Cleveland', after: '/images/job-1.jpg', alt: 'New hot water unit installed' },
+  // NOTE: these are tasteful stock placeholders (graded to the brand) so the
+  // gallery isn't empty. Swap for real S&W job photos when available — captions
+  // describe the service category, not a specific claimed job.
+  { title: 'Leaks & pipe repairs', after: '/images/work-1.webp', alt: 'Plumber repairing pipework under a sink' },
+  { title: 'Taps & outdoor fittings', after: '/images/work-2.webp', alt: 'Plumber working on an outdoor tap' },
+  { title: 'Pipework & maintenance', after: '/images/work-3.webp', alt: 'Domestic and industrial pipework' },
 ];
 
 /** Service options for the contact form dropdown. */

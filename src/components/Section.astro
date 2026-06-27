@@ -4,13 +4,14 @@ interface Props {
   tint?: boolean; // deeper panel background
   border?: boolean; // top hairline
   bleed?: boolean; // skip inner container
+  clip?: boolean; // clip decorative overflow (glows/parallax)
   class?: string;
 }
-const { id, tint = false, border = true, bleed = false, class: cls = '' } = Astro.props;
+const { id, tint = false, border = true, bleed = false, clip = false, class: cls = '' } = Astro.props;
 ---
 <section
   id={id}
-  class:list={['section', { 'section--tint': tint, 'section--noborder': !border }, cls]}
+  class:list={['section', { 'section--tint': tint, 'section--noborder': !border, 'section--clip': clip }, cls]}
 >
   {bleed ? <slot /> : <div class="container"><slot /></div>}
 </section>
@@ -21,5 +22,10 @@ const { id, tint = false, border = true, bleed = false, class: cls = '' } = Astr
   }
   .section--noborder {
     border-top: none;
+  }
+  /* Scoped to this component → reliably applies to the <section> root
+     (a class passed from the parent page would not get the page's scope). */
+  .section--clip {
+    overflow: hidden;
   }
 </style>
