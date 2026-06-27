@@ -1,0 +1,56 @@
+---
+import Icon from './Icon.astro';
+const items = [
+  { icon: 'shield', title: 'Certified plumber', sub: 'Licensed & qualified' },
+  { icon: 'pin', title: 'Bayside Brisbane local', sub: 'Based in Birkdale' },
+  { icon: 'bolt', title: 'Fast response', sub: 'Quick across the bay' },
+  { icon: 'dollar', title: 'Upfront pricing', sub: 'No surprises, ever' },
+];
+---
+<section class="trustbar">
+  <div class="container trustbar__grid" data-anim-children>
+    {
+      items.map((it) => (
+        <div class="trustbar__item">
+          <span class="trustbar__icon"><Icon name={it.icon} size={30} stroke="#B6FF3C" /></span>
+          <div>
+            <div class="trustbar__title">{it.title}</div>
+            <div class="trustbar__sub">{it.sub}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .trustbar {
+    border-top: 1px solid var(--ink-800);
+    border-bottom: 1px solid var(--ink-800);
+    background: var(--ink-850);
+    padding: 34px var(--pad-x);
+  }
+  .trustbar__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+  .trustbar__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .trustbar__icon {
+    color: var(--lime);
+    flex-shrink: 0;
+  }
+  .trustbar__title {
+    font-weight: 700;
+    font-size: 15px;
+    font-family: var(--font-display);
+  }
+  .trustbar__sub {
+    font-size: 12.5px;
+    color: var(--muted-2);
+  }
+</style>

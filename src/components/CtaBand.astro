@@ -1,0 +1,75 @@
+---
+import CallButton from './CallButton.astro';
+
+interface Props {
+  sub?: string;
+  note?: string;
+}
+const { sub, note } = Astro.props;
+---
+<section class="cta" id="contact-cta">
+  <canvas id="swp-cta-canvas" class="cta__canvas"></canvas>
+  <div class="cta__overlay"></div>
+  <div class="cta__inner">
+    <h2 data-reveal class="cta__title"><slot /></h2>
+    {sub && <p data-reveal class="cta__sub">{sub}</p>}
+    <div data-reveal class="cta__btn"><CallButton size="xl" pulse /></div>
+    {note && <p data-reveal class="cta__note">{note}</p>}
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    padding: clamp(90px, 13vw, 170px) var(--pad-x);
+    text-align: center;
+    overflow: hidden;
+    border-top: 1px solid var(--ink-800);
+  }
+  .cta__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.8;
+  }
+  .cta__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(110% 80% at 50% 50%, rgba(10, 12, 14, 0) 30%, var(--ink-900) 90%);
+  }
+  .cta__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 840px;
+    margin: 0 auto;
+  }
+  .cta__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .cta__title :global(.lime) {
+    color: var(--lime);
+  }
+  .cta__sub {
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    color: var(--muted-2);
+    margin-bottom: 44px;
+    line-height: 1.5;
+  }
+  .cta__btn {
+    display: flex;
+    justify-content: center;
+  }
+  .cta__note {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--muted-2);
+  }
+</style>

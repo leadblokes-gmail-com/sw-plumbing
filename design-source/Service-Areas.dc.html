@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500&f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="motion-enhancers.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#0A0C0E;color:#F4F7F5;font-family:'Satoshi','Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:#B6FF3C;color:#0A0C0E}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid #B6FF3C;outline-offset:3px;border-radius:4px}
+  @keyframes swpPulse{0%,100%{box-shadow:0 0 0 0 rgba(182,255,60,0.45),0 12px 30px -8px rgba(182,255,60,0.5)}50%{box-shadow:0 0 0 14px rgba(182,255,60,0),0 12px 40px -6px rgba(182,255,60,0.65)}}
+  @keyframes swpPing{0%{transform:scale(1);opacity:0.8}80%,100%{transform:scale(2.6);opacity:0}}
+  .swp-navlinks{display:flex}
+  .swp-bottombar{display:none}
+  @media (max-width:860px){
+    .swp-navlinks{display:none!important}
+    .swp-navcta-text{display:none}
+    .swp-bottombar{display:flex!important}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:0.001ms!important}}
+</style>
+</helmet>
+
+<div id="swp-root" style="position:relative;width:100%;background:#0A0C0E">
+
+  <div id="swp-progress" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#7FCB00,#B6FF3C);z-index:120;box-shadow:0 0 12px rgba(182,255,60,0.7);pointer-events:none"></div>
+
+  <!-- ====================== NAV ====================== -->
+  <header id="swp-nav" style="position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,56px);border-bottom:1px solid transparent;transition:background .4s cubic-bezier(0.22,1,0.36,1),backdrop-filter .4s,border-color .4s">
+    <a href="Home.dc.html" style="display:flex;align-items:center;gap:12px">
+      <svg width="34" height="38" viewBox="0 0 34 38" fill="none" aria-label="S and W Plumbing">
+        <path d="M17 1C17 1 4 14.5 4 24.5C4 31.9 9.8 37 17 37C24.2 37 30 31.9 30 24.5C30 14.5 17 1 17 1Z" stroke="#B6FF3C" stroke-width="2"/>
+        <path d="M21.5 18.5C20.6 17.4 19 16.7 17.2 16.7C14.4 16.7 12.5 18.2 12.5 20.3C12.5 24.6 21.8 22.7 21.8 26.9C21.8 29.1 19.7 30.6 16.8 30.6C14.7 30.6 12.9 29.7 12 28.4" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:18px;letter-spacing:-0.01em;line-height:1">S&nbsp;&amp;&nbsp;W<span style="color:#9AA5A0;font-weight:500"> PLUMBING</span></span>
+    </a>
+    <nav class="swp-navlinks" style="align-items:center;gap:34px;position:absolute;left:50%;transform:translateX(-50%)" aria-label="Primary">
+      <a href="Home.dc.html" style="font-size:14.5px;color:#9AA5A0;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">Home</a>
+      <a href="Services.dc.html" style="font-size:14.5px;color:#9AA5A0;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">Services</a>
+      <a href="About.dc.html" style="font-size:14.5px;color:#9AA5A0;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">About</a>
+      <a href="Service-Areas.dc.html" aria-current="page" style="font-size:14.5px;color:#B6FF3C;font-weight:600;transition:color .25s">Service Areas</a>
+      <a href="Contact.dc.html" style="font-size:14.5px;color:#9AA5A0;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">Contact</a>
+    </nav>
+    <a href="tel:0432292371" data-magnetic style="display:inline-flex;align-items:center;gap:9px;background:#B6FF3C;color:#0A0C0E;font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:999px;letter-spacing:-0.01em;white-space:nowrap;transition:transform .3s cubic-bezier(0.22,1,0.36,1),box-shadow .3s" style-hover="box-shadow:0 8px 30px -6px rgba(182,255,60,0.6);transform:translateY(-2px)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 5-2 1.5a11 11 0 005 5l1.5-2 5 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.2 2 2 0 016.5 3z" fill="#0A0C0E"/></svg>
+      <span><span class="swp-navcta-text">Call </span>0432 292 371</span>
+    </a>
+  </header>
+
+  <!-- ====================== HERO ====================== -->
+  <section style="position:relative;min-height:78vh;display:flex;align-items:center;overflow:hidden;padding:150px clamp(20px,5vw,56px) 70px">
+    <canvas id="swp-hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(120% 100% at 50% 0%,rgba(10,12,14,0) 38%,rgba(10,12,14,0.92) 100%)"></div>
+    <div class="hero-parallax" style="position:relative;z-index:2;max-width:1080px;width:100%;margin:0 auto">
+      <div data-hero style="display:inline-flex;align-items:center;gap:10px;padding:7px 14px;border:1px solid #232A30;background:rgba(20,24,28,0.6);backdrop-filter:blur(10px);border-radius:999px;margin-bottom:26px">
+        <span style="width:7px;height:7px;border-radius:50%;background:#B6FF3C;box-shadow:0 0 10px #B6FF3C"></span>
+        <span data-scramble style="font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9AA5A0;font-weight:600;white-space:nowrap">Service areas · Redlands &amp; bay</span>
+      </div>
+      <h1 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2.5rem,7vw,5.4rem);line-height:0.96;letter-spacing:-0.025em;max-width:15ch"><span style="display:block;overflow:hidden;padding-bottom:0.05em"><span class="swp-hl-inner" style="display:block;will-change:transform">Plumbing across</span></span><span style="display:block;overflow:hidden;padding-bottom:0.05em"><span class="swp-hl-inner" style="display:block;will-change:transform"><span style="color:#B6FF3C">bayside</span> Brisbane.</span></span></h1>
+      <p data-hero style="margin-top:24px;font-size:clamp(1.05rem,2.2vw,1.35rem);color:#9AA5A0;max-width:46ch;line-height:1.55;font-weight:500">Based in Birkdale, covering the Redlands and surrounding bayside suburbs.</p>
+      <div data-hero style="margin-top:32px">
+        <a href="tel:0432292371" data-magnetic style="display:inline-flex;align-items:center;gap:11px;background:#B6FF3C;color:#0A0C0E;font-weight:700;font-size:clamp(1rem,2vw,1.12rem);padding:16px 28px;border-radius:999px;letter-spacing:-0.01em;white-space:nowrap;animation:swpPulse 2.8s cubic-bezier(0.22,1,0.36,1) infinite;transition:transform .3s cubic-bezier(0.22,1,0.36,1)" style-hover="transform:translateY(-3px) scale(1.02)">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 5-2 1.5a11 11 0 005 5l1.5-2 5 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.2 2 2 0 016.5 3z" fill="#0A0C0E"/></svg>
+          Call 0432 292 371
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== INTERACTIVE MAP ====================== -->
+  <section data-horizon style="padding:clamp(70px,10vw,130px) clamp(20px,5vw,56px);border-top:1px solid #14181C">
+    <div style="max-width:1080px;margin:0 auto">
+      <div data-reveal style="text-align:center;margin-bottom:46px;max-width:600px;margin-left:auto;margin-right:auto">
+        <div style="font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#7FCB00;font-weight:700;margin-bottom:16px">The coverage</div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.02;letter-spacing:-0.02em">Right across the bay.</h2>
+        <p style="font-size:15px;color:#9AA5A0;margin-top:16px;line-height:1.6">Hover a pin to see the suburb. If you're anywhere near these, you're covered.</p>
+      </div>
+
+      <div id="swp-map" style="position:relative;max-width:680px;margin:0 auto;background:radial-gradient(circle at 55% 40%,rgba(20,24,28,0.95),#0A0C0E);border:1px solid #232A30;border-radius:24px;aspect-ratio:4/4.4;overflow:hidden;box-shadow:0 40px 90px -50px rgba(0,0,0,0.9)">
+        <svg viewBox="0 0 400 440" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true">
+          <defs><pattern id="mgrid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#171D22" stroke-width="1"/></pattern></defs>
+          <rect width="400" height="440" fill="url(#mgrid)"/>
+          <path d="M330 0 C 320 80, 350 150, 320 230 C 300 300, 340 380, 320 440 L400 440 L400 0 Z" fill="rgba(127,203,0,0.045)" stroke="#222B31" stroke-width="2"/>
+          <path d="M330 0 C 320 80, 350 150, 320 230 C 300 300, 340 380, 320 440" fill="none" stroke="#2C353B" stroke-width="2.5"/>
+          <line x1="0" y1="150" x2="320" y2="170" stroke="#1A2127" stroke-width="2"/>
+          <line x1="110" y1="0" x2="180" y2="440" stroke="#1A2127" stroke-width="2"/>
+          <line x1="0" y1="300" x2="300" y2="280" stroke="#1A2127" stroke-width="2"/>
+          <line x1="40" y1="60" x2="320" y2="120" stroke="#1A2127" stroke-width="1.5"/>
+        </svg>
+        <div style="position:absolute;right:16px;bottom:14px;font-family:'Clash Display',sans-serif;font-size:12px;letter-spacing:0.12em;color:#3A444B;font-weight:600">MORETON BAY</div>
+        <!-- pins injected by markup; positions are stylised, not survey-accurate -->
+        <div data-pin data-hq class="swp-mappin" style="position:absolute;left:50%;top:36%">
+          <div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer">
+            <span style="position:absolute;inset:0;margin:auto;width:14px;height:14px;border-radius:50%;background:#B6FF3C;animation:swpPing 2.4s ease-out infinite"></span>
+            <span class="swp-pin-dot" style="position:relative;display:block;width:14px;height:14px;border-radius:50%;background:#B6FF3C;box-shadow:0 0 0 4px rgba(182,255,60,0.18),0 0 16px rgba(182,255,60,0.8);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span>
+            <span class="swp-pin-tip" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%) translateY(6px);background:#B6FF3C;color:#0A0C0E;font-size:11px;font-weight:800;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Birkdale · HQ</span>
+          </div>
+        </div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:58%;top:9%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Wynnum</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:62%;top:17%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Manly</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:60%;top:25%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Lota</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:44%;top:28%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Thorneside</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:29%;top:40%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Capalaba</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:64%;top:43%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Ormiston</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:74%;top:37%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Wellington Point</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:43%;top:51%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Alexandra Hills</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:23%;top:57%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Sheldon</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:70%;top:55%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Cleveland</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:57%;top:64%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Thornlands</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:66%;top:73%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Victoria Point</span></div></div>
+        <div data-pin class="swp-mappin" style="position:absolute;left:55%;top:85%"><div class="swp-pin-visual" style="position:relative;transform:translate(-50%,-50%);cursor:pointer"><span class="swp-pin-dot" style="display:block;width:9px;height:9px;border-radius:50%;background:#7FCB00;box-shadow:0 0 10px rgba(127,203,0,0.6);transition:transform .25s cubic-bezier(0.22,1,0.36,1)"></span><span class="swp-pin-tip" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%) translateY(6px);background:#14181C;border:1px solid #2E363D;color:#F4F7F5;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s">Redland Bay</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== SUBURB LIST ====================== -->
+  <section data-horizon style="padding:clamp(70px,10vw,120px) clamp(20px,5vw,56px);background:#0C0F12;border-top:1px solid #14181C">
+    <div style="max-width:1100px;margin:0 auto">
+      <div data-reveal style="margin-bottom:40px;max-width:600px">
+        <div style="font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#7FCB00;font-weight:700;margin-bottom:16px">Suburbs we cover</div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.02;letter-spacing:-0.02em">Find your suburb.</h2>
+      </div>
+      <div id="swp-chips" style="display:flex;flex-wrap:wrap;gap:12px">
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid rgba(182,255,60,0.4);background:rgba(182,255,60,0.08);border-radius:999px;font-size:15px;font-weight:700;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s" style-hover="transform:translateY(-2px);box-shadow:0 12px 28px -12px rgba(182,255,60,0.6)"><span style="width:7px;height:7px;border-radius:50%;background:#B6FF3C;box-shadow:0 0 8px #B6FF3C"></span>Birkdale</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Wellington Point</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Cleveland</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Ormiston</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Thornlands</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Capalaba</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Alexandra Hills</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Victoria Point</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Redland Bay</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Manly</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Wynnum</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Lota</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Thorneside</span>
+        <span data-chip style="display:inline-flex;align-items:center;gap:9px;padding:13px 20px;border:1px solid #232A30;background:rgba(20,24,28,0.6);border-radius:999px;font-size:15px;font-weight:600;color:#C7CFCB;transition:transform .25s cubic-bezier(0.22,1,0.36,1),box-shadow .3s,border-color .3s,color .3s" style-hover="transform:translateY(-2px);border-color:rgba(182,255,60,0.5);color:#F4F7F5;box-shadow:0 12px 28px -14px rgba(182,255,60,0.5)">Sheldon</span>
+      </div>
+      <p data-reveal style="margin-top:30px;font-size:14.5px;color:#9AA5A0">Don't see yours? It's likely still on the run — just give us a call.</p>
+    </div>
+  </section>
+
+  <!-- ====================== RESPONSE PROMISE ====================== -->
+  <section data-horizon style="position:relative;padding:clamp(80px,11vw,140px) clamp(20px,5vw,56px);overflow:hidden;border-top:1px solid #14181C">
+    <div data-parallax-bg style="position:absolute;top:-20%;right:-10%;width:60%;height:140%;z-index:0;background:radial-gradient(circle,rgba(127,203,0,0.1),rgba(10,12,14,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto">
+      <div data-reveal style="max-width:600px;margin-bottom:50px">
+        <div style="font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#7FCB00;font-weight:700;margin-bottom:16px">Response promise</div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.02;letter-spacing:-0.02em">Fast response across the bay.</h2>
+        <p style="font-size:15px;color:#9AA5A0;margin-top:16px;line-height:1.6">Being local is the whole point. We're not crossing Brisbane to reach you — we're already on the bay, so we get there sooner.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px">
+        <div data-reveal style="background:rgba(20,24,28,0.5);border:1px solid #232A30;border-radius:18px;padding:32px">
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px"><span data-countup="14" style="font-family:'Clash Display',sans-serif;font-weight:700;font-size:clamp(2.6rem,6vw,3.6rem);line-height:1;color:#B6FF3C">14</span><span style="font-family:'Clash Display',sans-serif;font-weight:700;font-size:2rem;color:#B6FF3C">+</span></div>
+          <div style="font-size:15px;color:#9AA5A0;line-height:1.5">bayside suburbs covered, and growing</div>
+        </div>
+        <div data-reveal style="background:rgba(20,24,28,0.5);border:1px solid #232A30;border-radius:18px;padding:32px">
+          <div style="font-family:'Clash Display',sans-serif;font-weight:700;font-size:clamp(2.6rem,6vw,3.6rem);line-height:1;color:#B6FF3C;margin-bottom:8px">1 call</div>
+          <div style="font-size:15px;color:#9AA5A0;line-height:1.5">to book a local certified plumber</div>
+        </div>
+        <div data-reveal style="background:rgba(20,24,28,0.5);border:1px solid #232A30;border-radius:18px;padding:32px">
+          <div style="font-family:'Clash Display',sans-serif;font-weight:700;font-size:clamp(2.6rem,6vw,3.6rem);line-height:1;color:#B6FF3C;margin-bottom:8px">Birkdale</div>
+          <div style="font-size:15px;color:#9AA5A0;line-height:1.5">based right in the middle of it all</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CTA ====================== -->
+  <section data-horizon style="position:relative;padding:clamp(90px,13vw,170px) clamp(20px,5vw,56px);text-align:center;overflow:hidden;border-top:1px solid #14181C">
+    <canvas id="swp-cta-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:0.8"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(110% 80% at 50% 50%,rgba(10,12,14,0) 30%,#0A0C0E 90%)"></div>
+    <div style="position:relative;z-index:2;max-width:820px;margin:0 auto">
+      <h2 data-reveal style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2.2rem,6.5vw,4.4rem);line-height:1;letter-spacing:-0.025em;margin-bottom:22px">Not sure if we cover you?<br><span style="color:#B6FF3C">Just call and ask.</span></h2>
+      <p data-reveal style="font-size:clamp(1.05rem,2.4vw,1.3rem);color:#9AA5A0;margin-bottom:42px;line-height:1.5">Chances are we do. A quick call is the fastest way to find out.</p>
+      <a data-reveal href="tel:0432292371" data-magnetic style="display:inline-flex;align-items:center;gap:14px;background:#B6FF3C;color:#0A0C0E;font-weight:700;font-size:clamp(1.15rem,3vw,1.55rem);padding:clamp(20px,3vw,26px) clamp(34px,5vw,50px);border-radius:999px;letter-spacing:-0.01em;white-space:nowrap;animation:swpPulse 2.8s cubic-bezier(0.22,1,0.36,1) infinite;transition:transform .3s cubic-bezier(0.22,1,0.36,1)" style-hover="transform:translateY(-4px) scale(1.03)">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 5-2 1.5a11 11 0 005 5l1.5-2 5 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.2 2 2 0 016.5 3z" fill="#0A0C0E"/></svg>
+        Call 0432 292 371
+      </a>
+    </div>
+  </section>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer style="border-top:1px solid #232A30;background:#0C0F12;padding:clamp(50px,7vw,80px) clamp(20px,5vw,56px) 130px">
+    <div style="max-width:1280px;margin:0 auto clamp(36px,6vw,64px);overflow:hidden"><span class="footer-mark">S&amp;W&nbsp;PLUMBING</span></div>
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px">
+      <div style="grid-column:1/-1;max-width:340px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+          <svg width="30" height="34" viewBox="0 0 34 38" fill="none"><path d="M17 1C17 1 4 14.5 4 24.5C4 31.9 9.8 37 17 37C24.2 37 30 31.9 30 24.5C30 14.5 17 1 17 1Z" stroke="#B6FF3C" stroke-width="2"/><path d="M21.5 18.5C20.6 17.4 19 16.7 17.2 16.7C14.4 16.7 12.5 18.2 12.5 20.3C12.5 24.6 21.8 22.7 21.8 26.9C21.8 29.1 19.7 30.6 16.8 30.6C14.7 30.6 12.9 29.7 12 28.4" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round"/></svg>
+          <span style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:17px">S &amp; W <span style="color:#9AA5A0;font-weight:500">PLUMBING</span></span>
+        </div>
+        <p style="font-size:14.5px;color:#9AA5A0;line-height:1.6">Certified maintenance and general plumbing for Birkdale and bayside Brisbane. Fast, upfront, and done properly.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#5E6A64;font-weight:700;margin-bottom:16px">Contact</div>
+        <a href="tel:0432292371" style="display:block;font-size:15px;color:#F4F7F5;font-weight:600;margin-bottom:10px;transition:color .25s" style-hover="color:#B6FF3C">0432 292 371</a>
+        <a href="mailto:swplumbing@gmail.com" style="display:block;font-size:14.5px;color:#9AA5A0;margin-bottom:10px;transition:color .25s" style-hover="color:#B6FF3C">swplumbing@gmail.com</a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;font-size:14.5px;color:#9AA5A0;transition:color .25s" style-hover="color:#B6FF3C"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg> Facebook</a>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#5E6A64;font-weight:700;margin-bottom:16px">Service area</div>
+        <p style="font-size:14.5px;color:#9AA5A0;line-height:1.7">Birkdale · Wellington Point<br>Cleveland · Capalaba · Ormiston<br>Victoria Point · Wynnum &amp; the bay</p>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#5E6A64;font-weight:700;margin-bottom:16px">Hours</div>
+        <p style="font-size:14.5px;color:#9AA5A0;line-height:1.7">Call to arrange<br><span style="color:#B6FF3C;font-weight:600">Fast response across the bay</span></p>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:48px auto 0;padding-top:28px;border-top:1px solid #1A2026;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center">
+      <span style="font-size:12.5px;color:#5E6A64">© 2026 S &amp; W Plumbing · Licence [LICENCE #] · ABN [ABN]</span>
+      <span style="font-size:12.5px;color:#5E6A64">Certified plumber · Bayside Brisbane</span>
+    </div>
+  </footer>
+
+  <!-- ====================== MOBILE STICKY CALL BAR ====================== -->
+  <div class="swp-bottombar" style="position:fixed;bottom:0;left:0;width:100%;z-index:110;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:rgba(10,12,14,0.92);backdrop-filter:blur(16px);border-top:1px solid #232A30">
+    <a href="tel:0432292371" style="display:flex;align-items:center;justify-content:center;gap:11px;width:100%;background:#B6FF3C;color:#0A0C0E;font-weight:800;font-size:1.15rem;padding:17px;border-radius:14px;letter-spacing:-0.01em;box-shadow:0 0 26px -4px rgba(182,255,60,0.6)">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 5-2 1.5a11 11 0 005 5l1.5-2 5 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.2 2 2 0 016.5 3z" fill="#0A0C0E"/></svg>
+      Call 0432 292 371
+    </a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this._init) return;
+    this._init = true;
+    this.cleanups = [];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.startCanvas('swp-hero-canvas', reduce);
+    this.startCanvas('swp-cta-canvas', reduce);
+    this.navScroll();
+    this.progressBar();
+    if (!reduce && window.matchMedia('(pointer:fine)').matches && window.innerWidth > 860) {
+      this.tilt();
+    }
+    this.mapPins();
+    this.initMotion();
+    this.waitGsap(() => this.initGsap(reduce));
+    setTimeout(() => { document.querySelectorAll('.swp-hl-inner').forEach((el) => { el.style.transform = 'none'; }); }, 3400);
+  }
+
+  componentWillUnmount() {
+    (this.cleanups || []).forEach(fn => { try { fn(); } catch (e) {} });
+  }
+
+  waitGsap(cb, tries) {
+    tries = tries || 0;
+    if (window.gsap) return cb();
+    if (tries > 60) return;
+    setTimeout(() => this.waitGsap(cb, tries + 1), 60);
+  }
+
+  initMotion(tries) {
+    tries = tries || 0;
+    if (window.MotionEnhancers) { window.MotionEnhancers.init(); return; }
+    if (tries > 60) return;
+    setTimeout(() => this.initMotion(tries + 1), 60);
+  }
+
+  initGsap(reduce) {
+    const gsap = window.gsap;
+    const ST = window.ScrollTrigger;
+    if (ST) gsap.registerPlugin(ST);
+
+    if (!reduce && window.Lenis) {
+      const lenis = new window.Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      window.__swpLenis = lenis;
+      const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+      if (ST) lenis.on('scroll', ST.update);
+    }
+
+    if (reduce) return;
+    const ease = 'expo.out';
+
+    // HERO masked-line reveal
+    const heroLines = gsap.utils.toArray('.swp-hl-inner');
+    gsap.set(heroLines, { yPercent: 120 });
+    gsap.to(heroLines, { yPercent: 0, duration: 1.1, ease, stagger: 0.09, delay: 0.15 });
+
+    const heroEls = document.querySelectorAll('[data-hero]');
+    gsap.set(heroEls, { opacity: 0, y: 24 });
+    gsap.to(heroEls, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease, delay: 0.5 });
+
+    if (!ST) return;
+
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
+      gsap.set(el, { opacity: 0, y: 44 });
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.95, ease, scrollTrigger: { trigger: el, start: 'top 88%' } });
+    });
+
+    // map pins drop in with a bounce
+    const pins = gsap.utils.toArray('[data-pin]');
+    if (pins.length) {
+      gsap.set(pins, { scale: 0, opacity: 0, transformOrigin: 'center center' });
+      gsap.to(pins, { scale: 1, opacity: 1, duration: 0.6, stagger: 0.07, ease: 'back.out(2.4)', scrollTrigger: { trigger: '#swp-map', start: 'top 78%' } });
+    }
+
+    // suburb chips stagger
+    const chips = gsap.utils.toArray('[data-chip]');
+    if (chips.length) {
+      gsap.set(chips, { opacity: 0, y: 20, scale: 0.9 });
+      gsap.to(chips, { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.04, ease, scrollTrigger: { trigger: '#swp-chips', start: 'top 86%' } });
+    }
+
+    // count up
+    document.querySelectorAll('[data-countup]').forEach((el) => {
+      const target = parseFloat(el.getAttribute('data-countup')) || 0;
+      const obj = { v: 0 };
+      gsap.to(obj, { v: target, duration: 1.6, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 88%' }, onUpdate: () => { el.textContent = Math.round(obj.v); } });
+    });
+
+    // parallax glow
+    const pbg = document.querySelector('[data-parallax-bg]');
+    if (pbg) gsap.to(pbg, { yPercent: 24, ease: 'none', scrollTrigger: { trigger: pbg, start: 'top bottom', end: 'bottom top', scrub: true } });
+  }
+
+  mapPins() {
+    if (window.matchMedia('(pointer:coarse)').matches) return;
+    const handlers = [];
+    document.querySelectorAll('.swp-mappin').forEach((pin) => {
+      const dot = pin.querySelector('.swp-pin-dot');
+      const tip = pin.querySelector('.swp-pin-tip');
+      const isHq = pin.hasAttribute('data-hq');
+      const enter = () => {
+        if (dot) dot.style.transform = 'scale(1.6)';
+        if (tip) { tip.style.opacity = '1'; tip.style.transform = 'translateX(-50%) translateY(0)'; }
+        pin.style.zIndex = '10';
+      };
+      const leave = () => {
+        if (dot) dot.style.transform = 'scale(1)';
+        if (tip) { tip.style.opacity = '0'; tip.style.transform = 'translateX(-50%) translateY(6px)'; }
+        pin.style.zIndex = isHq ? '5' : '';
+      };
+      pin.addEventListener('mouseenter', enter);
+      pin.addEventListener('mouseleave', leave);
+      handlers.push(() => { pin.removeEventListener('mouseenter', enter); pin.removeEventListener('mouseleave', leave); });
+    });
+    this.cleanups.push(() => handlers.forEach(h => h()));
+  }
+
+  startCanvas(id, reduce) {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      W = canvas.width = Math.max(1, Math.floor(r.width * dpr));
+      H = canvas.height = Math.max(1, Math.floor(r.height * dpr));
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    this.cleanups.push(() => window.removeEventListener('resize', resize));
+
+    const blobs = [
+      { x: 0.30, y: 0.42, r: 0.62, c: [127, 203, 0], a: 0.16, sx: 0.000045, sy: 0.000061, ph: 0 },
+      { x: 0.72, y: 0.60, r: 0.50, c: [182, 255, 60], a: 0.10, sx: 0.000037, sy: 0.000052, ph: 2 },
+      { x: 0.52, y: 0.18, r: 0.42, c: [70, 120, 20], a: 0.14, sx: 0.000058, sy: 0.000041, ph: 4 },
+      { x: 0.15, y: 0.80, r: 0.40, c: [182, 255, 60], a: 0.07, sx: 0.000050, sy: 0.000066, ph: 1 }
+    ];
+
+    const drawFrame = (t) => {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#0A0C0E';
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      const maxR = Math.max(W, H);
+      blobs.forEach((b) => {
+        const cx = (b.x + Math.sin(t * b.sx + b.ph) * 0.14) * W;
+        const cy = (b.y + Math.cos(t * b.sy + b.ph) * 0.14) * H;
+        const rad = b.r * maxR;
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+        g.addColorStop(0, 'rgba(' + b.c[0] + ',' + b.c[1] + ',' + b.c[2] + ',' + b.a + ')');
+        g.addColorStop(1, 'rgba(' + b.c[0] + ',' + b.c[1] + ',' + b.c[2] + ',0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
+      });
+      ctx.globalCompositeOperation = 'source-over';
+    };
+
+    if (reduce) { drawFrame(8000); return; }
+
+    let raf, running = true, last = 0;
+    const loop = (now) => {
+      if (!running) return;
+      if (now - last > 24) { drawFrame(now); last = now; }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => {
+        if (e.isIntersecting && !running) { running = true; raf = requestAnimationFrame(loop); }
+        else if (!e.isIntersecting) { running = false; cancelAnimationFrame(raf); }
+      });
+    }, { threshold: 0.01 });
+    io.observe(canvas);
+    this.cleanups.push(() => { running = false; cancelAnimationFrame(raf); io.disconnect(); });
+  }
+
+  navScroll() {
+    const nav = document.getElementById('swp-nav');
+    if (!nav) return;
+    const onScroll = () => {
+      if (window.scrollY > 24) {
+        nav.style.background = 'rgba(10,12,14,0.78)';
+        nav.style.backdropFilter = 'blur(16px)';
+        nav.style.webkitBackdropFilter = 'blur(16px)';
+        nav.style.borderBottomColor = '#1A2026';
+      } else {
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'blur(0px)';
+        nav.style.webkitBackdropFilter = 'blur(0px)';
+        nav.style.borderBottomColor = 'transparent';
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    this.cleanups.push(() => window.removeEventListener('scroll', onScroll));
+  }
+
+  progressBar() {
+    const bar = document.getElementById('swp-progress');
+    if (!bar) return;
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+      bar.style.width = Math.max(0, Math.min(100, p)) + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    this.cleanups.push(() => window.removeEventListener('scroll', onScroll));
+  }
+
+  tilt() {
+    const handlers = [];
+    document.querySelectorAll('[data-tilt]').forEach((card) => {
+      const move = (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(900px) rotateY(' + (px * 6) + 'deg) rotateX(' + (-py * 6) + 'deg) translateY(-5px)';
+      };
+      const leave = () => { card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0)'; };
+      card.addEventListener('mousemove', move);
+      card.addEventListener('mouseleave', leave);
+      handlers.push(() => { card.removeEventListener('mousemove', move); card.removeEventListener('mouseleave', leave); });
+    });
+    this.cleanups.push(() => handlers.forEach(h => h()));
+  }
+}
+</script>
+</body>
+</html>

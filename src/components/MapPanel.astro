@@ -1,0 +1,177 @@
+---
+import { suburbs } from '../data/site';
+
+interface Props {
+  variant?: 'teaser' | 'interactive' | 'mini';
+}
+const { variant = 'teaser' } = Astro.props;
+const ratio = variant === 'interactive' ? '4 / 4.4' : variant === 'mini' ? '1 / 1' : '4 / 3';
+---
+<div class="map" style={`aspect-ratio:${ratio}`} aria-label="Stylised map of bayside Brisbane showing our service area">
+  <svg class="map__grid" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <pattern id={`grid-${variant}`} width="28" height="28" patternUnits="userSpaceOnUse">
+        <path d="M28 0H0V28" fill="none" stroke="#1B2228" stroke-width="1"></path>
+      </pattern>
+    </defs>
+    <rect width="400" height="300" fill={`url(#grid-${variant})`}></rect>
+    <path d="M250 0 C 240 60, 280 110, 260 160 C 245 200, 280 250, 270 300" fill="none" stroke="#2A333A" stroke-width="2.5"></path>
+    <path d="M250 0 C 240 60, 280 110, 260 160 C 245 200, 280 250, 270 300 L400 300 L400 0 Z" fill="rgba(127,203,0,0.04)"></path>
+    <line x1="0" y1="120" x2="250" y2="150" stroke="#1F262C" stroke-width="2"></line>
+    <line x1="60" y1="0" x2="120" y2="300" stroke="#1F262C" stroke-width="2"></line>
+    <line x1="0" y1="210" x2="240" y2="190" stroke="#1F262C" stroke-width="2"></line>
+  </svg>
+  <div class="map__label">MORETON BAY</div>
+
+  {
+    variant === 'interactive' ? (
+      suburbs.map((s) => (
+        <div
+          class:list={['pin', { 'pin--hq': s.hq }]}
+          data-pin
+          style={`left:${s.x}%;top:${s.y}%`}
+        >
+          <button class="pin__hit" aria-label={s.name + (s.hq ? ' — our base' : '')}>
+            {s.hq && <span class="pin__ping" />}
+            <span class="pin__dot" />
+            <span class="pin__tip">{s.name}{s.hq ? ' · HQ' : ''}</span>
+          </button>
+        </div>
+      ))
+    ) : variant === 'mini' ? (
+      <div class="pin pin--hq pin--center" data-pin>
+        <span class="pin__ping" />
+        <span class="pin__dot" />
+        <span class="pin__tip pin__tip--static">BIRKDALE</span>
+      </div>
+    ) : (
+      <>
+        <div class="pin pin--hq" data-pin style="left:30%;top:53%">
+          <span class="pin__ping" />
+          <span class="pin__dot" />
+        </div>
+        <div class="pin" data-pin style="left:48%;top:33%"><span class="pin__dot pin__dot--sm" /></div>
+        <div class="pin" data-pin style="left:54%;top:67%"><span class="pin__dot pin__dot--sm" /></div>
+        <div class="pin" data-pin style="left:20%;top:30%"><span class="pin__dot pin__dot--sm" /></div>
+        <div class="pin" data-pin style="left:38%;top:80%"><span class="pin__dot pin__dot--sm" /></div>
+        <div class="pin" data-pin style="left:15%;top:67%"><span class="pin__dot pin__dot--sm" /></div>
+        <div class="map__hq-label" style="left:30%;top:53%">BIRKDALE · HQ</div>
+      </>
+    )
+  }
+</div>
+
+<style>
+  .map {
+    position: relative;
+    background: radial-gradient(circle at 60% 40%, rgba(20, 24, 28, 0.9), var(--ink-850));
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.9);
+  }
+  .map__grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .map__label {
+    position: absolute;
+    right: 16px;
+    bottom: 14px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: #3a444b;
+    font-weight: 600;
+  }
+  .pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+  .pin--center {
+    left: 42%;
+    top: 50%;
+  }
+  .pin__hit {
+    all: unset;
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+  }
+  .pin__dot {
+    position: relative;
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--lime-dark);
+    box-shadow: 0 0 10px rgba(127, 203, 0, 0.6);
+    transition: transform 0.25s var(--ease-quint);
+  }
+  .pin--hq .pin__dot {
+    width: 14px;
+    height: 14px;
+    background: var(--lime);
+    box-shadow: 0 0 0 4px rgba(182, 255, 60, 0.18), 0 0 16px rgba(182, 255, 60, 0.8);
+  }
+  .pin__hit:hover .pin__dot,
+  .pin__hit:focus-visible .pin__dot {
+    transform: scale(1.35);
+  }
+  .pin__ping {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--lime);
+    animation: swpPing 2.4s ease-out infinite;
+  }
+  .pin__tip {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    background: var(--ink-800);
+    border: 1px solid var(--line-strong);
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .pin--hq .pin__tip {
+    background: var(--lime);
+    color: var(--ink-900);
+    border: none;
+  }
+  .pin__hit:hover .pin__tip,
+  .pin__hit:focus-visible .pin__tip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .pin__tip--static {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+  .map__hq-label {
+    position: absolute;
+    transform: translate(calc(-50% + 14px), -130%);
+    background: var(--lime);
+    color: var(--ink-900);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 9px;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+</style>

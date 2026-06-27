@@ -1,0 +1,126 @@
+---
+import CallButton from './CallButton.astro';
+
+interface Props {
+  eyebrow: string;
+  sub: string;
+  minh?: string;
+  underline?: boolean;
+  align?: 'left' | 'center';
+}
+const { eyebrow, sub, minh = '60vh', underline = false, align = 'left' } = Astro.props;
+---
+<section class:list={['phero', { 'phero--center': align === 'center' }]} style={`min-height:${minh}`}>
+  <canvas id="swp-hero-canvas" class="phero__canvas"></canvas>
+  <div class="phero__veil"></div>
+  <div class="phero__inner">
+    <div data-hero class="badge">
+      <span class="badge__dot"></span>
+      <span>{eyebrow}</span>
+    </div>
+    <h1 class="phero__title hero-mask"><slot /></h1>
+    {underline && <div id="swp-waterline" class="phero__underline"></div>}
+    <p data-hero class="phero__sub">{sub}</p>
+    <div data-hero class="phero__cta"><CallButton size="md" pulse /></div>
+  </div>
+</section>
+
+<style>
+  .phero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 150px var(--pad-x) 70px;
+  }
+  .phero__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .phero__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(120% 100% at 50% 0%, rgba(10, 12, 14, 0) 40%, rgba(10, 12, 14, 0.9) 100%);
+  }
+  .phero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1080px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .phero--center .phero__inner {
+    text-align: center;
+  }
+  .phero__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.5rem, 7.5vw, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    max-width: 16ch;
+  }
+  .phero--center .phero__title {
+    margin-inline: auto;
+  }
+  .phero__title :global(em) {
+    font-style: normal;
+    color: var(--lime);
+  }
+  .phero__underline {
+    height: 3px;
+    width: 100%;
+    max-width: 260px;
+    margin-top: 22px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--lime), var(--lime-dark));
+    border-radius: 3px;
+    box-shadow: 0 0 14px rgba(182, 255, 60, 0.5);
+  }
+  .phero__sub {
+    margin-top: 24px;
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    color: var(--muted-2);
+    max-width: 46ch;
+    line-height: 1.55;
+    font-weight: 500;
+  }
+  .phero--center .phero__sub {
+    margin-inline: auto;
+  }
+  .phero__cta {
+    margin-top: 32px;
+  }
+  .phero--center .phero__cta {
+    display: flex;
+    justify-content: center;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    background: rgba(20, 24, 28, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 999px;
+    margin-bottom: 26px;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-weight: 600;
+  }
+  .badge__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 10px var(--lime);
+  }
+</style>

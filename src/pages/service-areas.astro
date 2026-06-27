@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import MapPanel from '../components/MapPanel.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { suburbs } from '../data/site';
+---
+<Layout
+  title="Service Areas — Bayside Brisbane & the Redlands | S & W Plumbing"
+  description="Based in Birkdale, covering Wellington Point, Cleveland, Capalaba, Ormiston, Victoria Point, Wynnum, Redland Bay and across the Redlands. Fast local response. Call 0432 292 371."
+>
+  <PageHero eyebrow="Service areas · Redlands & bay" sub="Based in Birkdale, covering the Redlands and surrounding bayside suburbs." minh="62vh">
+    <span class="reveal-line"><span>Plumbing across</span></span>
+    <span class="reveal-line"><span><em>bayside</em> Brisbane.</span></span>
+  </PageHero>
+
+  <!-- Interactive map -->
+  <Section>
+    <div class="areas-map">
+      <SectionHeading eyebrow="The coverage" align="center" max="600px">Right across the bay.</SectionHeading>
+      <p data-reveal class="areas-map__note">Hover a pin to see the suburb. If you're anywhere near these, you're covered.</p>
+      <div data-reveal class="areas-map__panel"><MapPanel variant="interactive" /></div>
+    </div>
+  </Section>
+
+  <!-- Suburb chips -->
+  <Section tint>
+    <SectionHeading eyebrow="Suburbs we cover" max="600px">Find your suburb.</SectionHeading>
+    <div class="chips">
+      {
+        suburbs.map((s) => (
+          <span class:list={['chip', { 'chip--hq': s.hq }]} data-chip>
+            {s.hq && <span class="chip__dot" />}
+            {s.name}
+          </span>
+        ))
+      }
+    </div>
+    <p data-reveal class="chips__note">Don't see yours? It's likely still on the run — just give us a call.</p>
+  </Section>
+
+  <!-- Response promise -->
+  <Section class="promise">
+    <div data-parallax-bg class="promise__glow"></div>
+    <div class="promise__content">
+      <SectionHeading eyebrow="Response promise" max="600px">Fast response across the bay.</SectionHeading>
+      <p data-reveal class="promise__intro">
+        Being local is the whole point. We're not crossing Brisbane to reach you — we're already on the bay, so we
+        get there sooner.
+      </p>
+      <div class="promise__grid" data-anim-children>
+        <div class="promise__stat">
+          <div class="promise__num"><span data-countup="14">14</span><em>+</em></div>
+          <div class="promise__label">bayside suburbs covered, and growing</div>
+        </div>
+        <div class="promise__stat">
+          <div class="promise__num promise__num--text">1 call</div>
+          <div class="promise__label">to book a local certified plumber</div>
+        </div>
+        <div class="promise__stat">
+          <div class="promise__num promise__num--text">Birkdale</div>
+          <div class="promise__label">based right in the middle of it all</div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <CtaBand sub="Chances are we do. A quick call is the fastest way to find out.">
+    Not sure if we cover you?<br /><span class="lime">Just call and ask.</span>
+  </CtaBand>
+</Layout>
+
+<style>
+  .areas-map {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .areas-map__note {
+    text-align: center;
+    margin: -36px auto 46px;
+    font-size: 15px;
+    color: var(--muted-2);
+    max-width: 600px;
+  }
+  .areas-map__panel {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 20px;
+    border: 1px solid var(--line);
+    background: rgba(20, 24, 28, 0.6);
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: transform 0.25s var(--ease-quint), box-shadow 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .chip:hover {
+    transform: translateY(-2px);
+    border-color: rgba(182, 255, 60, 0.5);
+    color: var(--text);
+    box-shadow: 0 12px 28px -14px rgba(182, 255, 60, 0.5);
+  }
+  .chip--hq {
+    border-color: rgba(182, 255, 60, 0.4);
+    background: var(--lime-08);
+    color: var(--text);
+    font-weight: 700;
+  }
+  .chip__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 8px var(--lime);
+  }
+  .chips__note {
+    margin-top: 30px;
+    font-size: 14.5px;
+    color: var(--muted-2);
+  }
+
+  .promise {
+    position: relative;
+    overflow: hidden;
+  }
+  .promise__glow {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60%;
+    height: 140%;
+    z-index: 0;
+    background: radial-gradient(circle, rgba(127, 203, 0, 0.1), rgba(10, 12, 14, 0) 65%);
+    pointer-events: none;
+  }
+  .promise__content {
+    position: relative;
+    z-index: 1;
+  }
+  .promise__intro {
+    margin: -36px 0 50px;
+    font-size: 15px;
+    color: var(--muted-2);
+    max-width: 600px;
+    line-height: 1.6;
+  }
+  .promise__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+  }
+  .promise__stat {
+    background: rgba(20, 24, 28, 0.5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px;
+  }
+  .promise__num {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 6vw, 3.6rem);
+    line-height: 1;
+    color: var(--lime);
+    margin-bottom: 8px;
+  }
+  .promise__num em {
+    font-style: normal;
+    font-size: 2rem;
+  }
+  .promise__label {
+    font-size: 15px;
+    color: var(--muted-2);
+    line-height: 1.5;
+  }
+</style>

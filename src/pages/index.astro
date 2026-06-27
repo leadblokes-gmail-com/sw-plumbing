@@ -1,0 +1,446 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import TrustBar from '../components/TrustBar.astro';
+import Reviews from '../components/Reviews.astro';
+import JobGallery from '../components/JobGallery.astro';
+import MapPanel from '../components/MapPanel.astro';
+import CallButton from '../components/CallButton.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { services, reviews, googleRating, jobs } from '../data/site';
+
+const homeServices = services.slice(0, 6);
+const showSocialProof = reviews.length > 0 || !!googleRating || jobs.length > 0;
+const why = [
+  { icon: 'shield', title: 'Certified & insured', body: "A fully licensed, certified plumber on every job. The work is done to code and it's done to last." },
+  { icon: 'bolt', title: 'Fast bayside response', body: "Local to Birkdale and the bay, so we're not driving across Brisbane to get to you. Call and we'll move." },
+  { icon: 'dollar', title: 'Upfront honest pricing', body: 'You get the price before the work starts. No nasty surprises on the invoice — just a fair, honest quote.' },
+];
+
+---
+<Layout
+  title="S & W Plumbing — Certified Plumber in Birkdale & Bayside Brisbane"
+  description="Bayside Brisbane's plumbing, done properly. Certified, fast and upfront — blocked drains, burst pipes, hot water, gas fitting and more. Call 0432 292 371."
+  intro={true}
+>
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <canvas id="swp-hero-canvas" class="hero__canvas"></canvas>
+    <div class="hero__veil hero__veil--top"></div>
+    <div class="hero__veil hero__veil--bottom"></div>
+
+    <div class="hero__inner">
+      <div data-hero class="badge">
+        <span class="badge__dot"></span>
+        <span>Certified Plumber · Bayside Brisbane</span>
+      </div>
+
+      <h1 class="hero__title hero-mask">
+        <span class="reveal-line"><span>Bayside Brisbane's</span></span>
+        <span class="reveal-line"><span>plumbing,</span></span>
+        <span class="reveal-line"><span>done <em>properly</em>.</span></span>
+      </h1>
+
+      <p data-hero class="hero__sub">Certified, fast, and upfront. One call and it's sorted.</p>
+
+      <div data-hero class="hero__ctas">
+        <CallButton size="lg" pulse />
+        <a href="/services" class="btn-ghost" data-magnetic>
+          See our services
+          <Icon name="arrow" size={18} stroke="#B6FF3C" />
+        </a>
+      </div>
+
+      <div data-hero class="hero__ticks">
+        {['Certified', 'Bayside local', 'Fast response', 'Upfront pricing'].map((t, i) => (
+          <>
+            {i > 0 && <span class="hero__tick-sep"></span>}
+            <span class="hero__tick"><span>✓</span> {t}</span>
+          </>
+        ))}
+      </div>
+    </div>
+
+    <div class="hero__waterline-wrap">
+      <div id="swp-waterline" class="hero__waterline"></div>
+    </div>
+  </section>
+
+  <TrustBar />
+
+  <!-- ===== SERVICES ===== -->
+  <Section id="services">
+    <SectionHeading eyebrow="What we do" waterline max="620px">
+      Maintenance &amp; general plumbing, done right.
+    </SectionHeading>
+    <div class="grid-cards" data-anim-children>
+      {homeServices.map((s) => <ServiceCard icon={s.icon} title={s.homeTitle ?? s.title} blurb={s.blurb} />)}
+    </div>
+  </Section>
+
+  <!-- ===== WHY S&W ===== -->
+  <Section id="why" class="why">
+    <div data-parallax-bg class="why__glow"></div>
+    <div class="why__content">
+      <SectionHeading eyebrow="Why S&amp;W" max="640px">A new name, an old-school standard.</SectionHeading>
+      <div class="grid-cards" data-anim-children>
+        {
+          why.map((w) => (
+            <div class="why__card">
+              <div class="why__icon"><Icon name={w.icon} size={28} stroke="#B6FF3C" /></div>
+              <h3 class="why__title">{w.title}</h3>
+              <p class="why__body">{w.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- ===== REVIEWS / JOB GALLERY (only renders once real data is added) ===== -->
+  {
+    showSocialProof && (
+      <Section class="reviews-section">
+        <Reviews />
+        <JobGallery />
+      </Section>
+    )
+  }
+
+  <!-- ===== SERVICE AREA TEASER ===== -->
+  <Section id="areas">
+    <div class="areas">
+      <div data-reveal class="areas__copy">
+        <div class="eyebrow">Service area</div>
+        <h2 class="h2 areas__title">Covering Birkdale and all of bayside Brisbane.</h2>
+        <p class="areas__text">
+          From the Redlands to Wynnum — Wellington Point, Cleveland, Capalaba, Victoria Point and
+          everywhere between. If you're on the bay, we've got you.
+        </p>
+        <a href="/service-areas" class="btn-ghost" data-magnetic>
+          Check your suburb <Icon name="arrow" size={17} stroke="#B6FF3C" />
+        </a>
+      </div>
+      <div data-reveal><MapPanel variant="teaser" /></div>
+    </div>
+  </Section>
+
+  <!-- ===== GUARANTEE ===== -->
+  <Section border={false} class="guarantee-section">
+    <div data-reveal class="guarantee">
+      <div class="guarantee__glow"></div>
+      <div class="guarantee__inner">
+        <div class="eyebrow">Our promise</div>
+        <h2 class="guarantee__title">Not happy? <span>We'll make it right.</span></h2>
+        <p class="guarantee__text">
+          We stand behind every job. If something's not right, we come back and fix it. Simple as that.
+        </p>
+        <div class="guarantee__stat">
+          <span data-countup="100" data-suffix="%" class="guarantee__num">100%</span>
+          <span class="guarantee__label">satisfaction guaranteed</span>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <CtaBand sub="One call and it's sorted. Talk to your local certified plumber today." note="Prefer to talk it through? Just call — we usually answer.">
+    Got a plumbing problem?<br /><span class="lime">Call now.</span>
+  </CtaBand>
+</Layout>
+
+<style>
+  /* ---- HERO ---- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 120px var(--pad-x) 64px;
+  }
+  @media (max-width: 860px) {
+    .hero {
+      padding-bottom: 120px;
+    }
+  }
+  .hero__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .hero__veil {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .hero__veil--top {
+    background: radial-gradient(120% 90% at 50% 0%, rgba(10, 12, 14, 0) 40%, rgba(10, 12, 14, 0.85) 100%);
+  }
+  .hero__veil--bottom {
+    background: linear-gradient(180deg, rgba(10, 12, 14, 0.4) 0%, rgba(10, 12, 14, 0) 30%, rgba(10, 12, 14, 0.7) 100%);
+  }
+  .hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1080px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .hero__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.7rem, 8.2vw, 6.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    max-width: 14ch;
+  }
+  .hero__title em {
+    font-style: normal;
+    color: var(--lime);
+  }
+  .hero__sub {
+    margin-top: 26px;
+    font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+    color: var(--muted-2);
+    max-width: 38ch;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 38px;
+  }
+  .hero__ticks {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
+    margin-top: 42px;
+  }
+  .hero__tick {
+    font-size: 13.5px;
+    color: var(--text);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero__tick span {
+    color: var(--lime);
+  }
+  .hero__tick-sep {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--line-strong);
+  }
+  .hero__waterline-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    z-index: 3;
+    overflow: hidden;
+  }
+  .hero__waterline {
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, rgba(182, 255, 60, 0) 0%, var(--lime) 50%, rgba(182, 255, 60, 0) 100%);
+    box-shadow: 0 0 16px rgba(182, 255, 60, 0.8);
+  }
+
+  /* ---- shared ---- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    background: rgba(20, 24, 28, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 999px;
+    margin-bottom: 28px;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-weight: 600;
+  }
+  .badge__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lime);
+    box-shadow: 0 0 10px var(--lime);
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid var(--line-strong);
+    background: rgba(20, 24, 28, 0.5);
+    backdrop-filter: blur(10px);
+    color: var(--text);
+    font-weight: 600;
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    padding: 16px 26px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: border-color 0.3s, background 0.3s, transform 0.3s;
+    will-change: transform;
+  }
+  .btn-ghost:hover {
+    border-color: var(--lime);
+    background: var(--lime-08);
+    transform: translateY(-3px);
+  }
+  .grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  /* ---- WHY ---- */
+  .why {
+    position: relative;
+    overflow: hidden;
+  }
+  .why__glow {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60%;
+    height: 140%;
+    z-index: 0;
+    background: radial-gradient(circle, rgba(127, 203, 0, 0.1), rgba(10, 12, 14, 0) 65%);
+    pointer-events: none;
+  }
+  .why__content {
+    position: relative;
+    z-index: 1;
+  }
+  .why__card {
+    background: rgba(20, 24, 28, 0.5);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 34px;
+  }
+  .why__icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: var(--lime-10);
+    border: 1px solid rgba(182, 255, 60, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: var(--lime);
+  }
+  .why__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .why__body {
+    font-size: 15px;
+    color: var(--muted-2);
+    line-height: 1.6;
+  }
+
+  /* ---- AREAS TEASER ---- */
+  .areas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 48px;
+    align-items: center;
+  }
+  .areas__title {
+    margin: 16px 0 20px;
+  }
+  .areas__text {
+    font-size: 16px;
+    color: var(--muted-2);
+    line-height: 1.6;
+    max-width: 42ch;
+    margin-bottom: 30px;
+  }
+
+  /* ---- GUARANTEE ---- */
+  .guarantee {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    border: 1px solid rgba(182, 255, 60, 0.25);
+    background: linear-gradient(135deg, rgba(182, 255, 60, 0.07), rgba(20, 24, 28, 0.4));
+    border-radius: var(--radius-lg);
+    padding: clamp(40px, 7vw, 72px);
+    text-align: center;
+    overflow: hidden;
+  }
+  .guarantee__glow {
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(182, 255, 60, 0.16), transparent 65%);
+    pointer-events: none;
+  }
+  .guarantee__inner {
+    position: relative;
+  }
+  .guarantee .eyebrow {
+    margin-bottom: 20px;
+  }
+  .guarantee__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    margin-bottom: 18px;
+  }
+  .guarantee__title span {
+    color: var(--lime);
+  }
+  .guarantee__text {
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    color: var(--muted-2);
+    max-width: 46ch;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+  .guarantee__stat {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 36px;
+  }
+  .guarantee__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(3rem, 9vw, 5.5rem);
+    line-height: 1;
+    color: var(--lime);
+  }
+  .guarantee__label {
+    font-size: 1.1rem;
+    color: var(--muted-2);
+    font-weight: 600;
+  }
+</style>

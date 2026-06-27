@@ -1,0 +1,76 @@
+---
+import Logo from './Logo.astro';
+import CallButton from './CallButton.astro';
+import { nav } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header id="swp-nav" class="nav">
+  <a href="/" class="nav__brand" aria-label="S & W Plumbing — home"><Logo /></a>
+  <nav class="nav__links" aria-label="Primary">
+    {
+      nav.map((item) => {
+        const href = item.href.replace(/\/$/, '') || '/';
+        const active = href === path;
+        return (
+          <a href={item.href} class:list={['nav__link', { 'is-active': active }]} aria-current={active ? 'page' : undefined}>
+            {item.label}
+          </a>
+        );
+      })
+    }
+  </nav>
+  <CallButton size="sm" class="nav__cta" />
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px var(--pad-x);
+    border-bottom: 1px solid transparent;
+    transition: background 0.4s var(--ease-quint), backdrop-filter 0.4s, border-color 0.4s;
+  }
+  .nav.is-scrolled {
+    background: rgba(10, 12, 14, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: var(--ink-750);
+  }
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .nav__link {
+    font-size: 14.5px;
+    color: var(--muted-2);
+    font-weight: 500;
+    transition: color 0.25s;
+  }
+  .nav__link:hover {
+    color: var(--lime);
+  }
+  .nav__link.is-active {
+    color: var(--lime);
+    font-weight: 600;
+  }
+  @media (max-width: 860px) {
+    .nav__links {
+      display: none;
+    }
+    /* hide the word "Call" on the small nav CTA, keep the number */
+    .nav :global(.nav__cta) {
+      padding: 11px 16px;
+    }
+  }
+</style>

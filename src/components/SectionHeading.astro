@@ -1,0 +1,46 @@
+---
+interface Props {
+  eyebrow: string;
+  align?: 'left' | 'center';
+  waterline?: boolean; // scroll-scrubbed lime underline
+  max?: string;
+  class?: string;
+}
+const { eyebrow, align = 'left', waterline = false, max = '640px', class: cls = '' } = Astro.props;
+---
+<div
+  data-reveal
+  class:list={['heading', { 'heading--center': align === 'center' }, cls]}
+  style={`max-width:${max}`}
+>
+  <div class="eyebrow">{eyebrow}</div>
+  <h2 class="h2"><slot /></h2>
+  {waterline && <div data-waterline class="heading__waterline"></div>}
+</div>
+
+<style>
+  .heading {
+    margin-bottom: 54px;
+  }
+  .heading--center {
+    margin-inline: auto;
+    text-align: center;
+  }
+  .heading .eyebrow {
+    margin-bottom: 16px;
+  }
+  .heading__waterline {
+    height: 3px;
+    width: 120px;
+    margin-top: 22px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--lime), var(--lime-dark));
+    border-radius: 3px;
+    box-shadow: 0 0 14px rgba(182, 255, 60, 0.5);
+  }
+  .heading--center .heading__waterline {
+    margin-inline: auto;
+    transform-origin: center;
+  }
+</style>

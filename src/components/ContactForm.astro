@@ -1,0 +1,286 @@
+---
+import Icon from './Icon.astro';
+import { serviceOptions, business } from '../data/site';
+// One documented config value. Set PUBLIC_FORMSPREE_ENDPOINT in .env (see README).
+const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
+---
+<form id="swp-form" class="form" novalidate data-endpoint={endpoint}>
+  <div class="form__row">
+    <label class="field">
+      <span class="field__label">Name</span>
+      <input name="name" type="text" autocomplete="name" placeholder="Your name" required />
+      <span class="field__error" data-error-for="name"></span>
+    </label>
+    <label class="field">
+      <span class="field__label">Phone</span>
+      <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="04xx xxx xxx" required />
+      <span class="field__error" data-error-for="phone"></span>
+    </label>
+  </div>
+
+  <label class="field">
+    <span class="field__label">Suburb</span>
+    <input name="suburb" type="text" placeholder="e.g. Birkdale" />
+  </label>
+
+  <label class="field">
+    <span class="field__label">Service needed</span>
+    <div class="field__select">
+      <select name="service">
+        <option value="">Select a service…</option>
+        {serviceOptions.map((s) => <option>{s}</option>)}
+      </select>
+      <Icon name="arrow" size={16} class="field__select-chev" />
+    </div>
+  </label>
+
+  <label class="field">
+    <span class="field__label">Message</span>
+    <textarea name="message" rows="4" placeholder="Tell us what's going on…"></textarea>
+  </label>
+
+  <!-- honeypot: hidden from humans, bots fill it → silently rejected -->
+  <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="form__hp" aria-hidden="true" />
+
+  <button type="submit" class="form__submit" data-magnetic>
+    <span class="form__submit-label">Send message</span>
+    <Icon name="arrow" size={18} stroke="#0A0C0E" />
+  </button>
+
+  <p id="swp-form-note" class="form__note" role="status" aria-live="polite">
+    <span class="form__note-dot">●</span> Prefer to talk? Just call — we usually answer.
+  </p>
+</form>
+
+<style>
+  .form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .field {
+    display: block;
+  }
+  .field__label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted-2);
+    margin-bottom: 8px;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    background: var(--ink-800);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-size: 15px;
+    font-family: inherit;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .field textarea {
+    resize: vertical;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--faint);
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--lime);
+    box-shadow: 0 0 0 4px var(--lime-12);
+  }
+  .field.is-invalid input,
+  .field.is-invalid select {
+    border-color: #ff6b6b;
+  }
+  .field__error {
+    display: none;
+    color: #ff8a8a;
+    font-size: 12.5px;
+    margin-top: 6px;
+  }
+  .field.is-invalid .field__error {
+    display: block;
+  }
+  .field__select {
+    position: relative;
+  }
+  .field__select select {
+    appearance: none;
+  }
+  /* The chevron is rendered by the Icon component (separate scope), so target it
+     with :global within the scoped parent. */
+  .field__select :global(svg.field__select-chev) {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    color: var(--muted-2);
+    pointer-events: none;
+  }
+  .form__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .form__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--lime);
+    color: var(--ink-900);
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 17px 28px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    transition: transform 0.3s var(--ease-quint), box-shadow 0.3s, opacity 0.3s;
+    will-change: transform;
+  }
+  .form__submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px -12px rgba(182, 255, 60, 0.6);
+  }
+  .form__submit[disabled] {
+    opacity: 0.6;
+    cursor: default;
+  }
+  .form__note {
+    font-size: 13px;
+    color: var(--muted-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .form__note-dot {
+    color: var(--lime);
+  }
+  .form__note.is-success {
+    color: var(--text);
+  }
+  .form__note.is-error {
+    color: #ff8a8a;
+  }
+  .form__note a {
+    color: var(--lime);
+    font-weight: 700;
+  }
+</style>
+
+<script is:inline define:vars={{ phoneHref: business.phoneHref, phone: business.phone }}>
+  (function () {
+    const form = document.getElementById('swp-form');
+    if (!form) return;
+    const note = document.getElementById('swp-form-note');
+    const submit = form.querySelector('.form__submit');
+    const endpoint = form.getAttribute('data-endpoint') || '';
+
+    const setError = (name, msg) => {
+      const field = form.querySelector(`[name="${name}"]`)?.closest('.field');
+      const err = form.querySelector(`[data-error-for="${name}"]`);
+      if (field) field.classList.toggle('is-invalid', !!msg);
+      if (err) err.textContent = msg || '';
+    };
+
+    const validate = () => {
+      let ok = true;
+      const name = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      if (!name) {
+        setError('name', 'Please enter your name.');
+        ok = false;
+      } else setError('name', '');
+      // AU mobile/landline: at least 8 digits
+      const digits = phone.replace(/\D/g, '');
+      if (!phone) {
+        setError('phone', 'Please enter a phone number.');
+        ok = false;
+      } else if (digits.length < 8) {
+        setError('phone', 'That phone number looks too short.');
+        ok = false;
+      } else setError('phone', '');
+      return ok;
+    };
+
+    // live-clear errors as the user fixes them
+    ['name', 'phone'].forEach((n) => {
+      form[n]?.addEventListener('input', () => {
+        if (form[n].closest('.field').classList.contains('is-invalid')) validate();
+      });
+    });
+
+    const showNote = (html, cls) => {
+      if (!note) return;
+      note.className = 'form__note ' + (cls || '');
+      note.innerHTML = html;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // honeypot → silently "succeed" without sending
+      if (form._gotcha && form._gotcha.value) {
+        showNote('✓ Thanks — we\'ll be in touch.', 'is-success');
+        form.reset();
+        return;
+      }
+      if (!validate()) return;
+
+      const fallback =
+        'Couldn\'t send just now — please call <a href="' +
+        phoneHref +
+        '">' +
+        phone +
+        '</a> and we\'ll sort it.';
+
+      if (!endpoint) {
+        // No endpoint configured yet — guide them to call (documented in README).
+        showNote(
+          '✓ Thanks! Email isn\'t connected yet — for now please call <a href="' +
+            phoneHref +
+            '">' +
+            phone +
+            '</a>.',
+          'is-success'
+        );
+        return;
+      }
+
+      submit.setAttribute('disabled', 'true');
+      submit.querySelector('.form__submit-label').textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+        if (res.ok) {
+          showNote('✓ Thanks — we\'ve got it and will be in touch shortly.', 'is-success');
+          form.reset();
+        } else {
+          showNote(fallback, 'is-error');
+        }
+      } catch (err) {
+        showNote(fallback, 'is-error');
+      } finally {
+        submit.removeAttribute('disabled');
+        submit.querySelector('.form__submit-label').textContent = 'Send message';
+      }
+    });
+  })();
+</script>

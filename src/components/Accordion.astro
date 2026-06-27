@@ -1,0 +1,110 @@
+---
+import { business, credentialLine } from '../data/site';
+
+interface Props {
+  items: { q: string; a: string }[];
+}
+const { items } = Astro.props;
+// Append licence/ABN to the "certified & insured" answer only when real values exist.
+const withCreds = items.map((it) =>
+  /certified|insured/i.test(it.q) && credentialLine ? { ...it, a: `${it.a} ${credentialLine}.` } : it
+);
+---
+<div class="faq">
+  {
+    withCreds.map((item, i) => (
+      <div class="faq__item">
+        <button
+          class="faq__q"
+          aria-expanded="false"
+          aria-controls={`faq-panel-${i}`}
+          id={`faq-q-${i}`}
+        >
+          <span>{item.q}</span>
+          <svg class="faq__chev" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="faq__panel" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-q-${i}`}>
+          <p set:html={item.a.replace('call', `<a href="${business.phoneHref}">call</a>`)} />
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .faq {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq__item {
+    background: rgba(20, 24, 28, 0.6);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .faq__item.is-open {
+    border-color: rgba(182, 255, 60, 0.4);
+  }
+  .faq__q {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    padding: 24px 26px;
+    cursor: pointer;
+  }
+  .faq__q:focus-visible {
+    outline: 2px solid var(--lime);
+    outline-offset: -2px;
+  }
+  .faq__q span {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+  .faq__chev {
+    flex-shrink: 0;
+    color: var(--muted-2);
+    transition: transform 0.4s var(--ease-quint), color 0.4s;
+  }
+  .faq__item.is-open .faq__chev {
+    transform: rotate(45deg);
+    color: var(--lime);
+  }
+  .faq__panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s var(--ease-quint);
+  }
+  .faq__panel p {
+    padding: 0 26px 24px;
+    font-size: 15px;
+    color: var(--muted-2);
+    line-height: 1.6;
+  }
+  .faq__panel a {
+    color: var(--lime);
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.faq__q').forEach((btn) => {
+    const item = btn.closest('.faq__item') as HTMLElement;
+    const panel = item.querySelector('.faq__panel') as HTMLElement;
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      item.classList.toggle('is-open', !open);
+      panel.style.maxHeight = open ? '0px' : panel.scrollHeight + 'px';
+    });
+  });
+</script>

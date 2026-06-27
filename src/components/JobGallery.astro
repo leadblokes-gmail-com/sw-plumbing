@@ -1,0 +1,80 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { jobs } from '../data/site';
+// Auto-hides until real job photos are added (no stock filler).
+const hasJobs = jobs.length > 0;
+---
+{
+  hasJobs && (
+    <div class="gallery">
+      <SectionHeading eyebrow="Recent work" waterline>
+        Real jobs, done properly.
+      </SectionHeading>
+      <div class="gallery__grid" data-anim-children>
+        {jobs.map((job) => (
+          <figure class="gallery__item" data-tilt>
+            {job.before ? (
+              <div class="gallery__ba">
+                <img src={job.before} alt={`Before — ${job.alt}`} loading="lazy" decoding="async" />
+                <img src={job.after} alt={`After — ${job.alt}`} loading="lazy" decoding="async" />
+                <span class="gallery__ba-label gallery__ba-label--before">Before</span>
+                <span class="gallery__ba-label gallery__ba-label--after">After</span>
+              </div>
+            ) : (
+              <img src={job.after} alt={job.alt} loading="lazy" decoding="async" />
+            )}
+            <figcaption>{job.title}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .gallery__item {
+    background: rgba(20, 24, 28, 0.6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.25s var(--ease-quint), border-color 0.4s;
+  }
+  .gallery__item img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .gallery__ba {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .gallery__ba-label {
+    position: absolute;
+    bottom: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 9px;
+    border-radius: 6px;
+    background: rgba(10, 12, 14, 0.78);
+    color: var(--text);
+  }
+  .gallery__ba-label--before {
+    left: 10px;
+  }
+  .gallery__ba-label--after {
+    right: 10px;
+    background: var(--lime);
+    color: var(--ink-900);
+  }
+  .gallery__item figcaption {
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--muted-2);
+  }
+</style>

@@ -1,0 +1,125 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import MobileCallBar from '../components/MobileCallBar.astro';
+import IntroOverlay from '../components/IntroOverlay.astro';
+import { business, suburbs } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Per-page path-relative canonical override (defaults to current URL). */
+  canonical?: string;
+  /** Show the once-per-session intro overlay (Home only by default). */
+  intro?: boolean;
+  /** Extra JSON-LD objects to inject (e.g. Service / FAQPage). */
+  schema?: Record<string, unknown>[];
+}
+const { title, description, canonical, intro = false, schema = [] } = Astro.props;
+
+const canonicalURL = new URL(canonical ?? Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og-image.png', Astro.site).href;
+
+// Site-wide LocalBusiness (Plumber) schema with areaServed.
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'Plumber',
+  '@id': `${Astro.site}#business`,
+  name: business.name,
+  description:
+    'Certified maintenance and general plumbing for Birkdale and bayside Brisbane — blocked drains, burst pipes, hot water, gas fitting and more.',
+  url: Astro.site,
+  telephone: '+61432292371',
+  email: business.email,
+  priceRange: '$$',
+  image: ogImage,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Birkdale',
+    addressRegion: 'QLD',
+    postalCode: '4159',
+    addressCountry: 'AU',
+  },
+  areaServed: suburbs.map((s) => ({ '@type': 'City', name: `${s.name}, QLD` })),
+  sameAs: [business.facebook],
+};
+
+const allSchema = [localBusiness, ...schema];
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0A0C0E" />
+    <meta name="robots" content="index, follow" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_AU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Self-hosted fonts (Clash Display + Satoshi). No external blocking request.
+         Preload the two most-used weights so headings/body paint without FOIT. -->
+    <link rel="preload" href="/fonts/clash-display-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Add .js class before paint so reveals start hidden (no flash); failsafe reveals if motion never inits. -->
+    <script is:inline>
+      (function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) document.documentElement.classList.add('js');
+        window.setTimeout(function () {
+          if (!window.__swpMotionReady) document.documentElement.classList.add('motion-failsafe');
+        }, 2600);
+      })();
+    </script>
+
+    <script type="application/ld+json" set:html={JSON.stringify(allSchema)} />
+  </head>
+  <body>
+    {intro && <IntroOverlay />}
+
+    <div id="swp-progress" class="scroll-progress"></div>
+    <div id="swp-cursor" class="swp-cursor"></div>
+    <div id="swp-cursor-dot" class="swp-cursor-dot"></div>
+
+    <Nav />
+    <main id="top">
+      <slot />
+    </main>
+    <Footer />
+    <MobileCallBar />
+
+    <script>
+      import '../lib/motion.ts';
+    </script>
+
+    <style>
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0%;
+        background: linear-gradient(90deg, var(--lime-dark), var(--lime));
+        z-index: 120;
+        box-shadow: 0 0 12px rgba(182, 255, 60, 0.7);
+        pointer-events: none;
+      }
+    </style>
+  </body>
+</html>

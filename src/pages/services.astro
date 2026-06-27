@@ -1,0 +1,232 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import CallButton from '../components/CallButton.astro';
+import Icon from '../components/Icon.astro';
+import { services, business } from '../data/site';
+
+const steps = [
+  { n: '1', title: 'Call', body: "Tell us what's going on. We'll talk it through and book you in." },
+  { n: '2', title: 'We diagnose & quote upfront', body: 'We find the real cause and give you a clear price before any work starts.' },
+  { n: '3', title: 'Fixed right', body: 'Quality work, tidied up after, and backed by our guarantee.' },
+];
+
+// Per-service schema for SEO.
+const serviceSchema = services.map((s) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: s.title,
+  description: s.blurb,
+  provider: { '@id': `${Astro.site}#business` },
+  areaServed: { '@type': 'City', name: 'Birkdale, QLD' },
+}));
+---
+<Layout
+  title="Plumbing Services — Birkdale & Bayside Brisbane | S & W Plumbing"
+  description="Blocked drains, burst pipes, hot water, gas fitting, taps & toilets, bathroom renos and general maintenance. Certified, upfront, fast across bayside Brisbane. Call 0432 292 371."
+  schema={serviceSchema}
+>
+  <PageHero eyebrow="Maintenance & general plumbing" sub="From a dripping tap to a burst main — one certified local plumber for the lot. Upfront pricing, clean work, no fuss." underline minh="60vh">
+    Plumbing services, <em>sorted</em>.
+  </PageHero>
+
+  <!-- Emergency callout -->
+  <section class="emergency-wrap">
+    <div data-reveal class="emergency container">
+      <div class="emergency__glow"></div>
+      <div class="emergency__left">
+        <div class="emergency__icon">
+          <Icon name="bolt" size={26} stroke="#B6FF3C" />
+        </div>
+        <div>
+          <div class="emergency__title">Burst pipe or no hot water?</div>
+          <div class="emergency__sub">Call now — fast bayside response, day or night.</div>
+        </div>
+      </div>
+      <CallButton size="md" pulse label="Call now" />
+    </div>
+  </section>
+
+  <!-- Services grid (expandable) -->
+  <Section border={false}>
+    <SectionHeading eyebrow="The full range" max="620px">
+      Everything a bayside home or business needs.
+    </SectionHeading>
+    <p data-reveal class="grid-intro">Tap a service to see what's covered. Whatever it is, it's a quick call to get it booked.</p>
+    <div class="grid-cards" data-anim-children>
+      {services.map((s) => <ServiceCard icon={s.icon} title={s.title} blurb={s.short} details={s.details} expandable />)}
+    </div>
+  </Section>
+
+  <!-- Process -->
+  <Section tint>
+    <SectionHeading eyebrow="How it works" align="center" max="600px">Three steps. No surprises.</SectionHeading>
+    <div class="process">
+      <div class="process__line"><div data-process-line class="process__line-fill"></div></div>
+      <div class="process__grid" data-anim-children>
+        {
+          steps.map((s) => (
+            <div class="process__step">
+              <div class="process__num">{s.n}</div>
+              <h3 class="process__title">{s.title}</h3>
+              <p class="process__body">{s.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </Section>
+
+  <CtaBand sub="Whatever the job, it starts with a quick call. We'll talk it through and get you booked.">
+    Don't see your problem listed?<br /><span class="lime">Call us, we'll sort it.</span>
+  </CtaBand>
+</Layout>
+
+<style>
+  .grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+  }
+  .grid-intro {
+    margin: -34px 0 40px;
+    font-size: 15px;
+    color: var(--muted-2);
+    max-width: 620px;
+  }
+
+  /* Emergency band */
+  .emergency-wrap {
+    padding: 0 var(--pad-x);
+    margin-top: -30px;
+    position: relative;
+    z-index: 5;
+  }
+  .emergency {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(182, 255, 60, 0.4);
+    border-radius: 20px;
+    background: linear-gradient(120deg, rgba(182, 255, 60, 0.12), rgba(20, 24, 28, 0.6));
+    padding: clamp(26px, 4vw, 38px) clamp(24px, 4vw, 44px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    box-shadow: 0 0 50px -12px rgba(182, 255, 60, 0.35);
+  }
+  .emergency__glow {
+    position: absolute;
+    top: -50%;
+    left: -10%;
+    width: 50%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(182, 255, 60, 0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .emergency__left {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 260px;
+    flex: 1;
+  }
+  .emergency__icon {
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(182, 255, 60, 0.15);
+    border: 1px solid rgba(182, 255, 60, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lime);
+    animation: swpPulse 2.4s infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .emergency__icon {
+      animation: none;
+    }
+  }
+  .emergency__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .emergency__sub {
+    font-size: 15px;
+    color: var(--muted-2);
+    margin-top: 6px;
+  }
+
+  /* Process */
+  .process {
+    position: relative;
+  }
+  .process__line {
+    position: absolute;
+    top: 32px;
+    left: 16%;
+    right: 16%;
+    height: 2px;
+    background: var(--line);
+    z-index: 0;
+  }
+  .process__line-fill {
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--lime-dark), var(--lime));
+    box-shadow: 0 0 12px rgba(182, 255, 60, 0.6);
+  }
+  .process__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+  }
+  .process__step {
+    text-align: center;
+  }
+  .process__num {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background: var(--ink-850);
+    border: 2px solid var(--lime);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--lime);
+    box-shadow: 0 0 24px -6px rgba(182, 255, 60, 0.5);
+  }
+  .process__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.35rem;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .process__body {
+    font-size: 14.5px;
+    color: var(--muted-2);
+    line-height: 1.55;
+    max-width: 28ch;
+    margin: 0 auto;
+  }
+</style>

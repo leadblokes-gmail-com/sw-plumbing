@@ -1,0 +1,148 @@
+---
+import Icon from './Icon.astro';
+import { business } from '../data/site';
+
+interface Props {
+  icon: string;
+  title: string;
+  blurb: string;
+  details?: string[];
+  expandable?: boolean;
+}
+const { icon, title, blurb, details = [], expandable = false } = Astro.props;
+---
+{
+  expandable ? (
+    <div class="card card--expand" data-tilt data-expand role="button" tabindex="0" aria-expanded="false">
+      <div class="card__top">
+        <div class="card__icon"><Icon name={icon} size={26} stroke="#B6FF3C" /></div>
+        <svg data-chev class="card__chev" width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <h3 class="card__title">{title}</h3>
+      <p class="card__blurb">{blurb}</p>
+      <div data-detail class="card__detail">
+        <ul>
+          {details.map((d) => (
+            <li><span>›</span> {d}</li>
+          ))}
+        </ul>
+        <a href={business.phoneHref} class="card__call">
+          Call to book <Icon name="arrow" size={15} stroke="#B6FF3C" />
+        </a>
+      </div>
+    </div>
+  ) : (
+    <div class="card" data-tilt>
+      <div class="card__icon"><Icon name={icon} size={26} stroke="#B6FF3C" /></div>
+      <h3 class="card__title">{title}</h3>
+      <p class="card__blurb">{blurb}</p>
+      <a href={business.phoneHref} class="card__call">
+        Call now <Icon name="arrow" size={15} stroke="#B6FF3C" />
+      </a>
+    </div>
+  )
+}
+
+<style>
+  .card {
+    position: relative;
+    background: rgba(20, 24, 28, 0.65);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px;
+    transition: transform 0.25s var(--ease-quint), border-color 0.4s, box-shadow 0.4s;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .card--expand {
+    padding: 28px;
+    cursor: pointer;
+  }
+  .card:hover {
+    border-color: rgba(182, 255, 60, 0.5);
+    box-shadow: 0 24px 60px -24px rgba(182, 255, 60, 0.35);
+  }
+  .card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .card__icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 13px;
+    background: var(--lime-10);
+    border: 1px solid rgba(182, 255, 60, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    color: var(--lime);
+  }
+  .card--expand .card__icon {
+    margin-bottom: 0;
+  }
+  .card__chev {
+    color: var(--muted-2);
+    transition: transform 0.4s var(--ease-quint), color 0.4s;
+    flex-shrink: 0;
+  }
+  .card__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.32rem;
+    letter-spacing: -0.01em;
+    margin: 0 0 9px;
+  }
+  .card--expand .card__title {
+    margin-top: 20px;
+  }
+  .card__blurb {
+    font-size: 14.5px;
+    color: var(--muted-2);
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+  .card--expand .card__blurb {
+    margin-bottom: 0;
+  }
+  .card__detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s var(--ease-quint);
+  }
+  .card__detail ul {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 18px 0 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .card__detail li {
+    font-size: 13.5px;
+    color: var(--muted);
+    display: flex;
+    gap: 9px;
+  }
+  .card__detail li span {
+    color: var(--lime);
+  }
+  .card__call {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--lime);
+    margin-top: 18px;
+  }
+  .card:not(.card--expand) .card__call {
+    margin-top: 0;
+  }
+</style>

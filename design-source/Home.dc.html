@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700,500&f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="motion-enhancers.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#0A0C0E;color:#F4F7F5;font-family:'Satoshi','Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:#B6FF3C;color:#0A0C0E}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid #B6FF3C;outline-offset:3px;border-radius:4px}
+  @keyframes swpPulse{0%,100%{box-shadow:0 0 0 0 rgba(182,255,60,0.45),0 12px 30px -8px rgba(182,255,60,0.5)}50%{box-shadow:0 0 0 14px rgba(182,255,60,0),0 12px 40px -6px rgba(182,255,60,0.65)}}
+  @keyframes swpFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes swpSpin{to{transform:rotate(360deg)}}
+  .swp-navlinks{display:flex}
+  .swp-bottombar{display:none}
+  .swp-cursor,.swp-cursor-dot{display:none}
+  @media (pointer:fine) and (min-width:861px){.swp-cursor,.swp-cursor-dot{display:block}}
+  @media (max-width:860px){
+    .swp-navlinks{display:none!important}
+    .swp-navcta-text{display:none}
+    .swp-bottombar{display:flex!important}
+    .swp-hero-pad{padding-bottom:120px!important}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition-duration:0.001ms!important}
+  }
+</style>
+</helmet>
+
+<div id="swp-root" style="position:relative;width:100%;background:#0A0C0E;cursor:auto">
+
+  <!-- ====================== INTRO / LOADING SEQUENCE ====================== -->
+  <div id="swp-intro" style="position:fixed;inset:0;z-index:9999;background:#0A0C0E;display:flex;align-items:center;justify-content:center;transition:transform 0.95s cubic-bezier(0.83,0,0.17,1)">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+      <svg width="66" height="74" viewBox="0 0 34 38" fill="none" aria-hidden="true">
+        <path id="swp-intro-drop" d="M17 1C17 1 4 14.5 4 24.5C4 31.9 9.8 37 17 37C24.2 37 30 31.9 30 24.5C30 14.5 17 1 17 1Z" stroke="#B6FF3C" stroke-width="2" style="stroke-dasharray:210;stroke-dashoffset:210;transition:stroke-dashoffset 0.85s cubic-bezier(0.16,1,0.3,1)"/>
+        <path id="swp-intro-s" d="M21.5 18.5C20.6 17.4 19 16.7 17.2 16.7C14.4 16.7 12.5 18.2 12.5 20.3C12.5 24.6 21.8 22.7 21.8 26.9C21.8 29.1 19.7 30.6 16.8 30.6C14.7 30.6 12.9 29.7 12 28.4" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" style="stroke-dasharray:90;stroke-dashoffset:90;transition:stroke-dashoffset 0.7s cubic-bezier(0.16,1,0.3,1) 0.35s"/>
+      </svg>
+      <div id="swp-intro-word" style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:19px;letter-spacing:0.06em;opacity:0;transform:translateY(10px);transition:opacity .6s ease .55s,transform .7s cubic-bezier(0.16,1,0.3,1) .55s">S &amp; W <span style="color:#9AA5A0">PLUMBING</span></div>
+    </div>
+  </div>
+
+  <!-- scroll progress -->
+  <div id="swp-progress" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#7FCB00,#B6FF3C);z-index:120;box-shadow:0 0 12px rgba(182,255,60,0.7);pointer-events:none"></div>
+
+  <!-- ====================== NAV ====================== -->
+  <header id="swp-nav" style="position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,56px);border-bottom:1px solid transparent;transition:background .4s cubic-bezier(0.22,1,0.36,1),backdrop-filter .4s,border-color .4s">
+    <a href="#top" data-anchor="top" style="display:flex;align-items:center;gap:12px">
+      <svg width="34" height="38" viewBox="0 0 34 38" fill="none" aria-label="S and W Plumbing">
+        <path d="M17 1C17 1 4 14.5 4 24.5C4 31.9 9.8 37 17 37C24.2 37 30 31.9 30 24.5C30 14.5 17 1 17 1Z" stroke="#B6FF3C" stroke-width="2"/>
+        <path d="M21.5 18.5C20.6 17.4 19 16.7 17.2 16.7C14.4 16.7 12.5 18.2 12.5 20.3C12.5 24.6 21.8 22.7 21.8 26.9C21.8 29.1 19.7 30.6 16.8 30.6C14.7 30.6 12.9 29.7 12 28.4" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:18px;letter-spacing:-0.01em;line-height:1">S&nbsp;&amp;&nbsp;W<span style="color:#9AA5A0;font-weight:500"> PLUMBING</span></span>
+    </a>
+    <nav class="swp-navlinks" style="align-items:center;gap:34px;position:absolute;left:50%;transform:translateX(-50%)" aria-label="Primary">
+      <a href="#top" data-anchor="top" style="font-size:14.5px;color:#F4F7F5;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">Home</a>
+      <a href="#services" data-anchor="services" style="font-size:14.5px;color:#9AA5A0;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">Services</a>
+      <a href="#why" data-anchor="why" style="font-size:14.5px;color:#9AA5A0;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">About</a>
+      <a href="#areas" data-anchor="areas" style="font-size:14.5px;color:#9AA5A0;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">Service Areas</a>
+      <a href="#contact" data-anchor="contact" style="font-size:14.5px;color:#9AA5A0;font-weight:500;transition:color .25s" style-hover="color:#B6FF3C">Contact</a>
+    </nav>
+    <a href="tel:0432292371" data-magnetic style="display:inline-flex;align-items:center;gap:9px;background:#B6FF3C;color:#0A0C0E;font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:999px;letter-spacing:-0.01em;white-space:nowrap;transition:transform .3s cubic-bezier(0.22,1,0.36,1),box-shadow .3s" style-hover="box-shadow:0 8px 30px -6px rgba(182,255,60,0.6);transform:translateY(-2px)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 5-2 1.5a11 11 0 005 5l1.5-2 5 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.2 2 2 0 016.5 3z" fill="#0A0C0E"/></svg>
+      <span><span class="swp-navcta-text">Call </span>0432 292 371</span>
+    </a>
+  </header>
+
+  <!-- ====================== HERO ====================== -->
+  <section id="top" class="swp-hero-pad" style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:120px clamp(20px,5vw,56px) 64px">
+    <canvas id="swp-hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(120% 90% at 50% 0%,rgba(10,12,14,0) 40%,rgba(10,12,14,0.85) 100%)"></div>
+    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,12,14,0.4) 0%,rgba(10,12,14,0) 30%,rgba(10,12,14,0.7) 100%)"></div>
+
+    <div class="hero-parallax" style="position:relative;z-index:2;max-width:1080px;width:100%;margin:0 auto">
+      <div data-hero style="display:inline-flex;align-items:center;gap:10px;padding:7px 14px;border:1px solid #232A30;background:rgba(20,24,28,0.6);backdrop-filter:blur(10px);border-radius:999px;margin-bottom:28px">
+        <span style="width:7px;height:7px;border-radius:50%;background:#B6FF3C;box-shadow:0 0 10px #B6FF3C"></span>
+        <span data-scramble style="font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9AA5A0;font-weight:600;white-space:nowrap">Certified Plumber · Bayside Brisbane</span>
+      </div>
+
+      <h1 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2.7rem,8.2vw,6.6rem);line-height:0.95;letter-spacing:-0.025em;max-width:14ch"><span style="display:block;overflow:hidden;padding-bottom:0.05em"><span class="swp-hl-inner" style="display:block;will-change:transform">Bayside Brisbane's</span></span><span style="display:block;overflow:hidden;padding-bottom:0.05em"><span class="swp-hl-inner" style="display:block;will-change:transform">plumbing,</span></span><span style="display:block;overflow:hidden;padding-bottom:0.05em"><span class="swp-hl-inner" style="display:block;will-change:transform">done <span style="color:#B6FF3C">properly</span>.</span></span></h1>
+
+      <p data-hero style="margin-top:26px;font-size:clamp(1.05rem,2.4vw,1.45rem);color:#9AA5A0;max-width:38ch;line-height:1.5;font-weight:500">Certified, fast, and upfront. One call and it's sorted.</p>
+
+      <div data-hero style="display:flex;flex-wrap:wrap;gap:14px;margin-top:38px">
+        <a href="tel:0432292371" data-magnetic style="display:inline-flex;align-items:center;gap:11px;background:#B6FF3C;color:#0A0C0E;font-weight:700;font-size:clamp(1rem,2vw,1.15rem);padding:18px 30px;border-radius:999px;letter-spacing:-0.01em;white-space:nowrap;animation:swpPulse 2.8s cubic-bezier(0.22,1,0.36,1) infinite;transition:transform .3s cubic-bezier(0.22,1,0.36,1)" style-hover="transform:translateY(-3px) scale(1.02)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 5-2 1.5a11 11 0 005 5l1.5-2 5 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.2 2 2 0 016.5 3z" fill="#0A0C0E"/></svg>
+          Call 0432 292 371
+        </a>
+        <a href="#services" data-anchor="services" data-magnetic style="display:inline-flex;align-items:center;gap:9px;border:1px solid #2E363D;background:rgba(20,24,28,0.5);backdrop-filter:blur(10px);color:#F4F7F5;font-weight:600;font-size:clamp(1rem,2vw,1.15rem);padding:18px 28px;border-radius:999px;white-space:nowrap;transition:border-color .3s,background .3s,transform .3s" style-hover="border-color:#B6FF3C;background:rgba(182,255,60,0.08);transform:translateY(-3px)">
+          See our services
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div data-hero style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:42px">
+        <span style="font-size:13.5px;color:#F4F7F5;font-weight:600;display:inline-flex;align-items:center;gap:8px"><span style="color:#B6FF3C">✓</span> Certified</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:#2E363D"></span>
+        <span style="font-size:13.5px;color:#F4F7F5;font-weight:600;display:inline-flex;align-items:center;gap:8px"><span style="color:#B6FF3C">✓</span> Bayside local</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:#2E363D"></span>
+        <span style="font-size:13.5px;color:#F4F7F5;font-weight:600;display:inline-flex;align-items:center;gap:8px"><span style="color:#B6FF3C">✓</span> Fast response</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:#2E363D"></span>
+        <span style="font-size:13.5px;color:#F4F7F5;font-weight:600;display:inline-flex;align-items:center;gap:8px"><span style="color:#B6FF3C">✓</span> Upfront pricing</span>
+      </div>
+    </div>
+
+    <!-- water line -->
+    <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;z-index:3;overflow:hidden">
+      <div id="swp-waterline" style="height:100%;width:100%;transform:scaleX(0);transform-origin:left center;background:linear-gradient(90deg,rgba(182,255,60,0) 0%,#B6FF3C 50%,rgba(182,255,60,0) 100%);box-shadow:0 0 16px rgba(182,255,60,0.8)"></div>
+    </div>
+  </section>
+
+  <!-- ====================== TRUST STRIP ====================== -->
+  <section style="border-top:1px solid #14181C;border-bottom:1px solid #14181C;background:#0C0F12;padding:34px clamp(20px,5vw,56px)">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px">
+      <div data-trust style="display:flex;align-items:center;gap:14px">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.4 8.3-8 11-4.6-2.7-8-6-8-11V5l8-3z" stroke="#B6FF3C" stroke-width="1.6"/><path d="M8.5 12l2.4 2.4L16 9.5" stroke="#B6FF3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div style="font-weight:700;font-size:15px;font-family:'Clash Display',sans-serif">Certified plumber</div><div style="font-size:12.5px;color:#9AA5A0">Licensed &amp; qualified</div></div>
+      </div>
+      <div data-trust style="display:flex;align-items:center;gap:14px">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 21c4.5-4 7-7.3 7-11a7 7 0 10-14 0c0 3.7 2.5 7 7 11z" stroke="#B6FF3C" stroke-width="1.6"/><circle cx="12" cy="10" r="2.4" stroke="#B6FF3C" stroke-width="1.6"/></svg>
+        <div><div style="font-weight:700;font-size:15px;font-family:'Clash Display',sans-serif">Bayside Brisbane local</div><div style="font-size:12.5px;color:#9AA5A0">Based in Birkdale</div></div>
+      </div>
+      <div data-trust style="display:flex;align-items:center;gap:14px">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11l-1 8.5L19.5 10H13l0-8z" stroke="#B6FF3C" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <div><div style="font-weight:700;font-size:15px;font-family:'Clash Display',sans-serif">Fast response</div><div style="font-size:12.5px;color:#9AA5A0">Quick across the bay</div></div>
+      </div>
+      <div data-trust style="display:flex;align-items:center;gap:14px">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#B6FF3C" stroke-width="1.6"/><path d="M12 7v10M9.3 14.2c.4 1 1.4 1.6 2.7 1.6 1.6 0 2.7-.8 2.7-2.1 0-2.8-5-1.6-5-4 0-1.2 1-2 2.5-2 1.2 0 2.2.5 2.6 1.5" stroke="#B6FF3C" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div><div style="font-weight:700;font-size:15px;font-family:'Clash Display',sans-serif">Upfront pricing</div><div style="font-size:12.5px;color:#9AA5A0">No surprises, ever</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== SERVICES ====================== -->
+  <section id="services" data-horizon style="padding:clamp(80px,11vw,140px) clamp(20px,5vw,56px);position:relative">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="margin-bottom:54px;max-width:620px">
+        <div style="font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#7FCB00;font-weight:700;margin-bottom:16px">What we do</div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.02;letter-spacing:-0.02em">Maintenance &amp; general plumbing, done right.</h2>
+        <div data-waterline style="height:3px;width:120px;margin-top:22px;transform:scaleX(0);transform-origin:left center;background:linear-gradient(90deg,#B6FF3C,#7FCB00);border-radius:3px;box-shadow:0 0 14px rgba(182,255,60,0.5)"></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
+        <!-- card -->
+        <div data-service data-tilt style="position:relative;background:rgba(20,24,28,0.65);backdrop-filter:blur(14px);border:1px solid #232A30;border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(0.22,1,0.36,1),border-color .4s,box-shadow .4s;transform-style:preserve-3d;will-change:transform" style-hover="border-color:rgba(182,255,60,0.5);box-shadow:0 24px 60px -24px rgba(182,255,60,0.35)">
+          <div style="width:50px;height:50px;border-radius:13px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 8h7v12M11 8a4 4 0 014-4h3M18 12v3a3 3 0 01-3 3h-4" stroke="#B6FF3C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.35rem;margin-bottom:9px;letter-spacing:-0.01em">Blocked drains</h3>
+          <p style="font-size:14.5px;color:#9AA5A0;line-height:1.55;margin-bottom:20px">Cleared fast — sinks, showers and sewer lines back to flowing.</p>
+          <a href="tel:0432292371" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:#B6FF3C">Call now <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div data-service data-tilt style="position:relative;background:rgba(20,24,28,0.65);backdrop-filter:blur(14px);border:1px solid #232A30;border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(0.22,1,0.36,1),border-color .4s,box-shadow .4s;transform-style:preserve-3d;will-change:transform" style-hover="border-color:rgba(182,255,60,0.5);box-shadow:0 24px 60px -24px rgba(182,255,60,0.35)">
+          <div style="width:50px;height:50px;border-radius:13px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3c0 4-5 6-5 11a5 5 0 0010 0c0-5-5-7-5-11z" stroke="#B6FF3C" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.35rem;margin-bottom:9px;letter-spacing:-0.01em">Burst pipes &amp; leaks</h3>
+          <p style="font-size:14.5px;color:#9AA5A0;line-height:1.55;margin-bottom:20px">Leak detection and repairs that stop the damage and the water bill.</p>
+          <a href="tel:0432292371" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:#B6FF3C">Call now <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div data-service data-tilt style="position:relative;background:rgba(20,24,28,0.65);backdrop-filter:blur(14px);border:1px solid #232A30;border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(0.22,1,0.36,1),border-color .4s,box-shadow .4s;transform-style:preserve-3d;will-change:transform" style-hover="border-color:rgba(182,255,60,0.5);box-shadow:0 24px 60px -24px rgba(182,255,60,0.35)">
+          <div style="width:50px;height:50px;border-radius:13px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="3" stroke="#B6FF3C" stroke-width="1.7"/><path d="M9 8h6M12 12v5" stroke="#B6FF3C" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.35rem;margin-bottom:9px;letter-spacing:-0.01em">Hot water systems</h3>
+          <p style="font-size:14.5px;color:#9AA5A0;line-height:1.55;margin-bottom:20px">Repairs and installs — back to hot showers without the wait.</p>
+          <a href="tel:0432292371" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:#B6FF3C">Call now <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div data-service data-tilt style="position:relative;background:rgba(20,24,28,0.65);backdrop-filter:blur(14px);border:1px solid #232A30;border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(0.22,1,0.36,1),border-color .4s,box-shadow .4s;transform-style:preserve-3d;will-change:transform" style-hover="border-color:rgba(182,255,60,0.5);box-shadow:0 24px 60px -24px rgba(182,255,60,0.35)">
+          <div style="width:50px;height:50px;border-radius:13px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M9 4h6v4l-2 2v4a2 2 0 11-4 0v-4L7 8V4z" stroke="#B6FF3C" stroke-width="1.7" stroke-linejoin="round"/><path d="M11 18v3" stroke="#B6FF3C" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.35rem;margin-bottom:9px;letter-spacing:-0.01em">Taps &amp; toilets</h3>
+          <p style="font-size:14.5px;color:#9AA5A0;line-height:1.55;margin-bottom:20px">Dripping taps, running toilets and cisterns — sorted properly.</p>
+          <a href="tel:0432292371" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:#B6FF3C">Call now <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div data-service data-tilt style="position:relative;background:rgba(20,24,28,0.65);backdrop-filter:blur(14px);border:1px solid #232A30;border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(0.22,1,0.36,1),border-color .4s,box-shadow .4s;transform-style:preserve-3d;will-change:transform" style-hover="border-color:rgba(182,255,60,0.5);box-shadow:0 24px 60px -24px rgba(182,255,60,0.35)">
+          <div style="width:50px;height:50px;border-radius:13px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 19l5-5M9.5 9.5l5 5M7 8a3 3 0 014-3l-2 2 2 2 2-2a3 3 0 01-3 4l-3 3" stroke="#B6FF3C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.35rem;margin-bottom:9px;letter-spacing:-0.01em">Gas fitting</h3>
+          <p style="font-size:14.5px;color:#9AA5A0;line-height:1.55;margin-bottom:20px">Gas appliances and fittings handled safely and to code.</p>
+          <a href="tel:0432292371" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:#B6FF3C">Call now <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div data-service data-tilt style="position:relative;background:rgba(20,24,28,0.65);backdrop-filter:blur(14px);border:1px solid #232A30;border-radius:18px;padding:30px;transition:transform .25s cubic-bezier(0.22,1,0.36,1),border-color .4s,box-shadow .4s;transform-style:preserve-3d;will-change:transform" style-hover="border-color:rgba(182,255,60,0.5);box-shadow:0 24px 60px -24px rgba(182,255,60,0.35)">
+          <div style="width:50px;height:50px;border-radius:13px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:22px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 00-5.5 5.5l-5.5 5.5 1.5 1.5 5.5-5.5a4 4 0 005.5-5.5l-2.3 2.3-1.5-1.5 2.3-2.3z" stroke="#B6FF3C" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.35rem;margin-bottom:9px;letter-spacing:-0.01em">General maintenance</h3>
+          <p style="font-size:14.5px;color:#9AA5A0;line-height:1.55;margin-bottom:20px">The ongoing odd jobs that keep your home or business running.</p>
+          <a href="tel:0432292371" style="display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:#B6FF3C">Call now <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== WHY S&W ====================== -->
+  <section id="why" data-horizon style="position:relative;padding:clamp(80px,11vw,140px) clamp(20px,5vw,56px);overflow:hidden;border-top:1px solid #14181C">
+    <div data-parallax-bg style="position:absolute;top:-20%;right:-10%;width:60%;height:140%;z-index:0;background:radial-gradient(circle,rgba(127,203,0,0.1),rgba(10,12,14,0) 65%);pointer-events:none"></div>
+    <div style="position:relative;z-index:1;max-width:1200px;margin:0 auto">
+      <div data-reveal style="margin-bottom:54px;max-width:640px">
+        <div style="font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#7FCB00;font-weight:700;margin-bottom:16px">Why S&amp;W</div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.02;letter-spacing:-0.02em">A new name, an old-school standard.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px">
+        <div data-reveal style="background:rgba(20,24,28,0.5);border:1px solid #232A30;border-radius:18px;padding:34px">
+          <div style="width:54px;height:54px;border-radius:14px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:24px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.4 8.3-8 11-4.6-2.7-8-6-8-11V5l8-3z" stroke="#B6FF3C" stroke-width="1.6"/><path d="M8.5 12l2.4 2.4L16 9.5" stroke="#B6FF3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.5rem;margin-bottom:12px;letter-spacing:-0.01em">Certified &amp; insured</h3>
+          <p style="font-size:15px;color:#9AA5A0;line-height:1.6">A fully licensed, certified plumber on every job. The work is done to code and it's done to last.</p>
+        </div>
+        <div data-reveal style="background:rgba(20,24,28,0.5);border:1px solid #232A30;border-radius:18px;padding:34px">
+          <div style="width:54px;height:54px;border-radius:14px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:24px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11l-1 8.5L19.5 10H13l0-8z" stroke="#B6FF3C" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.5rem;margin-bottom:12px;letter-spacing:-0.01em">Fast bayside response</h3>
+          <p style="font-size:15px;color:#9AA5A0;line-height:1.6">Local to Birkdale and the bay, so we're not driving across Brisbane to get to you. Call and we'll move.</p>
+        </div>
+        <div data-reveal style="background:rgba(20,24,28,0.5);border:1px solid #232A30;border-radius:18px;padding:34px">
+          <div style="width:54px;height:54px;border-radius:14px;background:rgba(182,255,60,0.1);border:1px solid rgba(182,255,60,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:24px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#B6FF3C" stroke-width="1.6"/><path d="M12 7v10M9.3 14.2c.4 1 1.4 1.6 2.7 1.6 1.6 0 2.7-.8 2.7-2.1 0-2.8-5-1.6-5-4 0-1.2 1-2 2.5-2 1.2 0 2.2.5 2.6 1.5" stroke="#B6FF3C" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <h3 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:1.5rem;margin-bottom:12px;letter-spacing:-0.01em">Upfront honest pricing</h3>
+          <p style="font-size:15px;color:#9AA5A0;line-height:1.6">You get the price before the work starts. No nasty surprises on the invoice — just a fair, honest quote.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== SERVICE AREA TEASER ====================== -->
+  <section id="areas" data-horizon style="padding:clamp(80px,11vw,140px) clamp(20px,5vw,56px);border-top:1px solid #14181C">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:center">
+      <div data-reveal>
+        <div style="font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#7FCB00;font-weight:700;margin-bottom:16px">Service area</div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2rem,5vw,3.4rem);line-height:1.02;letter-spacing:-0.02em;margin-bottom:20px">Covering Birkdale and all of bayside Brisbane.</h2>
+        <p style="font-size:16px;color:#9AA5A0;line-height:1.6;max-width:42ch;margin-bottom:30px">From the Redlands to Wynnum — Wellington Point, Cleveland, Capalaba, Victoria Point and everywhere between. If you're on the bay, we've got you.</p>
+        <a href="#contact" data-anchor="contact" data-magnetic style="display:inline-flex;align-items:center;gap:10px;border:1px solid #2E363D;color:#F4F7F5;font-weight:600;font-size:1rem;padding:15px 26px;border-radius:999px;transition:border-color .3s,background .3s,transform .3s" style-hover="border-color:#B6FF3C;background:rgba(182,255,60,0.08);transform:translateY(-2px)">Check your suburb <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div data-reveal style="position:relative;background:radial-gradient(circle at 60% 40%,rgba(20,24,28,0.9),#0C0F12);border:1px solid #232A30;border-radius:22px;aspect-ratio:4/3;overflow:hidden">
+        <svg viewBox="0 0 400 300" style="position:absolute;inset:0;width:100%;height:100%" aria-label="Stylised map of bayside Brisbane">
+          <defs><pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="#1B2228" stroke-width="1"/></pattern></defs>
+          <rect width="400" height="300" fill="url(#grid)"/>
+          <path d="M250 0 C 240 60, 280 110, 260 160 C 245 200, 280 250, 270 300" fill="none" stroke="#2A333A" stroke-width="2.5"/>
+          <path d="M250 0 C 240 60, 280 110, 260 160 C 245 200, 280 250, 270 300 L400 300 L400 0 Z" fill="rgba(127,203,0,0.04)"/>
+          <line x1="0" y1="120" x2="250" y2="150" stroke="#1F262C" stroke-width="2"/>
+          <line x1="60" y1="0" x2="120" y2="300" stroke="#1F262C" stroke-width="2"/>
+          <line x1="0" y1="210" x2="240" y2="190" stroke="#1F262C" stroke-width="2"/>
+          <g class="swp-pin"><circle cx="120" cy="160" r="22" fill="rgba(182,255,60,0.12)"/><circle cx="120" cy="160" r="7" fill="#B6FF3C"/><circle cx="120" cy="160" r="7" fill="none" stroke="#B6FF3C"><animate attributeName="r" values="7;16;7" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0;0.8" dur="2.4s" repeatCount="indefinite"/></circle></g>
+          <g class="swp-pin"><circle cx="190" cy="100" r="5" fill="#7FCB00"/></g>
+          <g class="swp-pin"><circle cx="215" cy="200" r="5" fill="#7FCB00"/></g>
+          <g class="swp-pin"><circle cx="80" cy="90" r="5" fill="#7FCB00"/></g>
+          <g class="swp-pin"><circle cx="150" cy="240" r="5" fill="#7FCB00"/></g>
+          <g class="swp-pin"><circle cx="60" cy="200" r="5" fill="#7FCB00"/></g>
+        </svg>
+        <div style="position:absolute;left:calc(30% + 14px);top:calc(53.3% - 8px);transform:translateY(-100%);background:#B6FF3C;color:#0A0C0E;font-size:11px;font-weight:800;padding:4px 9px;border-radius:6px;letter-spacing:0.02em;white-space:nowrap">BIRKDALE · HQ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== GUARANTEE BAND ====================== -->
+  <section style="padding:clamp(60px,8vw,100px) clamp(20px,5vw,56px)">
+    <div data-reveal style="max-width:1100px;margin:0 auto;position:relative;border:1px solid rgba(182,255,60,0.25);background:linear-gradient(135deg,rgba(182,255,60,0.07),rgba(20,24,28,0.4));border-radius:24px;padding:clamp(40px,7vw,72px);text-align:center;overflow:hidden">
+      <div style="position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:70%;height:120%;background:radial-gradient(circle,rgba(182,255,60,0.16),transparent 65%);pointer-events:none"></div>
+      <div style="position:relative">
+        <div style="font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#7FCB00;font-weight:700;margin-bottom:20px">Our promise</div>
+        <h2 style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2.2rem,6vw,4.2rem);line-height:1;letter-spacing:-0.025em;margin-bottom:18px">Not happy? <span style="color:#B6FF3C">We'll make it right.</span></h2>
+        <p style="font-size:clamp(1rem,2.2vw,1.25rem);color:#9AA5A0;max-width:46ch;margin:0 auto;line-height:1.5">We stand behind every job. If something's not right, we come back and fix it. Simple as that.</p>
+        <div style="display:flex;align-items:baseline;justify-content:center;gap:10px;margin-top:36px">
+          <span data-countup="100" data-suffix="%" style="font-family:'Clash Display',sans-serif;font-weight:700;font-size:clamp(3rem,9vw,5.5rem);line-height:1;color:#B6FF3C">100%</span>
+          <span style="font-size:1.1rem;color:#9AA5A0;font-weight:600">satisfaction guaranteed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== FINAL CTA ====================== -->
+  <section id="contact" data-horizon style="position:relative;padding:clamp(90px,13vw,170px) clamp(20px,5vw,56px);text-align:center;overflow:hidden;border-top:1px solid #14181C">
+    <canvas id="swp-cta-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:0.8"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(110% 80% at 50% 50%,rgba(10,12,14,0) 30%,#0A0C0E 90%)"></div>
+    <div style="position:relative;z-index:2;max-width:840px;margin:0 auto">
+      <h2 data-reveal style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:clamp(2.4rem,7vw,5rem);line-height:0.98;letter-spacing:-0.025em;margin-bottom:24px">Got a plumbing problem?<br><span style="color:#B6FF3C">Call now.</span></h2>
+      <p data-reveal style="font-size:clamp(1.05rem,2.4vw,1.35rem);color:#9AA5A0;margin-bottom:44px;line-height:1.5">One call and it's sorted. Talk to your local certified plumber today.</p>
+      <a data-reveal href="tel:0432292371" data-magnetic style="display:inline-flex;align-items:center;gap:14px;background:#B6FF3C;color:#0A0C0E;font-weight:700;font-size:clamp(1.15rem,3vw,1.6rem);padding:clamp(20px,3vw,26px) clamp(34px,5vw,52px);border-radius:999px;letter-spacing:-0.01em;white-space:nowrap;animation:swpPulse 2.8s cubic-bezier(0.22,1,0.36,1) infinite;transition:transform .3s cubic-bezier(0.22,1,0.36,1)" style-hover="transform:translateY(-4px) scale(1.03)">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 5-2 1.5a11 11 0 005 5l1.5-2 5 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.2 2 2 0 016.5 3z" fill="#0A0C0E"/></svg>
+        Call 0432 292 371
+      </a>
+      <p data-reveal style="margin-top:24px;font-size:14px;color:#9AA5A0">Prefer to talk it through? Just call — we usually answer.</p>
+    </div>
+  </section>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer style="border-top:1px solid #232A30;background:#0C0F12;padding:clamp(50px,7vw,80px) clamp(20px,5vw,56px) 130px">
+    <div style="max-width:1280px;margin:0 auto clamp(36px,6vw,64px);overflow:hidden"><span class="footer-mark">S&amp;W&nbsp;PLUMBING</span></div>
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px">
+      <div style="grid-column:1/-1;max-width:340px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+          <svg width="30" height="34" viewBox="0 0 34 38" fill="none"><path d="M17 1C17 1 4 14.5 4 24.5C4 31.9 9.8 37 17 37C24.2 37 30 31.9 30 24.5C30 14.5 17 1 17 1Z" stroke="#B6FF3C" stroke-width="2"/><path d="M21.5 18.5C20.6 17.4 19 16.7 17.2 16.7C14.4 16.7 12.5 18.2 12.5 20.3C12.5 24.6 21.8 22.7 21.8 26.9C21.8 29.1 19.7 30.6 16.8 30.6C14.7 30.6 12.9 29.7 12 28.4" stroke="#B6FF3C" stroke-width="2" stroke-linecap="round"/></svg>
+          <span style="font-family:'Clash Display',sans-serif;font-weight:600;font-size:17px">S &amp; W <span style="color:#9AA5A0;font-weight:500">PLUMBING</span></span>
+        </div>
+        <p style="font-size:14.5px;color:#9AA5A0;line-height:1.6">Certified maintenance and general plumbing for Birkdale and bayside Brisbane. Fast, upfront, and done properly.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#5E6A64;font-weight:700;margin-bottom:16px">Contact</div>
+        <a href="tel:0432292371" style="display:block;font-size:15px;color:#F4F7F5;font-weight:600;margin-bottom:10px;transition:color .25s" style-hover="color:#B6FF3C">0432 292 371</a>
+        <a href="mailto:swplumbing@gmail.com" style="display:block;font-size:14.5px;color:#9AA5A0;margin-bottom:10px;transition:color .25s" style-hover="color:#B6FF3C">swplumbing@gmail.com</a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;font-size:14.5px;color:#9AA5A0;transition:color .25s" style-hover="color:#B6FF3C"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5h-3c-2.2 0-4 1.8-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg> Facebook</a>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#5E6A64;font-weight:700;margin-bottom:16px">Service area</div>
+        <p style="font-size:14.5px;color:#9AA5A0;line-height:1.7">Birkdale · Wellington Point<br>Cleveland · Capalaba · Ormiston<br>Victoria Point · Wynnum &amp; the bay</p>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#5E6A64;font-weight:700;margin-bottom:16px">Hours</div>
+        <p style="font-size:14.5px;color:#9AA5A0;line-height:1.7">Call to arrange<br><span style="color:#B6FF3C;font-weight:600">Fast response across the bay</span></p>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:48px auto 0;padding-top:28px;border-top:1px solid #1A2026;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center">
+      <span style="font-size:12.5px;color:#5E6A64">© 2026 S &amp; W Plumbing · Licence [LICENCE #] · ABN [ABN]</span>
+      <span style="font-size:12.5px;color:#5E6A64">Certified plumber · Bayside Brisbane</span>
+    </div>
+  </footer>
+
+  <!-- ====================== MOBILE STICKY CALL BAR ====================== -->
+  <div class="swp-bottombar" style="position:fixed;bottom:0;left:0;width:100%;z-index:110;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:rgba(10,12,14,0.92);backdrop-filter:blur(16px);border-top:1px solid #232A30">
+    <a href="tel:0432292371" style="display:flex;align-items:center;justify-content:center;gap:11px;width:100%;background:#B6FF3C;color:#0A0C0E;font-weight:800;font-size:1.15rem;padding:17px;border-radius:14px;letter-spacing:-0.01em;box-shadow:0 0 26px -4px rgba(182,255,60,0.6)">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6.5 3h3l1.5 5-2 1.5a11 11 0 005 5l1.5-2 5 1.5v3a2 2 0 01-2.2 2A17 17 0 014.5 5.2 2 2 0 016.5 3z" fill="#0A0C0E"/></svg>
+      Call 0432 292 371
+    </a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    if (this._init) return;
+    this._init = true;
+    this.cleanups = [];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.startCanvas('swp-hero-canvas', reduce);
+    this.startCanvas('swp-cta-canvas', reduce);
+    this.navScroll();
+    this.progressBar();
+    this.anchors(reduce);
+    this._introPlaying = this.intro(reduce);
+    if (!reduce && window.matchMedia('(pointer:fine)').matches && window.innerWidth > 860) {
+      this.tilt();
+    }
+    this.initMotion();
+    this.waitGsap(() => this.initGsap(reduce));
+    // headline failsafe — masked lines can never stay hidden
+    setTimeout(() => { document.querySelectorAll('.swp-hl-inner').forEach((el) => { el.style.transform = 'none'; }); }, 3400);
+  }
+
+  intro(reduce) {
+    const ov = document.getElementById('swp-intro');
+    if (!ov) return false;
+    let seen = false;
+    try { seen = sessionStorage.getItem('swpIntroSeen'); } catch (e) {}
+    if (reduce || seen) { ov.style.display = 'none'; return false; }
+    try { sessionStorage.setItem('swpIntroSeen', '1'); } catch (e) {}
+    requestAnimationFrame(() => {
+      const d = document.getElementById('swp-intro-drop'); if (d) d.style.strokeDashoffset = '0';
+      const s = document.getElementById('swp-intro-s'); if (s) s.style.strokeDashoffset = '0';
+      const w = document.getElementById('swp-intro-word'); if (w) { w.style.opacity = '1'; w.style.transform = 'translateY(0)'; }
+    });
+    setTimeout(() => { ov.style.transform = 'translateY(-100%)'; }, 1050);
+    setTimeout(() => { ov.style.display = 'none'; }, 2100);
+    return true;
+  }
+
+  componentWillUnmount() {
+    (this.cleanups || []).forEach(fn => { try { fn(); } catch (e) {} });
+  }
+
+  waitGsap(cb, tries) {
+    tries = tries || 0;
+    if (window.gsap) return cb();
+    if (tries > 60) return; // gsap failed to load — page stays visible
+    setTimeout(() => this.waitGsap(cb, tries + 1), 60);
+  }
+
+  initMotion(tries) {
+    tries = tries || 0;
+    if (window.MotionEnhancers) { window.MotionEnhancers.init(); return; }
+    if (tries > 60) return;
+    setTimeout(() => this.initMotion(tries + 1), 60);
+  }
+
+  initGsap(reduce) {
+    const gsap = window.gsap;
+    const ST = window.ScrollTrigger;
+    if (ST) gsap.registerPlugin(ST);
+
+    // Lenis smooth scroll
+    if (!reduce && window.Lenis) {
+      const lenis = new window.Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      window.__swpLenis = lenis;
+      const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+      if (ST) lenis.on('scroll', ST.update);
+    }
+
+    if (reduce) return; // leave everything in its natural visible state
+
+    const ease = 'expo.out';
+    const dly = this._introPlaying ? 1.0 : 0.15;
+
+    // HERO — clip-path line-mask reveal (lines rise out from behind an edge)
+    const heroLines = gsap.utils.toArray('.swp-hl-inner');
+    gsap.set(heroLines, { yPercent: 120 });
+    gsap.to(heroLines, { yPercent: 0, duration: 1.1, ease, stagger: 0.09, delay: dly });
+
+    // hero supporting elements
+    const heroEls = document.querySelectorAll('[data-hero]');
+    gsap.set(heroEls, { opacity: 0, y: 24 });
+    gsap.to(heroEls, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease, delay: dly + 0.35 });
+
+    // hero water line
+    const wl = document.getElementById('swp-waterline');
+    if (wl) gsap.fromTo(wl, { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: 'power3.inOut', delay: dly + 0.5 });
+
+    if (!ST) return;
+
+    // generic reveals
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
+      gsap.set(el, { opacity: 0, y: 44 });
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.95, ease, scrollTrigger: { trigger: el, start: 'top 86%' } });
+    });
+
+    // trust strip stagger
+    const trust = document.querySelectorAll('[data-trust]');
+    if (trust.length) {
+      gsap.set(trust, { opacity: 0, y: 24 });
+      gsap.to(trust, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease, scrollTrigger: { trigger: trust[0], start: 'top 90%' } });
+    }
+
+    // service cards stagger
+    const cards = document.querySelectorAll('[data-service]');
+    if (cards.length) {
+      gsap.set(cards, { opacity: 0, y: 50 });
+      gsap.to(cards, { opacity: 1, y: 0, duration: 0.85, stagger: 0.09, ease, scrollTrigger: { trigger: cards[0], start: 'top 84%' } });
+    }
+
+    // water lines — scroll-SCRUBBED draw, tied to scroll position (Apple move)
+    document.querySelectorAll('[data-waterline]').forEach((el) => {
+      gsap.fromTo(el, { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: el, start: 'top 92%', end: 'top 52%', scrub: true } });
+    });
+
+    // count up
+    document.querySelectorAll('[data-countup]').forEach((el) => {
+      const target = parseFloat(el.getAttribute('data-countup')) || 0;
+      const suffix = el.getAttribute('data-suffix') || '';
+      const obj = { v: 0 };
+      gsap.to(obj, { v: target, duration: 1.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 88%' }, onUpdate: () => { el.textContent = Math.round(obj.v) + suffix; } });
+    });
+
+    // map pins pop
+    const pins = document.querySelectorAll('.swp-pin');
+    if (pins.length) {
+      gsap.set(pins, { scale: 0, transformOrigin: 'center center' });
+      gsap.to(pins, { scale: 1, duration: 0.6, stagger: 0.12, ease: 'back.out(2.2)', scrollTrigger: { trigger: pins[0], start: 'top 85%' } });
+    }
+
+    // parallax glow
+    const pbg = document.querySelector('[data-parallax-bg]');
+    if (pbg) gsap.to(pbg, { yPercent: 24, ease: 'none', scrollTrigger: { trigger: pbg, start: 'top bottom', end: 'bottom top', scrub: true } });
+  }
+
+  // ---- cinematic drifting canvas ----
+  startCanvas(id, reduce) {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      W = canvas.width = Math.max(1, Math.floor(r.width * dpr));
+      H = canvas.height = Math.max(1, Math.floor(r.height * dpr));
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    this.cleanups.push(() => window.removeEventListener('resize', resize));
+
+    const blobs = [
+      { x: 0.30, y: 0.42, r: 0.62, c: [127, 203, 0], a: 0.16, sx: 0.000045, sy: 0.000061, ph: 0 },
+      { x: 0.72, y: 0.60, r: 0.50, c: [182, 255, 60], a: 0.10, sx: 0.000037, sy: 0.000052, ph: 2 },
+      { x: 0.52, y: 0.18, r: 0.42, c: [70, 120, 20], a: 0.14, sx: 0.000058, sy: 0.000041, ph: 4 },
+      { x: 0.15, y: 0.80, r: 0.40, c: [182, 255, 60], a: 0.07, sx: 0.000050, sy: 0.000066, ph: 1 }
+    ];
+
+    const drawFrame = (t) => {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#0A0C0E';
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      const maxR = Math.max(W, H);
+      blobs.forEach((b) => {
+        const cx = (b.x + Math.sin(t * b.sx + b.ph) * 0.14) * W;
+        const cy = (b.y + Math.cos(t * b.sy + b.ph) * 0.14) * H;
+        const rad = b.r * maxR;
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+        g.addColorStop(0, 'rgba(' + b.c[0] + ',' + b.c[1] + ',' + b.c[2] + ',' + b.a + ')');
+        g.addColorStop(1, 'rgba(' + b.c[0] + ',' + b.c[1] + ',' + b.c[2] + ',0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
+      });
+      ctx.globalCompositeOperation = 'source-over';
+    };
+
+    if (reduce) { drawFrame(8000); return; }
+
+    let raf, running = true, last = 0;
+    const loop = (now) => {
+      if (!running) return;
+      if (now - last > 24) { drawFrame(now); last = now; } // ~40fps cap, smooth + light
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    // pause offscreen for perf
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => {
+        if (e.isIntersecting && !running) { running = true; raf = requestAnimationFrame(loop); }
+        else if (!e.isIntersecting) { running = false; cancelAnimationFrame(raf); }
+      });
+    }, { threshold: 0.01 });
+    io.observe(canvas);
+    this.cleanups.push(() => { running = false; cancelAnimationFrame(raf); io.disconnect(); });
+  }
+
+  navScroll() {
+    const nav = document.getElementById('swp-nav');
+    if (!nav) return;
+    const onScroll = () => {
+      if (window.scrollY > 24) {
+        nav.style.background = 'rgba(10,12,14,0.78)';
+        nav.style.backdropFilter = 'blur(16px)';
+        nav.style.webkitBackdropFilter = 'blur(16px)';
+        nav.style.borderBottomColor = '#1A2026';
+      } else {
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'blur(0px)';
+        nav.style.webkitBackdropFilter = 'blur(0px)';
+        nav.style.borderBottomColor = 'transparent';
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    this.cleanups.push(() => window.removeEventListener('scroll', onScroll));
+  }
+
+  progressBar() {
+    const bar = document.getElementById('swp-progress');
+    if (!bar) return;
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+      bar.style.width = Math.max(0, Math.min(100, p)) + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    this.cleanups.push(() => window.removeEventListener('scroll', onScroll));
+  }
+
+  anchors(reduce) {
+    const handlers = [];
+    document.querySelectorAll('[data-anchor]').forEach((a) => {
+      const fn = (e) => {
+        const id = a.getAttribute('data-anchor');
+        const t = document.getElementById(id);
+        if (!t) return;
+        e.preventDefault();
+        const top = t.getBoundingClientRect().top + window.scrollY - 64;
+        if (window.__swpLenis) window.__swpLenis.scrollTo(top);
+        else window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+      };
+      a.addEventListener('click', fn);
+      handlers.push(() => a.removeEventListener('click', fn));
+    });
+    this.cleanups.push(() => handlers.forEach(h => h()));
+  }
+
+  cursor() {
+    const ring = document.getElementById('swp-cursor');
+    const dot = document.getElementById('swp-cursor-dot');
+    if (!ring || !dot) return;
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let rx = mx, ry = my, dx = mx, dy = my;
+    const move = (e) => { mx = e.clientX; my = e.clientY; };
+    window.addEventListener('mousemove', move);
+    let raf;
+    const loop = () => {
+      rx += (mx - rx) * 0.35; ry += (my - ry) * 0.35;
+      dx += (mx - dx) * 0.16; dy += (my - dy) * 0.16;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
+      dot.style.transform = 'translate(' + dx + 'px,' + dy + 'px) translate(-50%,-50%)';
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    const overEls = document.querySelectorAll('a,button,[data-tilt]');
+    const enter = () => { ring.style.width = '52px'; ring.style.height = '52px'; ring.style.background = 'rgba(182,255,60,0.12)'; };
+    const leave = () => { ring.style.width = '34px'; ring.style.height = '34px'; ring.style.background = 'transparent'; };
+    overEls.forEach((el) => { el.addEventListener('mouseenter', enter); el.addEventListener('mouseleave', leave); });
+    this.cleanups.push(() => {
+      window.removeEventListener('mousemove', move);
+      cancelAnimationFrame(raf);
+      overEls.forEach((el) => { el.removeEventListener('mouseenter', enter); el.removeEventListener('mouseleave', leave); });
+    });
+  }
+
+  magnetic() {
+    const handlers = [];
+    document.querySelectorAll('[data-magnetic]').forEach((el) => {
+      const move = (e) => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - (r.left + r.width / 2);
+        const y = e.clientY - (r.top + r.height / 2);
+        el.style.transform = 'translate(' + (x * 0.28) + 'px,' + (y * 0.4) + 'px)';
+      };
+      const leave = () => { el.style.transform = 'translate(0,0)'; };
+      el.addEventListener('mousemove', move);
+      el.addEventListener('mouseleave', leave);
+      handlers.push(() => { el.removeEventListener('mousemove', move); el.removeEventListener('mouseleave', leave); });
+    });
+    this.cleanups.push(() => handlers.forEach(h => h()));
+  }
+
+  tilt() {
+    const handlers = [];
+    document.querySelectorAll('[data-tilt]').forEach((card) => {
+      const move = (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(900px) rotateY(' + (px * 7) + 'deg) rotateX(' + (-py * 7) + 'deg) translateY(-6px)';
+      };
+      const leave = () => { card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateY(0)'; };
+      card.addEventListener('mousemove', move);
+      card.addEventListener('mouseleave', leave);
+      handlers.push(() => { card.removeEventListener('mousemove', move); card.removeEventListener('mouseleave', leave); });
+    });
+    this.cleanups.push(() => handlers.forEach(h => h()));
+  }
+}
+</script>
+</body>
+</html>

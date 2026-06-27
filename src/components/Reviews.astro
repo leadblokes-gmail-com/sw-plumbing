@@ -1,0 +1,107 @@
+---
+import Icon from './Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { reviews, googleRating } from '../data/site';
+
+interface Props {
+  heading?: boolean; // render the eyebrow/title block
+  compact?: boolean; // beside-the-form variant
+}
+const { heading = true, compact = false } = Astro.props;
+
+// Auto-hide: a brand-new business has no reviews yet. We never ship fake proof —
+// this block renders nothing until real reviews are added to src/data/site.ts.
+const hasData = reviews.length > 0 || !!googleRating;
+---
+{
+  hasData && (
+    <div class:list={['reviews', { 'reviews--compact': compact }]}>
+      {heading && (
+        <SectionHeading eyebrow="What people say" waterline>
+          Trusted by bayside locals.
+        </SectionHeading>
+      )}
+
+      {googleRating && (
+        <div class="reviews__rating" data-reveal>
+          <div class="reviews__stars" aria-hidden="true">
+            {Array.from({ length: 5 }).map(() => (
+              <Icon name="star" size={20} stroke="#B6FF3C" />
+            ))}
+          </div>
+          <strong>{googleRating.rating.toFixed(1)}</strong>
+          <span>from {googleRating.count} Google reviews</span>
+        </div>
+      )}
+
+      <div class="reviews__grid" data-anim-children>
+        {reviews.map((r) => (
+          <figure class="reviews__card">
+            <div class="reviews__stars" aria-label={`${r.rating} out of 5 stars`}>
+              {Array.from({ length: r.rating }).map(() => (
+                <Icon name="star" size={16} stroke="#B6FF3C" />
+              ))}
+            </div>
+            <blockquote>{r.text}</blockquote>
+            <figcaption>
+              <span class="reviews__name">{r.name}</span>
+              <span class="reviews__suburb">{r.suburb}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .reviews__rating {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .reviews__rating strong {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+  }
+  .reviews__rating span {
+    color: var(--muted-2);
+    font-size: 14px;
+  }
+  .reviews__stars {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--lime);
+  }
+  .reviews__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .reviews--compact .reviews__grid {
+    grid-template-columns: 1fr;
+  }
+  .reviews__card {
+    background: rgba(20, 24, 28, 0.6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .reviews__card blockquote {
+    margin: 14px 0 18px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .reviews__name {
+    font-weight: 700;
+    font-family: var(--font-display);
+    display: block;
+  }
+  .reviews__suburb {
+    font-size: 13px;
+    color: var(--muted-2);
+  }
+</style>

@@ -1,0 +1,132 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { business, credentialLine } from '../data/site';
+const year = 2026;
+---
+<footer class="footer">
+  <div class="footer__mark-wrap"><span class="footer-mark">S&amp;W&nbsp;PLUMBING</span></div>
+  <div class="footer__grid container">
+    <div class="footer__about">
+      <div class="footer__brand"><Logo size={30} /></div>
+      <p>
+        Certified maintenance and general plumbing for {business.baseSuburb} and bayside Brisbane.
+        Fast, upfront, and done properly.
+      </p>
+    </div>
+    <div>
+      <div class="footer__head">Contact</div>
+      <a href={business.phoneHref} class="footer__phone">{business.phone}</a>
+      <a href={business.emailHref} class="footer__link">{business.email}</a>
+      <a href={business.facebook} target="_blank" rel="noopener" class="footer__link footer__fb">
+        <Icon name="facebook" size={15} /> Facebook
+      </a>
+    </div>
+    <div>
+      <div class="footer__head">Service area</div>
+      <p class="footer__muted">
+        Birkdale · Wellington Point<br />Cleveland · Capalaba · Ormiston<br />Victoria Point · Wynnum &amp; the bay
+      </p>
+    </div>
+    <div>
+      <div class="footer__head">Hours</div>
+      <p class="footer__muted">
+        Call to arrange<br /><span class="footer__hl">Fast response across the bay</span>
+      </p>
+    </div>
+  </div>
+  <div class="footer__bar container">
+    <span>
+      © {year} {business.name}{credentialLine ? ` · ${credentialLine}` : ''} · Certified plumber
+    </span>
+    <span>Birkdale, QLD · Bayside Brisbane</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    background: var(--ink-850);
+    padding: clamp(50px, 7vw, 80px) var(--pad-x) calc(130px + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 861px) {
+    .footer {
+      padding-bottom: clamp(50px, 7vw, 80px);
+    }
+  }
+  .footer__mark-wrap {
+    max-width: 1280px;
+    margin: 0 auto clamp(36px, 6vw, 64px);
+    overflow: hidden;
+  }
+  .footer__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+  }
+  .footer__about {
+    grid-column: 1 / -1;
+    max-width: 340px;
+  }
+  .footer__brand {
+    margin-bottom: 18px;
+  }
+  .footer__about p {
+    font-size: 14.5px;
+    color: var(--muted-2);
+    line-height: 1.6;
+  }
+  .footer__head {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .footer__phone {
+    display: block;
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 10px;
+    transition: color 0.25s;
+  }
+  .footer__link {
+    display: block;
+    font-size: 14.5px;
+    color: var(--muted-2);
+    margin-bottom: 10px;
+    transition: color 0.25s;
+  }
+  .footer__fb {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .footer__phone:hover,
+  .footer__link:hover {
+    color: var(--lime);
+  }
+  .footer__muted {
+    font-size: 14.5px;
+    color: var(--muted-2);
+    line-height: 1.7;
+  }
+  .footer__hl {
+    color: var(--lime);
+    font-weight: 600;
+  }
+  .footer__bar {
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid var(--ink-750);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12.5px;
+    color: var(--faint);
+  }
+</style>

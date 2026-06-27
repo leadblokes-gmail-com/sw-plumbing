@@ -1,0 +1,25 @@
+---
+interface Props {
+  id?: string;
+  tint?: boolean; // deeper panel background
+  border?: boolean; // top hairline
+  bleed?: boolean; // skip inner container
+  class?: string;
+}
+const { id, tint = false, border = true, bleed = false, class: cls = '' } = Astro.props;
+---
+<section
+  id={id}
+  class:list={['section', { 'section--tint': tint, 'section--noborder': !border }, cls]}
+>
+  {bleed ? <slot /> : <div class="container"><slot /></div>}
+</section>
+
+<style>
+  .section--tint {
+    background: var(--ink-850);
+  }
+  .section--noborder {
+    border-top: none;
+  }
+</style>

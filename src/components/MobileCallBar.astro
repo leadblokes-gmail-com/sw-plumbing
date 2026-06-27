@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+import { business } from '../data/site';
+---
+<div class="callbar">
+  <a href={business.phoneHref} aria-label={`Call S & W Plumbing on ${business.phone}`}>
+    <Icon name="phone" size={22} />
+    Call {business.phone}
+  </a>
+</div>
+
+<style>
+  .callbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 110;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(10, 12, 14, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--line);
+    display: none;
+  }
+  .callbar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    width: 100%;
+    background: var(--lime);
+    color: var(--ink-900);
+    font-weight: 800;
+    font-size: 1.15rem;
+    padding: 17px;
+    border-radius: 14px;
+    letter-spacing: -0.01em;
+    box-shadow: 0 0 26px -4px rgba(182, 255, 60, 0.6);
+  }
+  @media (max-width: 860px) {
+    .callbar {
+      display: flex;
+    }
+  }
+</style>
