@@ -9,4 +9,10 @@ export default defineConfig({
     inlineStylesheets: 'auto',
   },
   compressHTML: true,
+  vite: {
+    // Allow sharing the local preview through a tunnel URL (Cloudflare/ngrok/etc).
+    preview: {
+      allowedHosts: true,
+    },
+  },
 });

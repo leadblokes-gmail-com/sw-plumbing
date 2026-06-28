@@ -9,6 +9,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "gen:images": "node scripts/generate-higgsfield.mjs",
     "astro": "astro"
   },
   "dependencies": {
