@@ -209,49 +209,6 @@ function pointerFx() {
     });
   });
 
-  // custom cursor
-  const ring = document.getElementById('swp-cursor');
-  const dot = document.getElementById('swp-cursor-dot');
-  if (ring && dot) {
-    let mx = window.innerWidth / 2,
-      my = window.innerHeight / 2;
-    let rx = mx,
-      ry = my,
-      dx = mx,
-      dy = my;
-    const onMove = (e: MouseEvent) => {
-      mx = e.clientX;
-      my = e.clientY;
-    };
-    window.addEventListener('mousemove', onMove);
-    let cursorRaf = 0;
-    const loop = () => {
-      rx += (mx - rx) * 0.35;
-      ry += (my - ry) * 0.35;
-      dx += (mx - dx) * 0.16;
-      dy += (my - dy) * 0.16;
-      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-      dot.style.transform = `translate(${dx}px,${dy}px) translate(-50%,-50%)`;
-      cursorRaf = requestAnimationFrame(loop);
-    };
-    cursorRaf = requestAnimationFrame(loop);
-    onCleanup(() => {
-      window.removeEventListener('mousemove', onMove);
-      cancelAnimationFrame(cursorRaf);
-    });
-    document.querySelectorAll('a,button,[data-tilt]').forEach((el) => {
-      el.addEventListener('mouseenter', () => {
-        ring.style.width = '52px';
-        ring.style.height = '52px';
-        ring.style.background = 'rgba(182,255,60,0.12)';
-      });
-      el.addEventListener('mouseleave', () => {
-        ring.style.width = '34px';
-        ring.style.height = '34px';
-        ring.style.background = 'transparent';
-      });
-    });
-  }
 }
 
 /** Expandable service cards (Services page). Keyboard + ARIA accessible. */
@@ -277,19 +234,6 @@ function serviceExpanders() {
         e.preventDefault();
         toggle();
       }
-    });
-  });
-}
-
-/** Cursor-tracking spotlight: feed --mx/--my to cards so the CSS glow follows the pointer. */
-function spotlight() {
-  if (reduce) return;
-  const sel = '.card,.creds__card,.gallery__item,.detail,.why__card,.values__card,.promise__stat';
-  document.querySelectorAll<HTMLElement>(sel).forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', e.clientX - r.left + 'px');
-      card.style.setProperty('--my', e.clientY - r.top + 'px');
     });
   });
 }
@@ -491,7 +435,6 @@ function init() {
   startCanvas('swp-hero-canvas');
   startCanvas('swp-cta-canvas');
   pointerFx();
-  spotlight();
   serviceExpanders();
   initGsap(introPlaying);
   window.__swpMotionReady = true;

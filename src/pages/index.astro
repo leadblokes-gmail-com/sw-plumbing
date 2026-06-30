@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Section from '../components/Section.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import ServiceCard from '../components/ServiceCard.astro';
 import TrustBar from '../components/TrustBar.astro';
 import Reviews from '../components/Reviews.astro';
 import JobGallery from '../components/JobGallery.astro';
@@ -10,10 +9,8 @@ import MapPanel from '../components/MapPanel.astro';
 import CallButton from '../components/CallButton.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Icon from '../components/Icon.astro';
-import { services, reviews, googleRating, jobs } from '../data/site';
+import { problems, business, reviews, jobs } from '../data/site';
 
-const homeServices = services.slice(0, 6);
-const showSocialProof = reviews.length > 0 || !!googleRating || jobs.length > 0;
 const why = [
   { icon: 'shield', title: 'Certified & insured', body: "A fully licensed, certified plumber on every job. The work is done to code and it's done to last." },
   { icon: 'bolt', title: 'Fast bayside response', body: "Local to Birkdale and the bay, so we're not driving across Brisbane to get to you. Call and we'll move." },
@@ -22,8 +19,8 @@ const why = [
 
 ---
 <Layout
-  title="S & W Plumbing — Certified Plumber in Birkdale & Bayside Brisbane"
-  description="Bayside Brisbane's plumbing, done properly. Certified, fast and upfront — blocked drains, burst pipes, hot water, gas fitting and more. Call 0432 292 371."
+  title="S&W Plumbing | Plumber Birkdale & Bayside Brisbane"
+  description="Certified local plumber servicing Birkdale, Wynnum, Cleveland, Wellington Point and Bayside Brisbane. Leaks, taps, toilets, hot water and general plumbing repairs. Upfront pricing, fast response — call 0432 292 371."
   intro={true}
 >
   <!-- ===== HERO ===== -->
@@ -38,16 +35,19 @@ const why = [
     <div class="hero__inner">
       <div data-hero class="badge">
         <span class="badge__dot"></span>
-        <span>Certified Plumber · Bayside Brisbane</span>
+        <span>Certified plumber · Birkdale &amp; Bayside Brisbane</span>
       </div>
 
       <h1 class="hero__title hero-mask">
-        <span class="reveal-line"><span>Bayside Brisbane's</span></span>
-        <span class="reveal-line"><span>plumbing,</span></span>
+        <span class="reveal-line"><span>Fast local plumbing</span></span>
+        <span class="reveal-line"><span>across the bay,</span></span>
         <span class="reveal-line"><span>done <em class="kinetic">properly</em>.</span></span>
       </h1>
 
-      <p data-hero class="hero__sub">Certified, fast, and upfront. One call and it's sorted.</p>
+      <p data-hero class="hero__sub">
+        Leaks, taps, toilets, hot water and general repairs — handled by a certified local plumber with
+        upfront pricing and fast response.
+      </p>
 
       <div data-hero class="hero__ctas">
         <CallButton size="lg" pulse />
@@ -74,13 +74,32 @@ const why = [
 
   <TrustBar />
 
-  <!-- ===== SERVICES ===== -->
+  <!-- ===== WHAT CAN WE HELP WITH ===== -->
   <Section id="services">
-    <SectionHeading eyebrow="What we do" waterline max="620px">
-      Maintenance &amp; general plumbing, done right.
+    <SectionHeading eyebrow="What can we help with?" waterline max="640px">
+      Tell us what's gone wrong — we'll sort it.
     </SectionHeading>
-    <div class="grid-cards" data-anim-children>
-      {homeServices.map((s) => <ServiceCard icon={s.icon} title={s.homeTitle ?? s.title} blurb={s.blurb} />)}
+    <p data-reveal class="section-lead">
+      From small leaks to urgent repairs, S&amp;W Plumbing handles general maintenance and residential
+      plumbing across Birkdale and bayside Brisbane.
+    </p>
+    <div class="problems" data-anim-children>
+      {
+        problems.map((p) => (
+          <a href={business.phoneHref} class="problem" data-tilt>
+            <div class="problem__icon"><Icon name={p.icon} size={24} stroke="#B6FF3C" /></div>
+            <div class="problem__body">
+              <h3 class="problem__title">{p.title}</h3>
+              <p class="problem__blurb">{p.blurb}</p>
+            </div>
+            <span class="problem__call">Call now <Icon name="arrow" size={14} stroke="#B6FF3C" /></span>
+          </a>
+        ))
+      }
+    </div>
+    <div data-reveal class="problems__cta">
+      <p>Not sure what the issue is? Call <strong>0432&nbsp;292&nbsp;371</strong> and we'll talk it through.</p>
+      <CallButton size="md" pulse label="Call now" />
     </div>
   </Section>
 
@@ -103,6 +122,66 @@ const why = [
     </div>
   </section>
 
+  <!-- ===== MEET YOUR PLUMBER ===== -->
+  <Section class="meet">
+    <div class="meet__grid">
+      <div data-reveal class="meet__media">
+        <div class="meet__frame">
+          <picture>
+            <source srcset="/images/about-founder.webp" type="image/webp" />
+            <img
+              src="/images/about-founder.png"
+              alt="Your local S & W plumber working on a hot water unit in bayside Brisbane"
+              width="720"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <span class="meet__badge"><span class="badge__dot"></span> Birkdale, QLD</span>
+        </div>
+      </div>
+      <div data-reveal class="meet__copy">
+        <div class="eyebrow">Your local plumber</div>
+        <h2 class="h2 meet__title">Meet your local bayside plumber.</h2>
+        <p class="meet__lead">
+          S&amp;W Plumbing provides certified maintenance and general plumbing across Birkdale and bayside
+          Brisbane. You'll deal directly with a local plumber who values clear communication, upfront
+          pricing and quality work done properly.
+        </p>
+        <ul class="meet__points">
+          {
+            [
+              'Local to the bayside area',
+              'Certified and insured',
+              'Clear communication before work begins',
+              'Respectful, tidy service',
+              'Fast response where available',
+            ].map((point) => (
+              <li>
+                <Icon name="check" size={16} stroke="#B6FF3C" /> {point}
+              </li>
+            ))
+          }
+        </ul>
+        <div class="meet__cta"><CallButton size="md" pulse /></div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- ===== REVIEWS ===== -->
+  {
+    reviews.length > 0 && (
+      <Section tint class="reviews-section">
+        <Reviews />
+        <div data-reveal class="reviews-cta">
+          <p>Need help with plumbing? Call <strong>0432&nbsp;292&nbsp;371</strong>.</p>
+          <CallButton size="md" pulse label="Call now" />
+        </div>
+      </Section>
+    )
+  }
+
   <!-- ===== WHY S&W ===== -->
   <Section id="why" class="why" clip>
     <div data-parallax-bg class="why__glow"></div>
@@ -122,11 +201,10 @@ const why = [
     </div>
   </Section>
 
-  <!-- ===== REVIEWS / JOB GALLERY (only renders once real data is added) ===== -->
+  <!-- ===== JOB GALLERY (only renders once photos are added) ===== -->
   {
-    showSocialProof && (
-      <Section class="reviews-section">
-        <Reviews />
+    jobs.length > 0 && (
+      <Section>
         <JobGallery />
       </Section>
     )
@@ -168,8 +246,12 @@ const why = [
     </div>
   </Section>
 
-  <CtaBand sub="One call and it's sorted. Talk to your local certified plumber today." note="Prefer to talk it through? Just call — we usually answer.">
-    Got a plumbing problem?<br /><span class="lime">Call now.</span>
+  <CtaBand
+    sub="Leaks, taps, toilets, hot water and general plumbing repairs — handled by a certified local plumber with clear pricing and fast response."
+    points={['Licensed & insured', 'Fast bayside response', 'Upfront pricing', 'Clean, quality work']}
+    note="Based near Birkdale · Servicing bayside Brisbane"
+  >
+    Need a plumber in Bayside Brisbane?<br /><span class="lime">Call S&amp;W Plumbing today.</span>
   </CtaBand>
 </Layout>
 
@@ -262,11 +344,11 @@ const why = [
     color: var(--lime);
   }
   .hero__sub {
-    margin-top: 26px;
-    font-size: clamp(1.05rem, 2.4vw, 1.45rem);
-    color: var(--muted-2);
-    max-width: 38ch;
-    line-height: 1.5;
+    margin-top: 24px;
+    font-size: clamp(1.02rem, 2.2vw, 1.3rem);
+    color: var(--muted);
+    max-width: 48ch;
+    line-height: 1.55;
     font-weight: 500;
   }
   .hero__ctas {
@@ -446,6 +528,93 @@ const why = [
     gap: 18px;
   }
 
+  /* ---- WHAT CAN WE HELP WITH (problems) ---- */
+  .section-lead {
+    margin: -34px 0 40px;
+    max-width: 640px;
+    font-size: 16px;
+    color: var(--muted-2);
+    line-height: 1.6;
+  }
+  .problems {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 14px;
+  }
+  @media (min-width: 1000px) {
+    .problems {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .problem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: rgba(20, 24, 28, 0.6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: transform 0.25s var(--ease-quint), border-color 0.4s, box-shadow 0.4s;
+    transform-style: preserve-3d;
+  }
+  .problem:hover {
+    border-color: rgba(182, 255, 60, 0.5);
+    box-shadow: 0 24px 60px -24px rgba(182, 255, 60, 0.35);
+  }
+  .problem__icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--lime-10);
+    border: 1px solid rgba(182, 255, 60, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lime);
+  }
+  .problem__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .problem__blurb {
+    font-size: 14px;
+    color: var(--muted-2);
+    line-height: 1.5;
+  }
+  .problem__call {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--lime);
+    margin-top: auto;
+  }
+  .problems__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 26px;
+    padding: 24px 28px;
+    border: 1px solid rgba(182, 255, 60, 0.25);
+    border-radius: var(--radius);
+    background: linear-gradient(120deg, rgba(182, 255, 60, 0.08), rgba(20, 24, 28, 0.4));
+  }
+  .problems__cta p {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--text);
+    max-width: 52ch;
+  }
+  .problems__cta strong {
+    color: var(--lime);
+  }
+
   /* ---- WHY ---- */
   .why {
     position: relative;
@@ -494,6 +663,89 @@ const why = [
     font-size: 15px;
     color: var(--muted-2);
     line-height: 1.6;
+  }
+
+  /* ---- MEET YOUR PLUMBER ---- */
+  .meet__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: clamp(36px, 5vw, 64px);
+    align-items: center;
+  }
+  .meet__frame {
+    position: relative;
+    border: 1px solid rgba(182, 255, 60, 0.35);
+    border-radius: 24px;
+    padding: 10px;
+    background: linear-gradient(160deg, rgba(182, 255, 60, 0.08), rgba(20, 24, 28, 0.4));
+    box-shadow: 0 0 70px -24px rgba(182, 255, 60, 0.45);
+    max-width: 440px;
+  }
+  .meet__frame picture {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .meet__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .meet__badge {
+    position: absolute;
+    bottom: 22px;
+    left: 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 15px;
+    border-radius: 999px;
+    background: rgba(10, 12, 14, 0.78);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .meet__title {
+    margin: 16px 0 18px;
+  }
+  .meet__lead {
+    font-size: 16px;
+    color: var(--muted-2);
+    line-height: 1.65;
+    max-width: 50ch;
+  }
+  .meet__points {
+    list-style: none;
+    margin: 24px 0 30px;
+    display: grid;
+    gap: 12px;
+  }
+  .meet__points li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .reviews-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 36px;
+  }
+  .reviews-cta p {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--text);
+  }
+  .reviews-cta strong {
+    color: var(--lime);
   }
 
   /* ---- AREAS TEASER ---- */

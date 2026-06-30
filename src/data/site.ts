@@ -138,6 +138,18 @@ export const services: Service[] = [
   },
 ];
 
+/** Problem-led cards for the Home "What can we help with?" section. */
+export const problems = [
+  { icon: 'tap', title: 'Leaking taps', blurb: 'Dripping taps and worn washers fixed for good.' },
+  { icon: 'leak', title: 'Burst pipes', blurb: 'Burst and leaking pipes isolated and repaired fast.' },
+  { icon: 'bathroom', title: 'Toilet repairs', blurb: 'Running, leaking or blocked toilets sorted properly.' },
+  { icon: 'hotwater', title: 'Hot water issues', blurb: 'No hot water or a leaking unit? Repairs and installs.' },
+  { icon: 'roof', title: 'Outdoor taps & fittings', blurb: 'Garden taps, hose fittings and outdoor plumbing.' },
+  { icon: 'maintenance', title: 'Pipework & maintenance', blurb: 'Ongoing repairs and the jobs that keep things running.' },
+  { icon: 'drain', title: 'Blocked drains', blurb: 'Sinks, showers and sewer lines back to flowing.' },
+  { icon: 'check', title: 'General plumbing repairs', blurb: 'The everyday plumbing issues, handled cleanly.' },
+];
+
 export const faqs = [
   {
     q: 'Do you do emergencies?',
@@ -218,8 +230,13 @@ export const suburbs = [
  * Optionally set googleRating + googleCount once a Google Business Profile exists.
  */
 export const reviews: { name: string; suburb: string; rating: number; text: string }[] = [
-  // TODO: add real reviews, e.g.
-  // { name: 'Jane D.', suburb: 'Cleveland', rating: 5, text: 'Turned up on time and sorted our hot water same day.' },
+  // ⚠️ PLACEHOLDER REVIEWS — these are NOT real and MUST be replaced with genuine
+  // Google/Facebook reviews before the site goes public. Publishing fabricated
+  // testimonials on an Australian business site breaches the Australian Consumer
+  // Law (ACCC). Swap these for real ones (name + suburb + their words).
+  { name: 'Sarah', suburb: 'Birkdale', rating: 5, text: 'Arrived on time, explained the issue clearly and had the leak fixed quickly.' },
+  { name: 'Matt', suburb: 'Wellington Point', rating: 5, text: 'Easy to deal with, upfront about pricing and left everything clean.' },
+  { name: 'Emily', suburb: 'Cleveland', rating: 5, text: 'Great local plumber. Friendly, professional and sorted the job without fuss.' },
 ];
 
 export const googleRating: { rating: number; count: number } | null = null; // TODO: set once GBP is live

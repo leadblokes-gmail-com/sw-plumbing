@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import { business } from '../data/site';
+---
+<Layout
+  title="Privacy Policy — S & W Plumbing"
+  description="How S & W Plumbing collects, uses and protects your personal information."
+>
+  <Section border={false} class="legal">
+    <div class="legal__inner">
+      <div class="eyebrow">Legal</div>
+      <h1 class="legal__title">Privacy Policy</h1>
+      <p class="legal__note">
+        <strong>TODO:</strong> replace this with your finalised privacy policy. Below is a plain-English
+        starting point — have it reviewed before publishing.
+      </p>
+      <div class="legal__body">
+        <p>
+          S &amp; W Plumbing ("we", "us") respects your privacy. This policy explains how we handle the
+          personal information you give us when you contact us or request plumbing work.
+        </p>
+        <h2>What we collect</h2>
+        <p>
+          When you call, email or submit the contact form, we may collect your name, phone number, email,
+          suburb and details of the work you need. We only collect what we need to respond and carry out the job.
+        </p>
+        <h2>How we use it</h2>
+        <p>
+          We use your information to reply to enquiries, quote and complete plumbing work, and keep records
+          for the job. We don't sell your information.
+        </p>
+        <h2>Sharing</h2>
+        <p>
+          We may share details with trusted services we use to run the business (for example, the form
+          provider that delivers your enquiry to us). We don't share your information for marketing by others.
+        </p>
+        <h2>Contact</h2>
+        <p>
+          Questions about your information? Call <a href={business.phoneHref}>{business.phone}</a> or email
+          <a href={business.emailHref}>{business.email}</a>.
+        </p>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .legal {
+    padding-top: clamp(140px, 16vw, 200px);
+  }
+  .legal__inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .legal__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    letter-spacing: -0.02em;
+    margin: 14px 0 24px;
+  }
+  .legal__note {
+    background: rgba(182, 255, 60, 0.06);
+    border: 1px solid rgba(182, 255, 60, 0.25);
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  .legal__note strong {
+    color: var(--lime);
+  }
+  .legal__body h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.35rem;
+    margin: 32px 0 10px;
+  }
+  .legal__body p {
+    color: var(--muted-2);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .legal__body a {
+    color: var(--lime);
+  }
+</style>

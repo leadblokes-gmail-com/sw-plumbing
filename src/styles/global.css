@@ -176,60 +176,6 @@ h3 {
   white-space: nowrap;
 }
 
-/* --- Cursor-tracking spotlight on cards (Linear/HighLevel style) ---
-   A soft lime light follows the cursor inside the card. JS sets --mx/--my. */
-.card,
-.creds__card,
-.gallery__item,
-.detail,
-.why__card,
-.values__card,
-.promise__stat {
-  position: relative;
-  isolation: isolate;
-}
-.card::before,
-.creds__card::before,
-.gallery__item::before,
-.detail::before,
-.why__card::before,
-.values__card::before,
-.promise__stat::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    240px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(182, 255, 60, 0.16),
-    transparent 68%
-  );
-  opacity: 0;
-  transition: opacity 0.4s var(--ease-quint);
-  pointer-events: none;
-  z-index: 0;
-}
-.card:hover::before,
-.creds__card:hover::before,
-.gallery__item:hover::before,
-.detail:hover::before,
-.why__card:hover::before,
-.values__card:hover::before,
-.promise__stat:hover::before {
-  opacity: 1;
-}
-/* keep card content above the glow */
-.card > *,
-.creds__card > *,
-.gallery__item > *,
-.detail > *,
-.why__card > *,
-.values__card > *,
-.promise__stat > * {
-  position: relative;
-  z-index: 1;
-}
-
 /* --- Kinetic shimmer on accent words (moving lime sheen) --- */
 .kinetic {
   background: linear-gradient(100deg, var(--lime) 18%, #e4ffae 50%, var(--lime) 82%);
@@ -251,15 +197,6 @@ h3 {
     -webkit-text-fill-color: var(--lime);
     color: var(--lime);
   }
-  .card::before,
-  .creds__card::before,
-  .gallery__item::before,
-  .detail::before,
-  .why__card::before,
-  .values__card::before,
-  .promise__stat::before {
-    display: none;
-  }
 }
 
 /* --- Film grain overlay (subtle premium texture, static, GPU-cheap) --- */
@@ -272,36 +209,6 @@ h3 {
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
-}
-
-/* --- Custom cursor (desktop pointer:fine only) --- */
-.swp-cursor,
-.swp-cursor-dot {
-  display: none;
-}
-@media (pointer: fine) and (min-width: 861px) {
-  .swp-cursor,
-  .swp-cursor-dot {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9998;
-    pointer-events: none;
-    border-radius: 50%;
-  }
-  .swp-cursor {
-    width: 34px;
-    height: 34px;
-    border: 1.5px solid var(--lime);
-    transition: width 0.25s var(--ease-quint), height 0.25s var(--ease-quint),
-      background 0.25s var(--ease-quint);
-  }
-  .swp-cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--lime);
-  }
 }
 
 /* --- Reveal primitives ---
