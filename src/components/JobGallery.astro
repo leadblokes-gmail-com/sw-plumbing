@@ -48,6 +48,15 @@ const hasJobs = jobs.length > 0;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
+    transition: transform 0.7s var(--ease-quint);
+  }
+  .gallery__item:hover img {
+    transform: scale(1.07);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gallery__item:hover img {
+      transform: none;
+    }
   }
   .gallery__ba {
     position: relative;

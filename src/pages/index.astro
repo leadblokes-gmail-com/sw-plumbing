@@ -28,7 +28,10 @@ const why = [
 >
   <!-- ===== HERO ===== -->
   <section class="hero">
-    <canvas id="swp-hero-canvas" class="hero__canvas"></canvas>
+    <div class="hero__media" aria-hidden="true">
+      <img src="/images/hero-bg.webp" alt="" width="1920" height="1080" fetchpriority="high" />
+    </div>
+    <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__veil hero__veil--top"></div>
     <div class="hero__veil hero__veil--bottom"></div>
 
@@ -80,6 +83,25 @@ const why = [
       {homeServices.map((s) => <ServiceCard icon={s.icon} title={s.homeTitle ?? s.title} blurb={s.blurb} />)}
     </div>
   </Section>
+
+  <!-- ===== CINEMATIC BAND ===== -->
+  <section class="band" aria-label="Plumbing you can rely on">
+    <div class="band__media" aria-hidden="true">
+      <img src="/images/band-pipes.webp" alt="" width="1920" height="1040" loading="lazy" decoding="async" />
+    </div>
+    <div class="band__overlay" aria-hidden="true"></div>
+    <div class="band__inner">
+      <div data-reveal>
+        <div class="eyebrow">Bayside Brisbane</div>
+        <h2 class="band__title">Plumbing you can<br />actually <span class="lime">rely on.</span></h2>
+        <p class="band__sub">
+          Certified, local, and upfront — from a dripping tap to a burst main. We turn up when we say we
+          will, quote it before we start, and leave the place tidy.
+        </p>
+        <div class="band__cta"><CallButton size="lg" pulse /></div>
+      </div>
+    </div>
+  </section>
 
   <!-- ===== WHY S&W ===== -->
   <Section id="why" class="why" clip>
@@ -166,12 +188,42 @@ const why = [
       padding-bottom: 120px;
     }
   }
-  .hero__canvas {
+  .hero__media {
     position: absolute;
     inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .hero__media img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+    transform: scale(1.05);
+    animation: heroKenBurns 26s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes heroKenBurns {
+    from {
+      transform: scale(1.05) translate(0, 0);
+    }
+    to {
+      transform: scale(1.17) translate(-2.5%, -2.5%);
+    }
+  }
+  .hero__glow {
+    position: absolute;
+    inset: 0;
     z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(60% 50% at 28% 38%, rgba(127, 203, 0, 0.2), transparent 60%),
+      radial-gradient(48% 44% at 76% 66%, rgba(182, 255, 60, 0.14), transparent 60%);
+    animation: heroGlowDrift 20s ease-in-out infinite alternate;
+  }
+  @keyframes heroGlowDrift {
+    to {
+      transform: translate3d(4%, -3%, 0) scale(1.12);
+    }
   }
   .hero__veil {
     position: absolute;
@@ -179,10 +231,16 @@ const why = [
     z-index: 1;
   }
   .hero__veil--top {
-    background: radial-gradient(120% 90% at 50% 0%, rgba(10, 12, 14, 0) 40%, rgba(10, 12, 14, 0.85) 100%);
+    background: radial-gradient(120% 90% at 50% 0%, rgba(10, 12, 14, 0) 28%, rgba(10, 12, 14, 0.9) 100%);
   }
   .hero__veil--bottom {
-    background: linear-gradient(180deg, rgba(10, 12, 14, 0.4) 0%, rgba(10, 12, 14, 0) 30%, rgba(10, 12, 14, 0.7) 100%);
+    background: linear-gradient(180deg, rgba(10, 12, 14, 0.6) 0%, rgba(10, 12, 14, 0.12) 38%, rgba(10, 12, 14, 0.88) 100%);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__media img,
+    .hero__glow {
+      animation: none;
+    }
   }
   .hero__inner {
     position: relative;
@@ -257,6 +315,84 @@ const why = [
     transform-origin: left center;
     background: linear-gradient(90deg, rgba(182, 255, 60, 0) 0%, var(--lime) 50%, rgba(182, 255, 60, 0) 100%);
     box-shadow: 0 0 16px rgba(182, 255, 60, 0.8);
+  }
+
+  /* ---- CINEMATIC BAND ---- */
+  .band {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    min-height: min(72vh, 640px);
+    padding: clamp(80px, 12vw, 150px) var(--pad-x);
+    border-top: 1px solid var(--ink-800);
+  }
+  .band__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .band__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    animation: bandKenBurns 32s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes bandKenBurns {
+    from {
+      transform: scale(1.05) translate(0, 0);
+    }
+    to {
+      transform: scale(1.18) translate(2.5%, 1.5%);
+    }
+  }
+  .band__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        90deg,
+        rgba(10, 12, 14, 0.94) 0%,
+        rgba(10, 12, 14, 0.78) 42%,
+        rgba(10, 12, 14, 0.55) 100%
+      ),
+      radial-gradient(60% 80% at 18% 50%, rgba(127, 203, 0, 0.14), transparent 55%);
+  }
+  .band__inner {
+    position: relative;
+    z-index: 2;
+    max-width: var(--container);
+    margin: 0 auto;
+    width: 100%;
+  }
+  .band__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 6vw, 4.4rem);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    margin: 16px 0 0;
+  }
+  .band__title .lime {
+    color: var(--lime);
+  }
+  .band__sub {
+    margin-top: 20px;
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    color: var(--muted);
+    max-width: 44ch;
+    line-height: 1.55;
+  }
+  .band__cta {
+    margin-top: 34px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .band__media img {
+      animation: none;
+    }
   }
 
   /* ---- shared ---- */
