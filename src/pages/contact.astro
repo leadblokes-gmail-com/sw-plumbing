@@ -13,7 +13,7 @@ import { business, faqs } from '../data/site';
 
 const details = [
   { icon: 'phoneline', label: 'Phone', value: business.phone, sub: 'Tap to call now', href: business.phoneHref },
-  { icon: 'mail', label: 'Email', value: business.email, sub: "We'll get back to you", href: business.emailHref },
+  { icon: 'mail', label: 'Email', value: 'Email us', sub: business.email, href: business.emailHref },
   { icon: 'clock', label: 'Hours', value: 'Call to arrange', sub: 'Fast response across the bay' },
   { icon: 'pin', label: 'Service area', value: 'Birkdale & the bay', sub: 'Bayside Brisbane & Redlands' },
 ];
@@ -52,7 +52,7 @@ const faqSchema = [
       </h1>
       <p data-hero class="chero__sub">Call now for fast bayside plumbing.</p>
       <div data-hero class="chero__cta"><CallButton size="xl" pulse /></div>
-      <p data-hero class="chero__note">Tap to call · we usually answer</p>
+      <p data-hero class="chero__note">Tap to call now</p>
     </div>
   </section>
 
@@ -81,7 +81,7 @@ const faqSchema = [
       <div data-reveal>
         <div class="eyebrow">Send a message</div>
         <h2 class="h2 contact__h2">Or drop us the details.</h2>
-        <p class="contact__lead">Prefer to talk? Just call — we usually answer. Otherwise leave it here and we'll be in touch.</p>
+        <p class="contact__lead">Prefer to talk? Call now — it's the fastest way to get sorted. Otherwise leave the details below and we'll be in touch.</p>
 
         <ul class="trust-strip" aria-label="Why locals call us">
           {trust.map((t) => <li><Icon name="check" size={15} stroke="#B6FF3C" /> {t}</li>)}

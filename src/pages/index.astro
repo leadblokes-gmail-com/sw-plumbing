@@ -234,13 +234,15 @@ const why = [
       <div class="guarantee__glow"></div>
       <div class="guarantee__inner">
         <div class="eyebrow">Our promise</div>
-        <h2 class="guarantee__title">Not happy? <span>We'll make it right.</span></h2>
+        <h2 class="guarantee__title">We stand behind <span>our work.</span></h2>
         <p class="guarantee__text">
-          We stand behind every job. If something's not right, we come back and fix it. Simple as that.
+          If something isn't right with our work, we'll come back and make it right. Clear communication,
+          upfront quotes and quality work done properly — that's the deal.
         </p>
-        <div class="guarantee__stat">
-          <span data-countup="100" data-suffix="%" class="guarantee__num">100%</span>
-          <span class="guarantee__label">satisfaction guaranteed</span>
+        <div class="guarantee__chips">
+          <span><Icon name="check" size={15} stroke="#B6FF3C" /> Workmanship backed</span>
+          <span><Icon name="check" size={15} stroke="#B6FF3C" /> Upfront quotes</span>
+          <span><Icon name="check" size={15} stroke="#B6FF3C" /> Clean, tidy work</span>
         </div>
       </div>
     </div>
@@ -812,23 +814,19 @@ const why = [
     margin: 0 auto;
     line-height: 1.5;
   }
-  .guarantee__stat {
+  .guarantee__chips {
     display: flex;
-    align-items: baseline;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-top: 36px;
+    gap: 12px 24px;
+    margin-top: 32px;
   }
-  .guarantee__num {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(3rem, 9vw, 5.5rem);
-    line-height: 1;
-    color: var(--lime);
-  }
-  .guarantee__label {
-    font-size: 1.1rem;
-    color: var(--muted-2);
+  .guarantee__chips span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
     font-weight: 600;
+    color: var(--text);
   }
 </style>

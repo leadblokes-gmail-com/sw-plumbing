@@ -64,26 +64,33 @@ const values = [
   <!-- ===== STORY ===== -->
   <Section>
     <div class="story">
-      <div data-reveal class="eyebrow story__eyebrow">Why I started S &amp; W</div>
+      <div data-reveal class="eyebrow story__eyebrow">Why S &amp; W exists</div>
       <div class="story__body">
-        <p data-reveal>I started S &amp; W because I was sick of seeing people mucked around.</p>
-        <p data-reveal class="muted">Late tradies. Vague quotes. A bigger bill than the one you agreed to.</p>
         <p data-reveal>
-          So I do it the way it should be done — <span class="lime">turn up when I say I will, quote it upfront, and leave the place tidy.</span>
+          I started S &amp; W because plumbing should be simple: <span class="lime">turn up when you say you
+          will, quote it upfront, and leave the place tidy.</span>
         </p>
-        <p data-reveal class="muted">No surprises. Just honest, certified plumbing done properly, for my own community here on the bay.</p>
+        <p data-reveal class="muted">
+          Too many people have dealt with late arrivals, vague pricing and work that feels rushed. S &amp; W
+          is built to be different — certified plumbing, clear communication and quality work for homes and
+          businesses across Birkdale and the bay.
+        </p>
       </div>
       <div data-reveal class="story__sign">
         <div class="story__rule"></div>
-        <span>The S &amp; W team</span>
+        <span>S &amp; W Plumbing</span>
       </div>
+      <div data-reveal class="story__cta"><CallButton size="md" pulse label="Call your local plumber" /></div>
     </div>
   </Section>
 
   <!-- ===== CREDENTIALS ===== -->
   <Section tint>
-    <SectionHeading eyebrow="Why trust us" max="600px">No reviews yet — but plenty to stand on.</SectionHeading>
-    <p data-reveal class="creds-intro">We're new, and we won't pretend otherwise. What we can promise is the stuff that actually matters.</p>
+    <SectionHeading eyebrow="Why trust S &amp; W" max="620px">Built on the stuff that actually matters.</SectionHeading>
+    <p data-reveal class="creds-intro">
+      You might not know us yet — but you'll know exactly what to expect: clear communication, upfront
+      quotes, certified work and a local plumber who treats your place properly.
+    </p>
     <Credentials />
   </Section>
 
@@ -329,6 +336,9 @@ const values = [
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 1.05rem;
+  }
+  .story__cta {
+    margin-top: 34px;
   }
 
   .creds-intro {

@@ -32,6 +32,7 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
       </select>
       <Icon name="arrow" size={16} class="field__select-chev" />
     </div>
+    <span class="field__help">Not sure what to choose? Pick "Not sure" and tell us what's happening.</span>
   </label>
 
   <label class="field">
@@ -48,7 +49,7 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
   </button>
 
   <p id="swp-form-note" class="form__note" role="status" aria-live="polite">
-    <span class="form__note-dot">●</span> Prefer to talk? Just call — we usually answer.
+    <span class="form__note-dot">●</span> For urgent issues, call <strong>0432&nbsp;292&nbsp;371</strong> — it's the fastest way to get sorted.
   </p>
 </form>
 
@@ -117,6 +118,12 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
   }
   .field.is-invalid .field__error {
     display: block;
+  }
+  .field__help {
+    display: block;
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: var(--muted-2);
   }
   .field__select {
     position: relative;

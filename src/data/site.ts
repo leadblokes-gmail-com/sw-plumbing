@@ -183,22 +183,22 @@ export const credentials = [
   {
     icon: 'shield',
     title: 'Certified plumber',
-    body: 'A fully licensed, certified plumber on every job. Work done to code, and done to last.',
+    body: 'Licensed plumbing work completed safely, properly and to code.',
   },
   {
     icon: 'insured',
     title: 'Fully insured',
-    body: "Covered work, so you're never carrying the risk. Peace of mind on every job.",
+    body: 'Covered work for peace of mind on every job.',
   },
   {
     icon: 'quote',
-    title: 'Upfront fixed quotes',
-    body: 'The price before the work starts. The number we say is the number you pay.',
+    title: 'Upfront quotes',
+    body: 'We explain the job and the price before any work starts.',
   },
   {
     icon: 'pin',
     title: 'Local & responsive',
-    body: 'Based right here in Birkdale. We answer the phone and we turn up.',
+    body: 'Based near Birkdale and servicing bayside Brisbane.',
   },
 ];
 
@@ -259,14 +259,15 @@ export const jobs: { title: string; before?: string; after: string; alt: string 
 
 /** Service options for the contact form dropdown. */
 export const serviceOptions = [
-  'Blocked drains & toilets',
-  'Burst pipes & leaks',
-  'Hot water systems',
-  'Tap, toilet & cistern repairs',
+  'Blocked drain / toilet',
+  'Burst pipe / leak',
+  'Hot water issue',
+  'Tap / toilet repair',
   'Gas fitting',
-  'General & maintenance plumbing',
-  'Bathroom & renovation',
-  'Something else',
+  'Roof / gutter leak',
+  'Renovation plumbing',
+  'General maintenance',
+  'Not sure',
 ];
 
 /** Helper: a human licence/ABN string for footers, or null. */
