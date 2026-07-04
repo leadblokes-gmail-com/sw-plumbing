@@ -1,44 +1,55 @@
 /* ============================================================
    S & W Plumbing — design tokens + base styles
-   Warm, established trade-business system:
-   cream background · deep forest green · muted brass accent.
+   High-conversion local plumber system:
+   deep navy · white base · bold orange CTA · yellow highlight.
    ============================================================ */
 @import './fonts.css';
 
 :root {
   /* --- Brand palette --- */
-  --cream: #f6f1e7; /* base background */
-  --cream-2: #efe8d9; /* alt / tinted sections */
-  --card: #fffdf7; /* card / white surface */
-  --forest: #0f2f28; /* primary deep green */
-  --forest-2: #071a16; /* near-black green */
-  --brass: #b99a52; /* accent (buttons, numbers, small highlights) */
-  --brass-dark: #9a7e3c;
-  --olive: #9ead68; /* secondary accent */
+  --navy: #0b1b33; /* deep navy (headers, footer, emergency strip) */
+  --navy-2: #0f2a4d; /* lighter navy panel */
+  --navy-3: #16335c; /* card/border on navy */
+  --bg: #ffffff; /* base background */
+  --bg-2: #f2f6fc; /* light alt section */
+  --card: #ffffff; /* card surface */
+  --ink: #0b1b33; /* headings on light */
+  --orange: #ff6a1a; /* primary CTA / urgency */
+  --orange-dark: #e85a0c;
+  --yellow: #ffc531; /* secondary highlight */
+  --blue: #2f80ed;
 
-  /* --- Legacy token names remapped to the light theme so existing
-         component styles restyle without per-rule edits. --- */
-  --ink-900: #f6f1e7; /* base bg */
-  --ink-850: #efe8d9; /* deeper/tinted panels */
-  --ink-800: #fffdf7; /* card surface */
-  --ink-750: #e7decb;
-  --ink-700: #ded6c5;
-  --line: #ded6c5; /* borders */
-  --line-strong: #cbc0a8;
+  /* --- Legacy token names remapped so existing components restyle --- */
+  --ink-900: #ffffff; /* base bg */
+  --ink-850: #f2f6fc; /* tinted section */
+  --ink-800: #ffffff; /* card surface */
+  --ink-750: #eaf0f9;
+  --ink-700: #dfe7f2;
+  --line: #e2e9f3; /* borders (light) */
+  --line-strong: #cdd8ea;
 
   /* --- Text --- */
-  --text: #1e2724; /* charcoal */
-  --muted: #3c443e;
-  --muted-2: #5f6861;
-  --faint: #7c8379;
-  --faint-deco: #9aa096;
+  --text: #17233b; /* strong heading ink */
+  --muted: #3c4b64;
+  --muted-2: #5a6b85;
+  --faint: #7d8aa1;
+  --faint-deco: #9aa6bb;
 
-  /* --- Accent tokens (old "lime" names now map to brass) --- */
-  --lime: #b99a52;
-  --lime-dark: #9a7e3c;
-  --lime-12: rgba(185, 154, 82, 0.14);
-  --lime-10: rgba(185, 154, 82, 0.1);
-  --lime-08: rgba(185, 154, 82, 0.08);
+  /* --- Accent tokens (old "lime" now maps to orange) --- */
+  --lime: #ff6a1a;
+  --lime-dark: #e85a0c;
+  --lime-12: rgba(255, 106, 26, 0.14);
+  --lime-10: rgba(255, 106, 26, 0.1);
+  --lime-08: rgba(255, 106, 26, 0.08);
+
+  /* --- Compatibility names from prior theme (remapped) --- */
+  --forest: #0b1b33; /* -> navy (util bar, cta band, footer) */
+  --forest-2: #071426; /* darker navy */
+  --brass: #ff6a1a; /* -> orange accent */
+  --brass-dark: #e85a0c;
+  --cream: #ffffff; /* -> white (text on navy) */
+  --cream-2: #f2f6fc;
+  --olive: #ffc531; /* -> yellow */
 
   /* --- Type --- */
   --font-display: 'Clash Display', 'Satoshi', 'Inter', system-ui, sans-serif;
@@ -68,7 +79,7 @@ html {
 
 html,
 body {
-  background: var(--cream);
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -82,8 +93,8 @@ body {
 }
 
 ::selection {
-  background: var(--forest);
-  color: var(--cream);
+  background: var(--orange);
+  color: #fff;
 }
 
 a {
@@ -101,7 +112,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--forest);
+  outline: 2px solid var(--orange);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -112,7 +123,7 @@ h3 {
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: var(--ink);
 }
 
 /* --- Reusable layout helpers --- */
@@ -126,8 +137,8 @@ h3 {
   font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brass-dark);
-  font-weight: 700;
+  color: var(--orange-dark);
+  font-weight: 800;
 }
 
 .section {
@@ -144,20 +155,20 @@ h3 {
   letter-spacing: -0.02em;
 }
 
-/* --- Signature keyframes (kept subtle) --- */
+/* --- Signature keyframes --- */
 @keyframes swpPulse {
   0%,
   100% {
-    box-shadow: 0 6px 16px -12px rgba(15, 47, 40, 0.4);
+    box-shadow: 0 8px 20px -10px rgba(255, 106, 26, 0.55);
   }
   50% {
-    box-shadow: 0 8px 18px -10px rgba(15, 47, 40, 0.5);
+    box-shadow: 0 10px 26px -8px rgba(255, 106, 26, 0.75);
   }
 }
 @keyframes swpPing {
   0% {
     transform: scale(1);
-    opacity: 0.6;
+    opacity: 0.7;
   }
   80%,
   100% {
@@ -183,20 +194,20 @@ h3 {
   line-height: 0.9;
   letter-spacing: -0.03em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(246, 241, 231, 0.28);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
   display: block;
   white-space: nowrap;
 }
 
-/* Accent words — solid brass. */
+/* Accent words */
 .kinetic {
-  color: var(--brass-dark);
+  color: var(--orange);
 }
 .lime {
-  color: var(--brass-dark);
+  color: var(--orange);
 }
 
-/* --- Reveal primitives (GSAP owns animation; CSS sets hidden start state) --- */
+/* --- Reveal primitives --- */
 .js [data-reveal] {
   opacity: 0;
 }
@@ -215,8 +226,6 @@ h3 {
 .js .reveal-line > span {
   transform: translateY(120%);
 }
-
-/* Failsafe: reveal everything if motion never initialises. */
 .motion-failsafe [data-reveal],
 .motion-failsafe [data-anim-children] > *,
 .motion-failsafe .reveal-line > span {

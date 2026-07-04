@@ -63,7 +63,7 @@ const faqSchema = [
           const Tag = d.href ? 'a' : 'div';
           return (
             <Tag href={d.href} class="detail" data-tilt>
-              <div class="detail__icon"><Icon name={d.icon} size={25} stroke="#0F2F28" /></div>
+              <div class="detail__icon"><Icon name={d.icon} size={25} stroke="#0B1B33" /></div>
               <div class="detail__label">{d.label}</div>
               <div class="detail__value">{d.value}</div>
               <div class="detail__sub">{d.sub}</div>
@@ -83,7 +83,7 @@ const faqSchema = [
         <p class="contact__lead">Calling is fastest. For non-urgent jobs, send the details below and we'll be in touch.</p>
 
         <ul class="trust-strip" aria-label="How we work">
-          {trust.map((t) => <li><Icon name="check" size={15} stroke="#0F2F28" /> {t}</li>)}
+          {trust.map((t) => <li><Icon name="check" size={15} stroke="#0B1B33" /> {t}</li>)}
         </ul>
 
         <ContactForm />
@@ -118,17 +118,21 @@ const faqSchema = [
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding: 128px var(--pad-x) 64px;
-    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+    padding: 132px var(--pad-x) 68px;
+    color: #fff;
+    background:
+      radial-gradient(120% 90% at 50% 0%, rgba(255, 106, 26, 0.16), transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
   }
-  .chero__canvas {
+  .chero__canvas,
+  .chero__veil {
     display: none;
   }
   .chero__veil {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: radial-gradient(120% 100% at 50% 0%, rgba(246, 241, 231, 0) 36%, rgba(246, 241, 231, 0.92) 100%);
+    background: radial-gradient(120% 100% at 50% 0%, rgba(255, 255, 255, 0) 36%, rgba(255, 255, 255, 0.92) 100%);
   }
   .chero__inner {
     position: relative;
@@ -146,15 +150,16 @@ const faqSchema = [
     letter-spacing: -0.025em;
     margin: 0 auto;
     max-width: 13ch;
+    color: #fff;
   }
   .chero__title :global(em) {
     font-style: normal;
-    color: var(--lime);
+    color: var(--orange);
   }
   .chero__sub {
     margin: 24px auto 0;
     font-size: clamp(1.1rem, 2.4vw, 1.45rem);
-    color: var(--muted-2);
+    color: rgba(255, 255, 255, 0.82);
     max-width: 34ch;
     line-height: 1.5;
     font-weight: 500;
@@ -167,22 +172,22 @@ const faqSchema = [
   .chero__note {
     margin-top: 18px;
     font-size: 13.5px;
-    color: var(--muted-2);
+    color: rgba(255, 255, 255, 0.7);
   }
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     padding: 7px 14px;
-    border: 1px solid var(--line);
-    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
     border-radius: 999px;
     margin-bottom: 28px;
     font-size: 12.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--muted-2);
+    color: #fff;
     font-weight: 600;
   }
   .badge__dot {
@@ -209,14 +214,14 @@ const faqSchema = [
     transform-style: preserve-3d;
   }
   .detail:hover {
-    border-color: rgba(185, 154, 82, 0.22);
+    border-color: rgba(255, 106, 26, 0.22);
   }
   .detail__icon {
     width: 50px;
     height: 50px;
     border-radius: 13px;
     background: var(--lime-10);
-    border: 1px solid rgba(185, 154, 82, 0.22);
+    border: 1px solid rgba(255, 106, 26, 0.22);
     display: flex;
     align-items: center;
     justify-content: center;

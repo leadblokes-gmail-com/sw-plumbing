@@ -30,15 +30,15 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
   </label>
 
   <label class="field">
-    <span class="field__label">Service needed</span>
+    <span class="field__label">Choose your problem</span>
     <div class="field__select">
       <select name="service">
-        <option value="">Select a service…</option>
+        <option value="">Select your problem…</option>
         {serviceOptions.map((s) => <option>{s}</option>)}
       </select>
       <Icon name="arrow" size={16} class="field__select-chev" />
     </div>
-    <span class="field__help">Not sure what to choose? Pick "Not sure" and tell us what's happening.</span>
+    <span class="field__help">Not sure? Pick "Other" and tell us what's happening.</span>
   </label>
 
   <label class="field">
@@ -59,7 +59,7 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
 
   <button type="submit" class="form__submit" data-magnetic>
     <span class="form__submit-label">{submitLabel}</span>
-    <Icon name="arrow" size={18} stroke="#F6F1E7" />
+    <Icon name="arrow" size={18} stroke="#FFFFFF" />
   </button>
 
   <p id="swp-form-note" class="form__note" role="status" aria-live="polite">

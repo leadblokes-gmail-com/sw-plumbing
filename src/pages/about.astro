@@ -38,7 +38,7 @@ const values = [
       <div data-hero class="ahero__media">
         <div class="ahero__frame">
           <div class="ahero__placeholder">
-            <Icon name="pin" size={28} stroke="#0F2F28" />
+            <Icon name="pin" size={28} stroke="#0B1B33" />
             <span>Owner photo to be added</span>
             <small>A real photo of your local plumber goes here.</small>
           </div>
@@ -93,7 +93,7 @@ const values = [
           { icon: 'quote', t: 'Clear pricing before work starts' },
         ].map((c) => (
           <div class="proof__card">
-            <span class="proof__icon"><Icon name={c.icon} size={22} stroke="#0F2F28" /></span>
+            <span class="proof__icon"><Icon name={c.icon} size={22} stroke="#0B1B33" /></span>
             <h3 class="proof__title">{c.t}</h3>
           </div>
         ))
@@ -136,7 +136,7 @@ const values = [
           knows the area — not a call centre three suburbs of traffic away.
         </p>
         <a href="/service-areas" class="btn-ghost" data-magnetic>
-          See our service areas <Icon name="arrow" size={17} stroke="#0F2F28" />
+          See our service areas <Icon name="arrow" size={17} stroke="#0B1B33" />
         </a>
       </div>
       <div data-reveal><MapPanel variant="teaser" /></div>
@@ -155,9 +155,13 @@ const values = [
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding: 128px var(--pad-x) 64px;
-    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+    padding: 132px var(--pad-x) 68px;
+    color: #fff;
+    background:
+      radial-gradient(120% 90% at 88% 0%, rgba(255, 106, 26, 0.16), transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
   }
+  .ahero__veil { display: none; }
   .ahero__canvas {
     display: none;
   }
@@ -165,7 +169,7 @@ const values = [
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: radial-gradient(120% 100% at 30% 10%, rgba(246, 241, 231, 0) 35%, rgba(246, 241, 231, 0.92) 100%);
+    background: radial-gradient(120% 100% at 30% 10%, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.92) 100%);
   }
   .ahero__inner {
     position: relative;
@@ -181,14 +185,15 @@ const values = [
     font-size: clamp(2.5rem, 6.5vw, 4.8rem);
     line-height: 0.97;
     letter-spacing: -0.025em;
+    color: #fff;
   }
   .ahero__title span {
-    color: var(--lime);
+    color: var(--orange);
   }
   .ahero__sub {
     margin-top: 24px;
     font-size: clamp(1.05rem, 2.2vw, 1.35rem);
-    color: var(--muted-2);
+    color: rgba(255, 255, 255, 0.82);
     max-width: 42ch;
     line-height: 1.55;
     font-weight: 500;
@@ -259,7 +264,7 @@ const values = [
     gap: 9px;
     padding: 9px 15px;
     border-radius: 999px;
-    background: rgba(246, 241, 231, 0.78);
+    background: rgba(255, 255, 255, 0.78);
     backdrop-filter: blur(10px);
     border: 1px solid var(--line);
     font-size: 13px;
@@ -272,15 +277,15 @@ const values = [
     align-items: center;
     gap: 10px;
     padding: 7px 14px;
-    border: 1px solid var(--line);
-    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
     border-radius: 999px;
     margin-bottom: 28px;
     font-size: 12.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--muted-2);
+    color: #fff;
     font-weight: 600;
   }
   .badge__dot {
@@ -405,7 +410,7 @@ const values = [
     width: 60%;
     height: 140%;
     z-index: 0;
-    background: radial-gradient(circle, rgba(127, 203, 0, 0.1), rgba(246, 241, 231, 0) 65%);
+    background: radial-gradient(circle, rgba(127, 203, 0, 0.1), rgba(255, 255, 255, 0) 65%);
     pointer-events: none;
   }
   .values__content {

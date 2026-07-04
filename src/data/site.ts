@@ -250,17 +250,16 @@ export const jobs: { title: string; before?: string; after: string; alt: string 
   // in /public/images and reference them by path when available.
 ];
 
-/** Service options for the contact form dropdown. */
+/** "Choose your problem" options for the quote form dropdown. */
 export const serviceOptions = [
-  'Blocked drain / toilet',
-  'Burst pipe / leak',
-  'Hot water issue',
-  'Tap / toilet repair',
-  'Gas fitting',
-  'Roof / gutter leak',
-  'Renovation plumbing',
-  'General maintenance',
-  'Not sure',
+  'Leaking Tap / Toilet',
+  'Leaking Pipe',
+  'Blocked Drain',
+  'Hot Water',
+  'Gas Fitting',
+  'Appliance Installation',
+  'Emergency Plumbing',
+  'Other',
 ];
 
 /** Helper: a human licence/ABN string for footers, or null. */

@@ -1,42 +1,62 @@
 ---
 import Logo from './Logo.astro';
-import CallButton from './CallButton.astro';
 import Icon from './Icon.astro';
-import { nav, business } from '../data/site';
+import { business } from '../data/site';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: 'Discounts', href: '/#discounts' },
+  { label: 'Why Us', href: '/#why' },
+  { label: 'Reviews', href: '/#reviews' },
+  { label: 'Contact', href: '/contact' },
+];
 ---
 <div id="swp-nav" class="navwrap">
-  <!-- Top utility bar -->
-  <div class="util">
-    <div class="util__inner container">
-      <span class="util__left"><Icon name="pin" size={13} /> Birkdale &amp; Bayside Brisbane</span>
-      <span class="util__right">
-        <a href={business.phoneHref}><Icon name="phone" size={13} /> {business.phone}</a>
-        <span class="util__sep" aria-hidden="true">·</span>
-        <a href={business.emailHref} class="util__email">{business.email}</a>
+  <!-- Sticky contact bar -->
+  <div class="cbar">
+    <div class="cbar__inner container">
+      <span class="cbar__msg"><span class="cbar__pulse"></span> Same-day plumbing service · 7 days a week</span>
+      <span class="cbar__actions">
+        <a href={business.phoneHref} class="cbar__phone"><Icon name="phone" size={14} /> {business.phone}</a>
+        <a href="/#enquiry" class="cbar__quote">Get a quote</a>
       </span>
     </div>
   </div>
 
-  <!-- Main header -->
+  <!-- Header -->
   <header class="nav">
     <a href="/" class="nav__brand" aria-label="S & W Plumbing — home"><Logo /></a>
     <nav class="nav__links" aria-label="Primary">
       {
-        nav.map((item) => {
-          const href = item.href.replace(/\/$/, '') || '/';
-          const active = href === path;
+        links.map((item) => {
+          const base = item.href.split('#')[0].replace(/\/$/, '') || '/';
+          const active = base === path && !item.href.includes('#');
           return (
-            <a href={item.href} class:list={['nav__link', { 'is-active': active }]} aria-current={active ? 'page' : undefined}>
+            <a href={item.href} class:list={['nav__link', { 'is-active': active }]}>
               {item.label}
             </a>
           );
         })
       }
     </nav>
-    <CallButton size="sm" class="nav__cta" />
+    <a href={business.phoneHref} class="nav__cta"><Icon name="phone" size={16} /> {business.phone}</a>
+    <button id="swp-burger" class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="swp-mobile">
+      <span></span><span></span><span></span>
+    </button>
   </header>
+
+  <!-- Mobile menu -->
+  <div id="swp-mobile" class="mobile" hidden>
+    <nav class="mobile__links" aria-label="Mobile">
+      {links.map((item) => <a href={item.href} class="mobile__link">{item.label}</a>)}
+    </nav>
+    <div class="mobile__actions">
+      <a href={business.phoneHref} class="mobile__call"><Icon name="phone" size={18} /> Call {business.phone}</a>
+      <a href="/#enquiry" class="mobile__quote">Get a quote</a>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -47,59 +67,74 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     width: 100%;
     z-index: 100;
   }
-  /* Utility bar */
-  .util {
-    background: var(--forest);
-    color: var(--cream);
-    font-size: 12.5px;
-    font-weight: 500;
-    padding: 7px var(--pad-x);
+  /* Contact bar */
+  .cbar {
+    background: var(--navy);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px var(--pad-x);
   }
-  .util__inner {
+  .cbar__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
   }
-  .util__left,
-  .util__right {
+  .cbar__msg {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    color: rgba(246, 241, 231, 0.82);
+    gap: 9px;
+    color: rgba(255, 255, 255, 0.85);
   }
-  .util__right a {
+  .cbar__pulse {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 0 0 rgba(255, 106, 26, 0.6);
+    animation: cbarPulse 2s infinite;
+  }
+  @keyframes cbarPulse {
+    70% { box-shadow: 0 0 0 7px rgba(255, 106, 26, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 106, 26, 0); }
+  }
+  .cbar__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cbar__phone {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: color 0.25s;
-  }
-  .util__right a:hover {
     color: #fff;
   }
-  .util__sep {
-    color: rgba(246, 241, 231, 0.4);
+  .cbar__quote {
+    display: inline-flex;
+    align-items: center;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12.5px;
   }
-  @media (max-width: 620px) {
-    .util__left {
-      display: none;
-    }
-    .util__inner {
-      justify-content: center;
-    }
+  @media (max-width: 560px) {
+    .cbar__msg { font-size: 12px; }
+    .cbar__phone { display: none; }
   }
-  @media (max-width: 440px) {
-    .util__email {
-      display: none;
-    }
+  @media (max-width: 380px) {
+    .cbar__msg span + * , .cbar__msg { font-size: 11.5px; }
   }
-  /* Main header */
+  /* Header */
   .nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px var(--pad-x);
-    background: rgba(246, 241, 231, 0.9);
+    gap: 16px;
+    padding: 13px var(--pad-x);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
@@ -107,7 +142,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
   .nav__links {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 30px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -116,7 +151,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     position: relative;
     font-size: 14.5px;
     color: var(--muted);
-    font-weight: 500;
+    font-weight: 600;
     transition: color 0.25s;
   }
   .nav__link::after {
@@ -127,33 +162,114 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     width: 100%;
     height: 2px;
     border-radius: 2px;
-    background: var(--brass);
+    background: var(--orange);
     transform: scaleX(0);
     transform-origin: left center;
-    transition: transform 0.35s var(--ease-quint);
+    transition: transform 0.3s var(--ease-quint);
   }
-  .nav__link:hover {
-    color: var(--forest);
-  }
+  .nav__link:hover { color: var(--navy); }
   .nav__link:hover::after,
-  .nav__link.is-active::after {
-    transform: scaleX(1);
+  .nav__link.is-active::after { transform: scaleX(1); }
+  .nav__link.is-active { color: var(--navy); }
+  .nav__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14.5px;
+    padding: 11px 20px;
+    border-radius: 999px;
+    box-shadow: 0 8px 20px -12px rgba(255, 106, 26, 0.7);
+    transition: background 0.25s, transform 0.25s;
   }
-  .nav__link.is-active {
-    color: var(--forest);
+  .nav__cta:hover { background: var(--orange-dark); transform: translateY(-1px); }
+  /* Hamburger */
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .burger span {
+    width: 24px;
+    height: 2.5px;
+    background: var(--navy);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+  /* Mobile menu */
+  .mobile {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 12px var(--pad-x) 22px;
+    box-shadow: 0 20px 40px -24px rgba(11, 27, 51, 0.35);
+  }
+  .mobile[hidden] { display: none; }
+  .mobile__links {
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile__link {
+    padding: 14px 4px;
+    font-size: 1.05rem;
     font-weight: 600;
+    color: var(--navy);
+    border-bottom: 1px solid var(--line);
   }
-  @media (prefers-reduced-motion: reduce) {
-    .nav__link::after {
-      transition: none;
-    }
+  .mobile__actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
   }
-  @media (max-width: 860px) {
-    .nav__links {
-      display: none;
-    }
-    .nav :global(.nav__cta) {
-      padding: 11px 16px;
-    }
+  .mobile__call,
+  .mobile__quote {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .mobile__call { background: var(--orange); color: #fff; }
+  .mobile__quote { background: var(--navy); color: #fff; }
+
+  @media (max-width: 900px) {
+    .nav__links { display: none; }
+    .nav__cta { display: none; }
+    .burger { display: flex; }
+  }
+  @media (min-width: 901px) {
+    .mobile { display: none !important; }
   }
 </style>
+
+<script>
+  const burger = document.getElementById('swp-burger');
+  const menu = document.getElementById('swp-mobile');
+  if (burger && menu) {
+    burger.addEventListener('click', () => {
+      const open = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!open));
+      burger.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+      if (open) menu.setAttribute('hidden', '');
+      else menu.removeAttribute('hidden');
+    });
+    // close when a link is tapped
+    menu.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        burger.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('hidden', '');
+      })
+    );
+  }
+</script>

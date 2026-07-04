@@ -31,17 +31,15 @@ const { eyebrow, sub, minh = '60vh', underline = false, align = 'left' } = Astro
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding: 128px var(--pad-x) 56px;
-    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+    padding: 132px var(--pad-x) 60px;
+    color: #fff;
+    background:
+      radial-gradient(120% 90% at 85% 0%, rgba(255, 106, 26, 0.16), transparent 55%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
   }
-  .phero__canvas {
-    display: none;
-  }
+  .phero__canvas,
   .phero__veil {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: radial-gradient(120% 100% at 50% 0%, rgba(246, 241, 231, 0) 40%, rgba(246, 241, 231, 0.9) 100%);
+    display: none;
   }
   .phero__inner {
     position: relative;
@@ -60,6 +58,7 @@ const { eyebrow, sub, minh = '60vh', underline = false, align = 'left' } = Astro
     line-height: 0.96;
     letter-spacing: -0.025em;
     max-width: 16ch;
+    color: #fff;
   }
   .phero--center .phero__title {
     margin-inline: auto;
@@ -77,12 +76,12 @@ const { eyebrow, sub, minh = '60vh', underline = false, align = 'left' } = Astro
     transform-origin: left center;
     background: linear-gradient(90deg, var(--lime), var(--lime-dark));
     border-radius: 3px;
-    box-shadow: 0 0 14px rgba(185, 154, 82, 0.22);
+    box-shadow: 0 0 14px rgba(255, 106, 26, 0.22);
   }
   .phero__sub {
     margin-top: 24px;
     font-size: clamp(1.05rem, 2.4vw, 1.35rem);
-    color: var(--muted-2);
+    color: rgba(255, 255, 255, 0.82);
     max-width: 46ch;
     line-height: 1.55;
     font-weight: 500;
@@ -102,15 +101,15 @@ const { eyebrow, sub, minh = '60vh', underline = false, align = 'left' } = Astro
     align-items: center;
     gap: 10px;
     padding: 7px 14px;
-    border: 1px solid var(--line);
-    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
     border-radius: 999px;
     margin-bottom: 26px;
     font-size: 12.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--muted-2);
+    color: #fff;
     font-weight: 600;
   }
   .badge__dot {

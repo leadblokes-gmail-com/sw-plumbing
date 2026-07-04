@@ -26,7 +26,7 @@ const hasData = reviews.length > 0 || !!googleRating;
         <div class="reviews__rating" data-reveal>
           <div class="reviews__stars" aria-hidden="true">
             {Array.from({ length: 5 }).map(() => (
-              <Icon name="star" size={20} stroke="#0F2F28" />
+              <Icon name="star" size={20} stroke="#0B1B33" />
             ))}
           </div>
           <strong>{googleRating.rating.toFixed(1)}</strong>
@@ -39,7 +39,7 @@ const hasData = reviews.length > 0 || !!googleRating;
           <figure class="reviews__card">
             <div class="reviews__stars" aria-label={`${r.rating} out of 5 stars`}>
               {Array.from({ length: r.rating }).map(() => (
-                <Icon name="star" size={16} stroke="#0F2F28" />
+                <Icon name="star" size={16} stroke="#0B1B33" />
               ))}
             </div>
             <blockquote>{r.text}</blockquote>
