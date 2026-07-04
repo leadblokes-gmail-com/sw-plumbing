@@ -304,11 +304,19 @@ const reviews = [
 
   /* ---- 1. HERO ---- */
   .hero {
-    background:
-      radial-gradient(120% 90% at 88% 0%, rgba(255, 106, 26, 0.18), transparent 55%),
-      linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
     color: #fff;
     padding: calc(clamp(96px, 13vh, 150px) + 30px) var(--pad-x) clamp(56px, 8vw, 96px);
+    /* Photo layer sits under a navy overlay so the copy stays legible.
+       Drop /public/images/hero-plumber.jpg to switch it on — until then the
+       navy gradient below is the fallback and it looks identical to before. */
+    background-color: var(--navy);
+    background-image:
+      linear-gradient(110deg, rgba(11, 27, 51, 0.96) 0%, rgba(11, 27, 51, 0.88) 42%, rgba(11, 27, 51, 0.6) 100%),
+      radial-gradient(120% 90% at 88% 0%, rgba(255, 106, 26, 0.18), transparent 55%),
+      url('/images/hero-plumber.jpg');
+    background-size: cover, cover, cover;
+    background-position: center, center, center right;
+    background-repeat: no-repeat;
   }
   .hero__inner {
     display: grid;
@@ -466,11 +474,16 @@ const reviews = [
 
   /* ---- 5. MID CTA ---- */
   .midcta {
-    background:
-      radial-gradient(90% 120% at 15% 0%, rgba(255, 106, 26, 0.2), transparent 55%),
-      var(--navy);
     color: #fff;
     padding: clamp(48px, 7vw, 84px) var(--pad-x);
+    /* Drop /public/images/emergency-night.jpg to switch on the night photo. */
+    background-color: var(--navy);
+    background-image:
+      linear-gradient(90deg, rgba(11, 27, 51, 0.92) 0%, rgba(11, 27, 51, 0.7) 60%, rgba(11, 27, 51, 0.55) 100%),
+      url('/images/emergency-night.jpg');
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat;
   }
   .midcta__inner {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;
