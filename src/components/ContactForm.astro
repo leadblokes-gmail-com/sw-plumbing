@@ -3,6 +3,12 @@ import Icon from './Icon.astro';
 import { serviceOptions, business } from '../data/site';
 // One documented config value. Set PUBLIC_FORMSPREE_ENDPOINT in .env (see README).
 const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
+
+interface Props {
+  submitLabel?: string;
+  compact?: boolean; // hero variant: hide the optional photo field
+}
+const { submitLabel = 'Send message', compact = false } = Astro.props;
 ---
 <form id="swp-form" class="form" novalidate data-endpoint={endpoint}>
   <div class="form__row">
@@ -40,18 +46,20 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
     <textarea name="message" rows="4" placeholder="Tell us what's going on…"></textarea>
   </label>
 
-  <label class="field">
-    <span class="field__label">Photo of the issue <span class="field__opt">(optional)</span></span>
-    <input name="photo" type="file" accept="image/*" class="field__file" />
-    <span class="field__help">A quick photo of the leak, unit or fitting helps us come prepared.</span>
-  </label>
+  {!compact && (
+    <label class="field">
+      <span class="field__label">Photo of the issue <span class="field__opt">(optional)</span></span>
+      <input name="photo" type="file" accept="image/*" class="field__file" />
+      <span class="field__help">A quick photo of the leak, unit or fitting helps us come prepared.</span>
+    </label>
+  )}
 
   <!-- honeypot: hidden from humans, bots fill it → silently rejected -->
   <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="form__hp" aria-hidden="true" />
 
   <button type="submit" class="form__submit" data-magnetic>
-    <span class="form__submit-label">Send message</span>
-    <Icon name="arrow" size={18} stroke="#0A0C0E" />
+    <span class="form__submit-label">{submitLabel}</span>
+    <Icon name="arrow" size={18} stroke="#F6F1E7" />
   </button>
 
   <p id="swp-form-note" class="form__note" role="status" aria-live="polite">
@@ -184,8 +192,8 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: var(--lime);
-    color: var(--ink-900);
+    background: var(--forest);
+    color: var(--cream);
     font-weight: 700;
     font-size: 1.05rem;
     padding: 17px 28px;
@@ -193,12 +201,12 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
     border-radius: 12px;
     cursor: pointer;
     letter-spacing: -0.01em;
-    transition: transform 0.3s var(--ease-quint), box-shadow 0.3s, opacity 0.3s;
+    transition: transform 0.3s var(--ease-quint), background 0.3s, opacity 0.3s;
     will-change: transform;
   }
   .form__submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 36px -12px rgba(182, 255, 60, 0.6);
+    background: var(--forest-2);
   }
   .form__submit[disabled] {
     opacity: 0.6;
@@ -232,6 +240,7 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
     if (!form) return;
     const note = document.getElementById('swp-form-note');
     const submit = form.querySelector('.form__submit');
+    const origLabel = submit.querySelector('.form__submit-label').textContent;
     const endpoint = form.getAttribute('data-endpoint') || '';
 
     const setError = (name, msg) => {
@@ -322,7 +331,7 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
         showNote(fallback, 'is-error');
       } finally {
         submit.removeAttribute('disabled');
-        submit.querySelector('.form__submit-label').textContent = 'Send message';
+        submit.querySelector('.form__submit-label').textContent = origLabel;
       }
     });
   })();

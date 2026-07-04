@@ -64,7 +64,7 @@ const ratio = variant === 'interactive' ? '4 / 4.4' : variant === 'mini' ? '1 / 
 <style>
   .map {
     position: relative;
-    background: radial-gradient(circle at 60% 40%, rgba(20, 24, 28, 0.9), var(--ink-850));
+    background: radial-gradient(circle at 60% 40%, var(--card), var(--ink-850));
     border: 1px solid var(--line);
     border-radius: 22px;
     overflow: hidden;
@@ -117,7 +117,7 @@ const ratio = variant === 'interactive' ? '4 / 4.4' : variant === 'mini' ? '1 / 
     width: 14px;
     height: 14px;
     background: var(--lime);
-    box-shadow: 0 0 0 4px rgba(182, 255, 60, 0.18), 0 0 16px rgba(182, 255, 60, 0.8);
+    box-shadow: 0 0 0 4px rgba(185, 154, 82, 0.22), 0 0 16px rgba(185, 154, 82, 0.22);
   }
   .pin__hit:hover .pin__dot,
   .pin__hit:focus-visible .pin__dot {

@@ -15,7 +15,7 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
   expandable ? (
     <div class="card card--expand" data-tilt data-expand role="button" tabindex="0" aria-expanded="false">
       <div class="card__top">
-        <div class="card__icon"><Icon name={icon} size={26} stroke="#B6FF3C" /></div>
+        <div class="card__icon"><Icon name={icon} size={26} stroke="#0F2F28" /></div>
         <svg data-chev class="card__chev" width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
@@ -29,17 +29,17 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
           ))}
         </ul>
         <a href={business.phoneHref} class="card__call">
-          Call to book <Icon name="arrow" size={15} stroke="#B6FF3C" />
+          Call to book <Icon name="arrow" size={15} stroke="#0F2F28" />
         </a>
       </div>
     </div>
   ) : (
     <div class="card" data-tilt>
-      <div class="card__icon"><Icon name={icon} size={26} stroke="#B6FF3C" /></div>
+      <div class="card__icon"><Icon name={icon} size={26} stroke="#0F2F28" /></div>
       <h3 class="card__title">{title}</h3>
       <p class="card__blurb">{blurb}</p>
       <a href={business.phoneHref} class="card__call">
-        Call now <Icon name="arrow" size={15} stroke="#B6FF3C" />
+        Call now <Icon name="arrow" size={15} stroke="#0F2F28" />
       </a>
     </div>
   )
@@ -48,7 +48,7 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
 <style>
   .card {
     position: relative;
-    background: rgba(20, 24, 28, 0.65);
+    background: var(--card);
     backdrop-filter: blur(14px);
     border: 1px solid var(--line);
     border-radius: var(--radius);
@@ -62,8 +62,8 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
     cursor: pointer;
   }
   .card:hover {
-    border-color: rgba(182, 255, 60, 0.5);
-    box-shadow: 0 24px 60px -24px rgba(182, 255, 60, 0.35);
+    border-color: rgba(185, 154, 82, 0.22);
+    box-shadow: 0 24px 60px -24px rgba(185, 154, 82, 0.22);
   }
   .card__top {
     display: flex;
@@ -76,7 +76,7 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
     height: 50px;
     border-radius: 13px;
     background: var(--lime-10);
-    border: 1px solid rgba(182, 255, 60, 0.2);
+    border: 1px solid rgba(185, 154, 82, 0.22);
     display: flex;
     align-items: center;
     justify-content: center;

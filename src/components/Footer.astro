@@ -80,9 +80,12 @@ const footerAreas = [
 
 <style>
   .footer {
-    border-top: 1px solid var(--line);
-    background: var(--ink-850);
+    background: var(--forest);
+    color: var(--cream);
     padding: clamp(50px, 7vw, 80px) var(--pad-x) calc(130px + env(safe-area-inset-bottom));
+  }
+  .footer :global(.footer__brand .logo) {
+    color: var(--cream);
   }
   @media (min-width: 861px) {
     .footer {
@@ -124,21 +127,21 @@ const footerAreas = [
   }
   .footer__about p {
     font-size: 14.5px;
-    color: var(--muted-2);
+    color: rgba(246, 241, 231, 0.72);
     line-height: 1.6;
   }
   .footer__head {
     font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--faint);
+    color: rgba(246, 241, 231, 0.5);
     font-weight: 700;
     margin-bottom: 16px;
   }
   .footer__phone {
     display: block;
     font-size: 16px;
-    color: var(--lime);
+    color: var(--brass);
     font-weight: 700;
     margin-bottom: 10px;
     transition: opacity 0.25s;
@@ -156,7 +159,7 @@ const footerAreas = [
     align-items: center;
     gap: 7px;
     font-size: 14.5px;
-    color: var(--muted-2);
+    color: rgba(246, 241, 231, 0.75);
     transition: color 0.25s;
   }
   .footer__link:not(.footer__fb) {
@@ -167,16 +170,16 @@ const footerAreas = [
     margin-top: 10px;
   }
   .footer__link:hover {
-    color: var(--lime);
+    color: var(--brass);
   }
   .footer__muted {
     font-size: 14.5px;
-    color: var(--muted-2);
+    color: rgba(246, 241, 231, 0.72);
     line-height: 1.7;
     margin-bottom: 16px;
   }
   .footer__hl {
-    color: var(--lime);
+    color: var(--brass);
     font-weight: 600;
   }
   .footer__callbtn {
@@ -185,8 +188,8 @@ const footerAreas = [
     gap: 8px;
     font-size: 14px;
     font-weight: 700;
-    color: var(--ink-900);
-    background: var(--lime);
+    color: var(--forest-2);
+    background: var(--brass);
     padding: 10px 16px;
     border-radius: 999px;
     transition: transform 0.25s var(--ease-quint);
@@ -197,14 +200,14 @@ const footerAreas = [
   .footer__bar {
     margin-top: 48px;
     padding-top: 28px;
-    border-top: 1px solid var(--ink-750);
+    border-top: 1px solid rgba(246, 241, 231, 0.14);
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
     justify-content: space-between;
     align-items: center;
     font-size: 12.5px;
-    color: var(--faint);
+    color: rgba(246, 241, 231, 0.6);
   }
   .footer__bar-links {
     display: inline-flex;
@@ -213,13 +216,13 @@ const footerAreas = [
     flex-wrap: wrap;
   }
   .footer__bar-links a {
-    color: var(--muted-2);
+    color: rgba(246, 241, 231, 0.75);
     transition: color 0.25s;
   }
   .footer__bar-links a:hover {
-    color: var(--lime);
+    color: var(--brass);
   }
   .footer__sep {
-    color: var(--line-strong);
+    color: rgba(246, 241, 231, 0.3);
   }
 </style>
