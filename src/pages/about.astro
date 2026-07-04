@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Section from '../components/Section.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import Credentials from '../components/Credentials.astro';
 import MapPanel from '../components/MapPanel.astro';
 import Reviews from '../components/Reviews.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -20,7 +19,7 @@ const values = [
 ---
 <Layout
   title="About S & W Plumbing — Your Local Birkdale Plumber"
-  description="A new name with an old-school standard. Certified, straight-talking plumbing for Birkdale and bayside Brisbane — turn up on time, quote upfront, leave it tidy. Call 0432 292 371."
+  description="A local plumber for Birkdale and Bayside Brisbane — straight-talking, careful work: turn up when booked, explain the job, price it before starting and leave it tidy. Call 0432 292 371."
 >
   <!-- ===== HERO ===== -->
   <section class="ahero">
@@ -33,23 +32,16 @@ const values = [
           <span>About S &amp; W Plumbing</span>
         </div>
         <h1 class="ahero__title">Your local <span class="kinetic">bayside</span> plumber.</h1>
-        <p data-hero class="ahero__sub">Certified, straight-talking, and proud to look after Birkdale and the bay.</p>
+        <p data-hero class="ahero__sub">Straight-talking, local plumbing — proud to look after Birkdale and the bay.</p>
         <div data-hero class="ahero__cta"><CallButton size="md" pulse /></div>
       </div>
       <div data-hero class="ahero__media">
-        <div class="ahero__frame" data-tilt>
-          <picture>
-            <source srcset="/images/about-founder.webp" type="image/webp" />
-            <img
-              src="/images/about-founder.png"
-              alt="S & W Plumbing — working on a hot water unit in bayside Brisbane"
-              width="720"
-              height="900"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </picture>
+        <div class="ahero__frame">
+          <div class="ahero__placeholder">
+            <Icon name="pin" size={28} stroke="#B6FF3C" />
+            <span>Owner photo to be added</span>
+            <small>A real photo of your local plumber goes here.</small>
+          </div>
           <span class="ahero__corner ahero__corner--tl"></span>
           <span class="ahero__corner ahero__corner--br"></span>
         </div>
@@ -72,7 +64,7 @@ const values = [
         </p>
         <p data-reveal class="muted">
           Too many people have dealt with late arrivals, vague pricing and work that feels rushed. S &amp; W
-          is built to be different — certified plumbing, clear communication and quality work for homes and
+          is built to be different — clear communication and careful work for homes, rentals and small
           businesses across Birkdale and the bay.
         </p>
       </div>
@@ -84,14 +76,29 @@ const values = [
     </div>
   </Section>
 
-  <!-- ===== CREDENTIALS ===== -->
+  <!-- ===== REAL WORK, REAL STANDARDS ===== -->
   <Section tint>
-    <SectionHeading eyebrow="Why trust S &amp; W" max="620px">Built on the stuff that actually matters.</SectionHeading>
+    <SectionHeading eyebrow="How we work" max="640px">Real work. Real standards.</SectionHeading>
     <p data-reveal class="creds-intro">
-      You might not know us yet — but you'll know exactly what to expect: clear communication, upfront
-      quotes, certified work and a local plumber who treats your place properly.
+      We're not interested in looking bigger than we are. S&amp;W is a local plumbing business built on
+      doing the basics properly: answer clearly, turn up when booked, explain the work and leave the
+      place tidy.
     </p>
-    <Credentials />
+    <div class="proof" data-anim-children>
+      {
+        [
+          { icon: 'pin', t: 'Based near Birkdale' },
+          { icon: 'maintenance', t: 'Maintenance and general plumbing' },
+          { icon: 'check', t: 'Homes, rentals and small businesses' },
+          { icon: 'quote', t: 'Clear pricing before work starts' },
+        ].map((c) => (
+          <div class="proof__card">
+            <span class="proof__icon"><Icon name={c.icon} size={22} stroke="#B6FF3C" /></span>
+            <h3 class="proof__title">{c.t}</h3>
+          </div>
+        ))
+      }
+    </div>
   </Section>
 
   <!-- ===== VALUES ===== -->
@@ -136,7 +143,7 @@ const values = [
     </div>
   </Section>
 
-  <CtaBand sub="No call centres, no runaround. Just a certified bayside plumber on the other end.">
+  <CtaBand sub="No call centres, no runaround. Just a local bayside plumber on the other end.">
     Give your local plumber<br />a <span class="lime">call.</span>
   </CtaBand>
 </Layout>
@@ -198,26 +205,35 @@ const values = [
   }
   .ahero__frame {
     position: relative;
-    border: 1px solid rgba(182, 255, 60, 0.4);
+    border: 1px solid var(--line-strong);
     border-radius: 26px;
     padding: 10px;
-    background: linear-gradient(160deg, rgba(182, 255, 60, 0.08), rgba(20, 24, 28, 0.4));
-    box-shadow: 0 0 70px -22px rgba(182, 255, 60, 0.5);
-    transition: transform 0.25s var(--ease-quint);
-    transform-style: preserve-3d;
+    background: var(--ink-850);
   }
-  .ahero__frame picture {
-    display: block;
+  .ahero__placeholder {
     width: 100%;
     aspect-ratio: 4 / 5;
     border-radius: 18px;
-    overflow: hidden;
+    background: var(--ink-850);
+    border: 1px dashed var(--line-strong);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    padding: 24px;
   }
-  .ahero__frame img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .ahero__placeholder span {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--muted);
+  }
+  .ahero__placeholder small {
+    font-size: 13px;
+    color: var(--faint);
+    max-width: 24ch;
   }
   .ahero__corner {
     position: absolute;
@@ -345,7 +361,40 @@ const values = [
     margin: -34px 0 40px;
     font-size: 15px;
     color: var(--muted-2);
-    max-width: 600px;
+    max-width: 620px;
+    line-height: 1.65;
+  }
+  .proof {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+  }
+  .proof__card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--ink-800);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .proof__icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    background: var(--lime-10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lime);
+  }
+  .proof__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.02rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
   }
 
   /* VALUES */

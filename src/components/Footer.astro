@@ -29,8 +29,8 @@ const footerAreas = [
     <div class="footer__about">
       <div class="footer__brand"><Logo size={30} /></div>
       <p>
-        Certified maintenance and general plumbing for Birkdale and bayside Brisbane. Fast response,
-        upfront pricing and quality work done properly.
+        Local plumbing for Birkdale, Bayside Brisbane and the Redlands — leaks, taps, toilets, hot
+        water, burst pipes and maintenance, with clear pricing before work starts.
       </p>
     </div>
 
@@ -59,7 +59,7 @@ const footerAreas = [
 
     <div>
       <div class="footer__head">Hours</div>
-      <p class="footer__muted">Call to arrange<br /><span class="footer__hl">Fast response across the bay</span></p>
+      <p class="footer__muted">Call to arrange<br /><span class="footer__hl">Local response where available</span></p>
       <a href={business.phoneHref} class="footer__callbtn">
         <Icon name="phone" size={15} /> Call {business.phone}
       </a>
@@ -68,13 +68,12 @@ const footerAreas = [
 
   <div class="footer__bar container">
     <span>
-      © {year} {business.name} · Licence {business.licence ?? 'TBC'} · ABN {business.abn ?? 'TBC'} · Public
-      liability insured
+      © {year} {business.name} · {credentialLine ?? 'Business details available on request'}
     </span>
     <span class="footer__bar-links">
       <a href="/privacy">Privacy Policy</a>
       <span class="footer__sep">·</span>
-      Certified plumber · Birkdale, QLD
+      Birkdale, QLD · Bayside Brisbane
     </span>
   </div>
 </footer>

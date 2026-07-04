@@ -120,7 +120,7 @@ h3 {
 
 .section {
   position: relative; /* contain absolutely-positioned decorative glows */
-  padding: clamp(80px, 11vw, 140px) var(--pad-x);
+  padding: clamp(60px, 8vw, 104px) var(--pad-x);
   border-top: 1px solid var(--ink-800);
 }
 
@@ -136,10 +136,10 @@ h3 {
 @keyframes swpPulse {
   0%,
   100% {
-    box-shadow: 0 8px 22px -10px rgba(182, 255, 60, 0.45);
+    box-shadow: 0 6px 18px -12px rgba(182, 255, 60, 0.28);
   }
   50% {
-    box-shadow: 0 10px 26px -8px rgba(182, 255, 60, 0.6);
+    box-shadow: 0 8px 20px -10px rgba(182, 255, 60, 0.36);
   }
 }
 @keyframes swpPing {

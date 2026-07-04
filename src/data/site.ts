@@ -152,53 +152,52 @@ export const problems = [
 
 export const faqs = [
   {
-    q: 'Do you do emergencies?',
-    a: "Yep — burst pipes, no hot water, blocked drains and the like. Give us a call and we'll get to you as fast as we can across the bay.",
+    q: 'What plumbing services do you offer?',
+    a: 'Blocked drains and toilets, burst pipes and leaks, hot water repairs and installs, taps, toilets and cisterns, gas fitting, roof and gutter leaks, and general maintenance plumbing for homes, rentals and small businesses.',
   },
   {
-    q: 'What areas do you cover?',
-    a: "Birkdale and all of bayside Brisbane — Wellington Point, Cleveland, Capalaba, Victoria Point, Wynnum and the wider Redlands. Not sure if you're in? Just call and ask.",
+    q: 'Do you service my suburb?',
+    a: "We're based near Birkdale and cover Bayside Brisbane and the Redlands — Wellington Point, Cleveland, Capalaba, Victoria Point, Wynnum and nearby. Not sure if you're in the area? Give us a call and we'll let you know.",
   },
   {
-    q: 'Do you give upfront quotes?',
-    a: 'Always. We diagnose the problem and give you a clear price before any work starts — so there are no surprises when the invoice lands.',
+    q: 'Do you provide pricing before work starts?',
+    a: "Yes. We look at the job, explain what's involved and give you a clear price before any work begins — so you know the number before we start.",
   },
   {
-    q: 'Are you certified & insured?',
-    // Renders the licence/ABN when set in `business`; otherwise stays honest with no bracket.
-    a: 'Yes — a fully licensed, certified and insured plumber on every job.',
+    q: 'Can I call for urgent issues?',
+    a: "Call anytime and we'll talk it through. For urgent problems like a burst pipe or no hot water, phoning is the fastest way to get a time sorted.",
   },
   {
-    q: 'What does it cost to call you out?',
-    a: "We'll always talk through the job and give you the price before we start, so a call-out never turns into a nasty surprise. No work goes ahead until you've okayed the number.",
-  },
-  {
-    q: 'How do I pay?',
-    a: "Easy — we'll sort the details when we book you in. Just give us a call and we'll let you know the options.",
+    q: 'Do you do small jobs?',
+    a: "Absolutely — a dripping tap, a running toilet or a single outdoor fitting are all worth a call. No job is too small.",
   },
 ];
 
-/** Credentials shown in the trust bar / About credentials grid. */
+/**
+ * "Proof over promises" cards — the honest trust points shown on Home + About.
+ * Deliberately avoids licensed/insured/certified claims until real proof exists;
+ * add those back once a licence number and insurance are confirmed in `business`.
+ */
 export const credentials = [
   {
-    icon: 'shield',
-    title: 'Certified plumber',
-    body: 'Licensed plumbing work completed safely, properly and to code.',
-  },
-  {
-    icon: 'insured',
-    title: 'Fully insured',
-    body: 'Covered work for peace of mind on every job.',
-  },
-  {
     icon: 'quote',
-    title: 'Upfront quotes',
-    body: 'We explain the job and the price before any work starts.',
+    title: 'Clear pricing before work starts',
+    body: 'We explain the job and give you the price before any work begins — no surprises on the invoice.',
+  },
+  {
+    icon: 'shield',
+    title: 'Clean, tidy work',
+    body: 'We treat your place with respect and leave it as we found it — tidied up and sorted.',
   },
   {
     icon: 'pin',
-    title: 'Local & responsive',
-    body: 'Based near Birkdale and servicing bayside Brisbane.',
+    title: 'Local to Birkdale',
+    body: 'Based near Birkdale and working across Bayside Brisbane and the Redlands.',
+  },
+  {
+    icon: 'insured',
+    title: 'Business details available on request',
+    body: 'Licence and insurance details can be provided when you get in touch.',
   },
 ];
 
@@ -230,13 +229,10 @@ export const suburbs = [
  * Optionally set googleRating + googleCount once a Google Business Profile exists.
  */
 export const reviews: { name: string; suburb: string; rating: number; text: string }[] = [
-  // ⚠️ PLACEHOLDER REVIEWS — these are NOT real and MUST be replaced with genuine
-  // Google/Facebook reviews before the site goes public. Publishing fabricated
-  // testimonials on an Australian business site breaches the Australian Consumer
-  // Law (ACCC). Swap these for real ones (name + suburb + their words).
-  { name: 'Sarah', suburb: 'Birkdale', rating: 5, text: 'Arrived on time, explained the issue clearly and had the leak fixed quickly.' },
-  { name: 'Matt', suburb: 'Wellington Point', rating: 5, text: 'Easy to deal with, upfront about pricing and left everything clean.' },
-  { name: 'Emily', suburb: 'Cleveland', rating: 5, text: 'Great local plumber. Friendly, professional and sorted the job without fuss.' },
+  // Intentionally EMPTY. This is a new business — no fabricated testimonials.
+  // Paste real Google/Facebook reviews here (name + suburb + their words) to
+  // switch the Reviews block on across Home + Contact + About. Until then the
+  // site shows "Proof over promises" instead of fake social proof.
 ];
 
 export const googleRating: { rating: number; count: number } | null = null; // TODO: set once GBP is live
@@ -249,12 +245,9 @@ export const googleRating: { rating: number; count: number } | null = null; // T
  * Shape: { title: string, before?: string, after: string, alt: string }
  */
 export const jobs: { title: string; before?: string; after: string; alt: string }[] = [
-  // NOTE: these are tasteful stock placeholders (graded to the brand) so the
-  // gallery isn't empty. Swap for real S&W job photos when available — captions
-  // describe the service category, not a specific claimed job.
-  { title: 'Leaks & pipe repairs', after: '/images/work-1.webp', alt: 'Plumber repairing pipework under a sink' },
-  { title: 'Taps & outdoor fittings', after: '/images/work-2.webp', alt: 'Plumber working on an outdoor tap' },
-  { title: 'Pipework & maintenance', after: '/images/work-3.webp', alt: 'Domestic and industrial pipework' },
+  // Intentionally EMPTY — no stock photos posing as real jobs. The JobGallery
+  // auto-hides until genuine S&W job photos are added here. Put real image files
+  // in /public/images and reference them by path when available.
 ];
 
 /** Service options for the contact form dropdown. */

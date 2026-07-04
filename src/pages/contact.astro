@@ -5,7 +5,6 @@ import SectionHeading from '../components/SectionHeading.astro';
 import ContactForm from '../components/ContactForm.astro';
 import MapPanel from '../components/MapPanel.astro';
 import Accordion from '../components/Accordion.astro';
-import Reviews from '../components/Reviews.astro';
 import CtaBand from '../components/CtaBand.astro';
 import CallButton from '../components/CallButton.astro';
 import Icon from '../components/Icon.astro';
@@ -14,11 +13,11 @@ import { business, faqs } from '../data/site';
 const details = [
   { icon: 'phoneline', label: 'Phone', value: business.phone, sub: 'Tap to call now', href: business.phoneHref },
   { icon: 'mail', label: 'Email', value: 'Email us', sub: business.email, href: business.emailHref },
-  { icon: 'clock', label: 'Hours', value: 'Call to arrange', sub: 'Fast response across the bay' },
+  { icon: 'clock', label: 'Hours', value: 'Call to arrange', sub: 'Local response where available' },
   { icon: 'pin', label: 'Service area', value: 'Birkdale & the bay', sub: 'Bayside Brisbane & Redlands' },
 ];
 
-const trust = ['Certified plumber', 'Fully insured', 'Upfront fixed quotes', 'Local to the bay'];
+const trust = ['Clear pricing before work starts', 'Clean, tidy work', 'Local to Birkdale', 'Call for the fastest time'];
 
 const faqSchema = [
   {
@@ -34,7 +33,7 @@ const faqSchema = [
 ---
 <Layout
   title="Contact S & W Plumbing — Call 0432 292 371 | Birkdale & Bayside Brisbane"
-  description="Get in touch with your local certified plumber. Call 0432 292 371 for fast bayside plumbing, or send the details and we'll be in touch. Birkdale, QLD."
+  description="Get in touch with your local plumber. Call 0432 292 371 for bayside plumbing, or send the details and we'll be in touch. Birkdale, QLD — Bayside Brisbane & the Redlands."
   schema={faqSchema}
 >
   <!-- ===== HERO ===== -->
@@ -81,14 +80,13 @@ const faqSchema = [
       <div data-reveal>
         <div class="eyebrow">Send a message</div>
         <h2 class="h2 contact__h2">Or drop us the details.</h2>
-        <p class="contact__lead">Prefer to talk? Call now — it's the fastest way to get sorted. Otherwise leave the details below and we'll be in touch.</p>
+        <p class="contact__lead">Calling is fastest. For non-urgent jobs, send the details below and we'll be in touch.</p>
 
-        <ul class="trust-strip" aria-label="Why locals call us">
+        <ul class="trust-strip" aria-label="How we work">
           {trust.map((t) => <li><Icon name="check" size={15} stroke="#B6FF3C" /> {t}</li>)}
         </ul>
 
         <ContactForm />
-        <Reviews heading={false} compact />
       </div>
 
       <div data-reveal>
@@ -215,8 +213,7 @@ const faqSchema = [
     transform-style: preserve-3d;
   }
   .detail:hover {
-    border-color: rgba(182, 255, 60, 0.5);
-    box-shadow: 0 24px 60px -24px rgba(182, 255, 60, 0.35);
+    border-color: rgba(182, 255, 60, 0.4);
   }
   .detail__icon {
     width: 50px;

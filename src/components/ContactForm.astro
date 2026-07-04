@@ -40,6 +40,12 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
     <textarea name="message" rows="4" placeholder="Tell us what's going on…"></textarea>
   </label>
 
+  <label class="field">
+    <span class="field__label">Photo of the issue <span class="field__opt">(optional)</span></span>
+    <input name="photo" type="file" accept="image/*" class="field__file" />
+    <span class="field__help">A quick photo of the leak, unit or fitting helps us come prepared.</span>
+  </label>
+
   <!-- honeypot: hidden from humans, bots fill it → silently rejected -->
   <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="form__hp" aria-hidden="true" />
 
@@ -124,6 +130,31 @@ const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
     margin-top: 8px;
     font-size: 12.5px;
     color: var(--muted-2);
+  }
+  .field__opt {
+    color: var(--faint);
+    font-weight: 500;
+  }
+  .field__file {
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--muted-2);
+    cursor: pointer;
+  }
+  .field__file::file-selector-button {
+    margin-right: 12px;
+    padding: 8px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--ink-750);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .field__file::file-selector-button:hover {
+    border-color: var(--lime);
   }
   .field__select {
     position: relative;
