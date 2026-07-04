@@ -192,8 +192,8 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: var(--forest);
-    color: var(--cream);
+    background: var(--orange);
+    color: #fff;
     font-weight: 700;
     font-size: 1.05rem;
     padding: 17px 28px;
@@ -201,12 +201,13 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
     border-radius: 12px;
     cursor: pointer;
     letter-spacing: -0.01em;
+    box-shadow: 0 10px 24px -14px rgba(245, 130, 32, 0.7);
     transition: transform 0.3s var(--ease-quint), background 0.3s, opacity 0.3s;
     will-change: transform;
   }
   .form__submit:hover {
     transform: translateY(-2px);
-    background: var(--forest-2);
+    background: var(--orange-dark);
   }
   .form__submit[disabled] {
     opacity: 0.6;

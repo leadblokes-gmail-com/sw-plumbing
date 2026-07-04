@@ -1,55 +1,60 @@
 /* ============================================================
    S & W Plumbing — design tokens + base styles
-   High-conversion local plumber system:
-   deep navy · white base · bold orange CTA · yellow highlight.
+   Bright, trustworthy local-plumber system:
+   white / light-grey base · bright blue brand · deep navy for
+   strong areas · orange reserved for high-value CTAs.
    ============================================================ */
 @import './fonts.css';
 
 :root {
   /* --- Brand palette --- */
-  --navy: #0b1b33; /* deep navy (headers, footer, emergency strip) */
-  --navy-2: #0f2a4d; /* lighter navy panel */
-  --navy-3: #16335c; /* card/border on navy */
-  --bg: #ffffff; /* base background */
-  --bg-2: #f2f6fc; /* light alt section */
-  --card: #ffffff; /* card surface */
-  --ink: #0b1b33; /* headings on light */
-  --orange: #ff6a1a; /* primary CTA / urgency */
-  --orange-dark: #e85a0c;
-  --yellow: #ffc531; /* secondary highlight */
-  --blue: #2f80ed;
+  --blue: #0077c8; /* main brand */
+  --blue-dark: #0a5fa0;
+  --blue-soft: #eaf5ff; /* light blue section bg */
+  --blue-border: #b8dfff;
+  --navy: #08233f; /* headings, footer, strong sections only */
+  --navy-2: #0d3358;
+  --orange: #f58220; /* high-value CTAs / small accents only */
+  --orange-hover: #ff9a3d;
+  --orange-dark: #d96f14; /* button hover */
+  --yellow: #f7b32b;
 
-  /* --- Legacy token names remapped so existing components restyle --- */
-  --ink-900: #ffffff; /* base bg */
-  --ink-850: #f2f6fc; /* tinted section */
-  --ink-800: #ffffff; /* card surface */
-  --ink-750: #eaf0f9;
-  --ink-700: #dfe7f2;
-  --line: #e2e9f3; /* borders (light) */
-  --line-strong: #cdd8ea;
+  --bg: #ffffff; /* base background */
+  --bg-2: #f5f7fa; /* light grey section */
+  --card: #ffffff;
+  --ink: #08233f; /* headings deep navy */
+
+  /* --- Legacy token names remapped --- */
+  --ink-900: #ffffff;
+  --ink-850: #f5f7fa;
+  --ink-800: #ffffff;
+  --ink-750: #eef3f9;
+  --ink-700: #e1e7ef;
+  --line: #e1e7ef;
+  --line-strong: #d3dcea;
 
   /* --- Text --- */
-  --text: #17233b; /* strong heading ink */
-  --muted: #3c4b64;
-  --muted-2: #5a6b85;
-  --faint: #7d8aa1;
-  --faint-deco: #9aa6bb;
+  --text: #102033; /* dark text */
+  --muted: #47566b;
+  --muted-2: #5f6b7a; /* body grey */
+  --faint: #8a96a7;
+  --faint-deco: #a6b0bf;
 
-  /* --- Accent tokens (old "lime" now maps to orange) --- */
-  --lime: #ff6a1a;
-  --lime-dark: #e85a0c;
-  --lime-12: rgba(255, 106, 26, 0.14);
-  --lime-10: rgba(255, 106, 26, 0.1);
-  --lime-08: rgba(255, 106, 26, 0.08);
+  /* --- Accent tokens (old "lime" now maps to the blue brand) --- */
+  --lime: #0077c8;
+  --lime-dark: #0a5fa0;
+  --lime-12: rgba(0, 119, 200, 0.12);
+  --lime-10: rgba(0, 119, 200, 0.09);
+  --lime-08: rgba(0, 119, 200, 0.07);
 
-  /* --- Compatibility names from prior theme (remapped) --- */
-  --forest: #0b1b33; /* -> navy (util bar, cta band, footer) */
-  --forest-2: #071426; /* darker navy */
-  --brass: #ff6a1a; /* -> orange accent */
-  --brass-dark: #e85a0c;
-  --cream: #ffffff; /* -> white (text on navy) */
-  --cream-2: #f2f6fc;
-  --olive: #ffc531; /* -> yellow */
+  /* --- Compatibility names from prior themes --- */
+  --forest: #08233f; /* -> navy (util bar, cta band, footer) */
+  --forest-2: #06192e;
+  --brass: #f58220; /* -> orange CTA */
+  --brass-dark: #d96f14;
+  --cream: #ffffff;
+  --cream-2: #f5f7fa;
+  --olive: #f58220;
 
   /* --- Type --- */
   --font-display: 'Clash Display', 'Satoshi', 'Inter', system-ui, sans-serif;
@@ -93,7 +98,7 @@ body {
 }
 
 ::selection {
-  background: var(--orange);
+  background: var(--blue);
   color: #fff;
 }
 
@@ -112,7 +117,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--orange);
+  outline: 2px solid var(--blue);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -137,7 +142,7 @@ h3 {
   font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--orange-dark);
+  color: var(--blue);
   font-weight: 800;
 }
 
@@ -153,16 +158,17 @@ h3 {
   font-size: clamp(1.9rem, 4.4vw, 3.1rem);
   line-height: 1.06;
   letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 /* --- Signature keyframes --- */
 @keyframes swpPulse {
   0%,
   100% {
-    box-shadow: 0 8px 20px -10px rgba(255, 106, 26, 0.55);
+    box-shadow: 0 8px 20px -10px rgba(245, 130, 32, 0.5);
   }
   50% {
-    box-shadow: 0 10px 26px -8px rgba(255, 106, 26, 0.75);
+    box-shadow: 0 10px 26px -8px rgba(245, 130, 32, 0.68);
   }
 }
 @keyframes swpPing {
@@ -199,12 +205,12 @@ h3 {
   white-space: nowrap;
 }
 
-/* Accent words */
+/* Accent / highlight words — blue brand (not orange). */
 .kinetic {
-  color: var(--orange);
+  color: var(--blue);
 }
 .lime {
-  color: var(--orange);
+  color: var(--blue);
 }
 
 /* --- Reveal primitives --- */
