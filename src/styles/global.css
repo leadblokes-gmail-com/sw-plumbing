@@ -1,60 +1,70 @@
 /* ============================================================
    S & W Plumbing — design tokens + base styles
-   Bright, trustworthy local-plumber system:
-   white / light-grey base · bright blue brand · deep navy for
-   strong areas · orange reserved for high-value CTAs.
+   Premium green + black brand:
+   black/charcoal for top bar, footer & impact sections ·
+   white / soft backgrounds for content · green for CTAs,
+   icons, badges, highlights.
    ============================================================ */
 @import './fonts.css';
 
 :root {
   /* --- Brand palette --- */
-  --blue: #0077c8; /* main brand */
-  --blue-dark: #0a5fa0;
-  --blue-soft: #eaf5ff; /* light blue section bg */
-  --blue-border: #b8dfff;
-  --navy: #08233f; /* headings, footer, strong sections only */
-  --navy-2: #0d3358;
-  --orange: #f58220; /* high-value CTAs / small accents only */
-  --orange-hover: #ff9a3d;
-  --orange-dark: #d96f14; /* button hover */
-  --yellow: #f7b32b;
-
-  --bg: #ffffff; /* base background */
-  --bg-2: #f5f7fa; /* light grey section */
-  --card: #ffffff;
-  --ink: #08233f; /* headings deep navy */
+  --black: #050708;
+  --charcoal: #101412;
+  --charcoal-soft: #1a1f1c;
+  --green: #00a651; /* main brand */
+  --green-dark: #007a3d;
+  --green-bright: #19c463; /* primary CTA buttons */
+  --green-light: #eaf8f0; /* soft green tint */
+  --white: #ffffff;
+  --ink: #101412; /* headings (near-black) */
 
   /* --- Legacy token names remapped --- */
-  --ink-900: #ffffff;
-  --ink-850: #f5f7fa;
-  --ink-800: #ffffff;
-  --ink-750: #eef3f9;
-  --ink-700: #e1e7ef;
-  --line: #e1e7ef;
-  --line-strong: #d3dcea;
+  --ink-900: #ffffff; /* base bg */
+  --ink-850: #f5f7f4; /* soft section */
+  --ink-800: #ffffff; /* card */
+  --ink-750: #eef2ee;
+  --ink-700: #dde5dd;
+  --line: #dde5dd; /* borders */
+  --line-strong: #c7d2c7;
 
   /* --- Text --- */
-  --text: #102033; /* dark text */
-  --muted: #47566b;
-  --muted-2: #5f6b7a; /* body grey */
-  --faint: #8a96a7;
-  --faint-deco: #a6b0bf;
+  --text: #101412;
+  --muted: #46504a;
+  --muted-2: #66706a;
+  --faint: #8b948d;
+  --faint-deco: #a7afa8;
 
-  /* --- Accent tokens (old "lime" now maps to the blue brand) --- */
-  --lime: #0077c8;
-  --lime-dark: #0a5fa0;
-  --lime-12: rgba(0, 119, 200, 0.12);
-  --lime-10: rgba(0, 119, 200, 0.09);
-  --lime-08: rgba(0, 119, 200, 0.07);
+  /* --- Accent tokens (old "lime" -> green brand) --- */
+  --lime: #00a651;
+  --lime-dark: #007a3d;
+  --lime-12: rgba(0, 166, 81, 0.12);
+  --lime-10: rgba(0, 166, 81, 0.09);
+  --lime-08: rgba(0, 166, 81, 0.07);
 
-  /* --- Compatibility names from prior themes --- */
-  --forest: #08233f; /* -> navy (util bar, cta band, footer) */
-  --forest-2: #06192e;
-  --brass: #f58220; /* -> orange CTA */
-  --brass-dark: #d96f14;
+  /* --- Prior blue/orange names remapped to green so usages flip --- */
+  --blue: #00a651;
+  --blue-dark: #007a3d;
+  --blue-soft: #eaf8f0;
+  --blue-border: #b7e3cb;
+  --orange: #19c463; /* CTA -> bright green */
+  --orange-dark: #00a651;
+  --orange-hover: #2fd472;
+  --yellow: #00a651;
+  --navy: #101412; /* headings/strong -> charcoal */
+  --navy-2: #1a1f1c;
+
+  /* --- Compatibility names --- */
+  --forest: #050708; /* top bar / footer / cta band -> black */
+  --forest-2: #101412;
+  --brass: #00a651; /* accent CTA -> green */
+  --brass-dark: #007a3d;
   --cream: #ffffff;
-  --cream-2: #f5f7fa;
-  --olive: #f58220;
+  --cream-2: #f5f7f4;
+  --olive: #00a651;
+  --bg: #ffffff;
+  --bg-2: #f5f7f4;
+  --card: #ffffff;
 
   /* --- Type --- */
   --font-display: 'Clash Display', 'Satoshi', 'Inter', system-ui, sans-serif;
@@ -84,7 +94,7 @@ html {
 
 html,
 body {
-  background: var(--bg);
+  background: var(--white);
   color: var(--text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -98,7 +108,7 @@ body {
 }
 
 ::selection {
-  background: var(--blue);
+  background: var(--green);
   color: #fff;
 }
 
@@ -117,7 +127,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--blue);
+  outline: 2px solid var(--green);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -142,7 +152,7 @@ h3 {
   font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--blue);
+  color: var(--green-dark);
   font-weight: 800;
 }
 
@@ -165,10 +175,10 @@ h3 {
 @keyframes swpPulse {
   0%,
   100% {
-    box-shadow: 0 8px 20px -10px rgba(245, 130, 32, 0.5);
+    box-shadow: 0 8px 20px -10px rgba(0, 166, 81, 0.5);
   }
   50% {
-    box-shadow: 0 10px 26px -8px rgba(245, 130, 32, 0.68);
+    box-shadow: 0 10px 26px -8px rgba(0, 166, 81, 0.68);
   }
 }
 @keyframes swpPing {
@@ -200,17 +210,17 @@ h3 {
   line-height: 0.9;
   letter-spacing: -0.03em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
   display: block;
   white-space: nowrap;
 }
 
-/* Accent / highlight words — blue brand (not orange). */
+/* Accent / highlight words — green brand. */
 .kinetic {
-  color: var(--blue);
+  color: var(--green);
 }
 .lime {
-  color: var(--blue);
+  color: var(--green);
 }
 
 /* --- Reveal primitives --- */

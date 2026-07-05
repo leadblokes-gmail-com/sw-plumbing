@@ -37,10 +37,10 @@ const footerAreas = [
     <div>
       <div class="footer__head">Contact</div>
       <a href={business.phoneHref} class="footer__phone">{business.phone}</a>
-      <a href={business.emailHref} class="footer__link">{business.email}</a>
       <a href={business.facebook} target="_blank" rel="noopener" class="footer__link footer__fb">
         <Icon name="facebook" size={15} /> Facebook
       </a>
+      <p class="footer__muted footer__loc">Birkdale, QLD<br />Bayside Brisbane &amp; the Redlands</p>
     </div>
 
     <div>
@@ -68,12 +68,12 @@ const footerAreas = [
 
   <div class="footer__bar container">
     <span>
-      © {year} {business.name} · {credentialLine ?? 'Business details available on request'}
+      © {year} {business.shortName} · Birkdale, QLD · Bayside Brisbane{credentialLine ? ` · ${credentialLine}` : ''}
     </span>
     <span class="footer__bar-links">
       <a href="/privacy">Privacy Policy</a>
       <span class="footer__sep">·</span>
-      Birkdale, QLD · Bayside Brisbane
+      <a href={business.facebook} target="_blank" rel="noopener">Facebook</a>
     </span>
   </div>
 </footer>
@@ -170,7 +170,7 @@ const footerAreas = [
     margin-top: 10px;
   }
   .footer__link:hover {
-    color: #6fb7e8;
+    color: #19C463;
   }
   .footer__muted {
     font-size: 14.5px;
@@ -220,7 +220,7 @@ const footerAreas = [
     transition: color 0.25s;
   }
   .footer__bar-links a:hover {
-    color: #6fb7e8;
+    color: #19C463;
   }
   .footer__sep {
     color: rgba(255, 255, 255, 0.3);

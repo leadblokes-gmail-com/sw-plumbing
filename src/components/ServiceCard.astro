@@ -15,7 +15,7 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
   expandable ? (
     <div class="card card--expand" data-tilt data-expand role="button" tabindex="0" aria-expanded="false">
       <div class="card__top">
-        <div class="card__icon"><Icon name={icon} size={26} stroke="#0B1B33" /></div>
+        <div class="card__icon"><Icon name={icon} size={26} stroke="#00A651" /></div>
         <svg data-chev class="card__chev" width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
@@ -29,17 +29,17 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
           ))}
         </ul>
         <a href={business.phoneHref} class="card__call">
-          Call to book <Icon name="arrow" size={15} stroke="#0B1B33" />
+          Call to book <Icon name="arrow" size={15} stroke="#00A651" />
         </a>
       </div>
     </div>
   ) : (
     <div class="card" data-tilt>
-      <div class="card__icon"><Icon name={icon} size={26} stroke="#0B1B33" /></div>
+      <div class="card__icon"><Icon name={icon} size={26} stroke="#00A651" /></div>
       <h3 class="card__title">{title}</h3>
       <p class="card__blurb">{blurb}</p>
       <a href={business.phoneHref} class="card__call">
-        Call now <Icon name="arrow" size={15} stroke="#0B1B33" />
+        Call now <Icon name="arrow" size={15} stroke="#00A651" />
       </a>
     </div>
   )
@@ -62,8 +62,8 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
     cursor: pointer;
   }
   .card:hover {
-    border-color: rgba(255, 106, 26, 0.22);
-    box-shadow: 0 24px 60px -24px rgba(255, 106, 26, 0.22);
+    border-color: rgba(0, 166, 81, 0.22);
+    box-shadow: 0 24px 60px -24px rgba(0, 166, 81, 0.22);
   }
   .card__top {
     display: flex;
@@ -76,7 +76,7 @@ const { icon, title, blurb, details = [], expandable = false } = Astro.props;
     height: 50px;
     border-radius: 13px;
     background: var(--lime-10);
-    border: 1px solid rgba(255, 106, 26, 0.22);
+    border: 1px solid rgba(0, 166, 81, 0.22);
     display: flex;
     align-items: center;
     justify-content: center;

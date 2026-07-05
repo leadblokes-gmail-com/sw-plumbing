@@ -12,7 +12,7 @@ import { business, faqs } from '../data/site';
 
 const details = [
   { icon: 'phoneline', label: 'Phone', value: business.phone, sub: 'Tap to call now', href: business.phoneHref },
-  { icon: 'mail', label: 'Email', value: 'Email us', sub: business.email, href: business.emailHref },
+  { icon: 'facebook', label: 'Facebook', value: 'Message us', sub: 'S & W Plumbing', href: business.facebook },
   { icon: 'clock', label: 'Hours', value: 'Call to arrange', sub: 'Local response where available' },
   { icon: 'pin', label: 'Service area', value: 'Birkdale & the bay', sub: 'Bayside Brisbane & Redlands' },
 ];
@@ -32,8 +32,8 @@ const faqSchema = [
 ];
 ---
 <Layout
-  title="Contact S & W Plumbing — Call 0432 292 371 | Birkdale & Bayside Brisbane"
-  description="Get in touch with your local plumber. Call 0432 292 371 for bayside plumbing, or send the details and we'll be in touch. Birkdale, QLD — Bayside Brisbane & the Redlands."
+  title="Contact S&W Plumbing | Birkdale & Bayside Brisbane Plumber"
+  description="Call S&W Plumbing on 0432 292 371 for local plumbing across Birkdale, Bayside Brisbane and the Redlands."
   schema={faqSchema}
 >
   <!-- ===== HERO ===== -->
@@ -46,12 +46,14 @@ const faqSchema = [
         <span>Get in touch · Bayside Brisbane</span>
       </div>
       <h1 class="chero__title hero-mask">
-        <span class="reveal-line"><span>Let's get it</span></span>
-        <span class="reveal-line"><span><em class="kinetic">sorted.</em></span></span>
+        <span class="reveal-line"><span>Need a plumber?</span></span>
+        <span class="reveal-line"><span>Let's get it <em class="kinetic">sorted.</em></span></span>
       </h1>
-      <p data-hero class="chero__sub">Call now for fast bayside plumbing.</p>
-      <div data-hero class="chero__cta"><CallButton size="xl" pulse /></div>
-      <p data-hero class="chero__note">Tap to call now</p>
+      <p data-hero class="chero__sub">Call now for the fastest response, or send the details and we'll get back to you.</p>
+      <div data-hero class="chero__cta">
+        <CallButton size="lg" pulse />
+        <a href="#contact-form" class="chero__secondary">Send enquiry</a>
+      </div>
     </div>
   </section>
 
@@ -63,7 +65,7 @@ const faqSchema = [
           const Tag = d.href ? 'a' : 'div';
           return (
             <Tag href={d.href} class="detail" data-tilt>
-              <div class="detail__icon"><Icon name={d.icon} size={25} stroke="#0B1B33" /></div>
+              <div class="detail__icon"><Icon name={d.icon} size={25} stroke="#00A651" /></div>
               <div class="detail__label">{d.label}</div>
               <div class="detail__value">{d.value}</div>
               <div class="detail__sub">{d.sub}</div>
@@ -77,13 +79,13 @@ const faqSchema = [
   <!-- ===== FORM + MAP ===== -->
   <Section tint>
     <div class="contact-grid">
-      <div data-reveal>
+      <div data-reveal id="contact-form">
         <div class="eyebrow">Send a message</div>
-        <h2 class="h2 contact__h2">Or drop us the details.</h2>
-        <p class="contact__lead">Calling is fastest. For non-urgent jobs, send the details below and we'll be in touch.</p>
+        <h2 class="h2 contact__h2">Send the job details.</h2>
+        <p class="contact__lead">Tell us what's happening, where you are, and the best number to call.</p>
 
         <ul class="trust-strip" aria-label="How we work">
-          {trust.map((t) => <li><Icon name="check" size={15} stroke="#0B1B33" /> {t}</li>)}
+          {trust.map((t) => <li><Icon name="check" size={15} stroke="#00A651" /> {t}</li>)}
         </ul>
 
         <ContactForm />
@@ -93,7 +95,7 @@ const faqSchema = [
         <div class="eyebrow">Where we're based</div>
         <h2 class="h2 contact__h2">Birkdale, QLD.</h2>
         <div class="contact__map"><MapPanel variant="mini" /></div>
-        <p class="contact__map-note">Map is indicative — we come to you, anywhere across bayside Brisbane and the Redlands.</p>
+        <p class="contact__map-note">Based near Birkdale and servicing Bayside Brisbane, the Redlands and nearby suburbs.</p>
       </div>
     </div>
   </Section>
@@ -121,7 +123,7 @@ const faqSchema = [
     padding: 132px var(--pad-x) 68px;
     color: #fff;
     background:
-      radial-gradient(120% 90% at 50% 0%, rgba(255, 106, 26, 0.16), transparent 55%),
+      radial-gradient(120% 90% at 50% 0%, rgba(0, 166, 81, 0.16), transparent 55%),
       linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
   }
   .chero__canvas,
@@ -167,7 +169,25 @@ const faqSchema = [
   .chero__cta {
     margin-top: 40px;
     display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
     justify-content: center;
+  }
+  .chero__secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 15px 26px;
+    border-radius: 999px;
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .chero__secondary:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
   }
   .chero__note {
     margin-top: 18px;
@@ -214,14 +234,14 @@ const faqSchema = [
     transform-style: preserve-3d;
   }
   .detail:hover {
-    border-color: rgba(255, 106, 26, 0.22);
+    border-color: rgba(0, 166, 81, 0.22);
   }
   .detail__icon {
     width: 50px;
     height: 50px;
     border-radius: 13px;
     background: var(--lime-10);
-    border: 1px solid rgba(255, 106, 26, 0.22);
+    border: 1px solid rgba(0, 166, 81, 0.22);
     display: flex;
     align-items: center;
     justify-content: center;

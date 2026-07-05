@@ -30,10 +30,10 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
   </label>
 
   <label class="field">
-    <span class="field__label">Choose your problem</span>
+    <span class="field__label">Service needed</span>
     <div class="field__select">
       <select name="service">
-        <option value="">Select your problem…</option>
+        <option value="">Select a service…</option>
         {serviceOptions.map((s) => <option>{s}</option>)}
       </select>
       <Icon name="arrow" size={16} class="field__select-chev" />
@@ -201,7 +201,7 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
     border-radius: 12px;
     cursor: pointer;
     letter-spacing: -0.01em;
-    box-shadow: 0 10px 24px -14px rgba(245, 130, 32, 0.7);
+    box-shadow: 0 10px 24px -14px rgba(0, 166, 81, 0.7);
     transition: transform 0.3s var(--ease-quint), background 0.3s, opacity 0.3s;
     will-change: transform;
   }
@@ -235,7 +235,7 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
   }
 </style>
 
-<script is:inline define:vars={{ phoneHref: business.phoneHref, phone: business.phone }}>
+<script is:inline define:vars={{ phoneHref: business.phoneHref, phone: business.phone, businessEmail: business.email }}>
   (function () {
     const form = document.getElementById('swp-form');
     if (!form) return;
@@ -302,13 +302,20 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
         '</a> and we\'ll sort it.';
 
       if (!endpoint) {
-        // No endpoint configured yet — guide them to call (documented in README).
+        // TODO(dev): set PUBLIC_FORMSPREE_ENDPOINT in .env for a proper backend.
+        // Until then, fall back to the visitor's own email client (mailto) so the
+        // enquiry is never silently lost.
+        const subject = encodeURIComponent('Plumbing enquiry — ' + (form.service.value || 'S&W Plumbing'));
+        const body = encodeURIComponent(
+          'Name: ' + form.name.value +
+            '\nPhone: ' + form.phone.value +
+            '\nSuburb: ' + form.suburb.value +
+            '\nService needed: ' + form.service.value +
+            '\n\nMessage:\n' + form.message.value
+        );
+        window.location.href = 'mailto:' + businessEmail + '?subject=' + subject + '&body=' + body;
         showNote(
-          '✓ Thanks! Email isn\'t connected yet — for now please call <a href="' +
-            phoneHref +
-            '">' +
-            phone +
-            '</a>.',
+          '✓ Opening your email app to send — or call <a href="' + phoneHref + '">' + phone + '</a> for the fastest response.',
           'is-success'
         );
         return;

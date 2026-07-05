@@ -6,27 +6,27 @@ import AssetImg from '../components/AssetImg.astro';
 import Icon from '../components/Icon.astro';
 import { business } from '../data/site';
 
-const heroTrust = ['Licensed & insured', 'Same-day service', 'Upfront pricing', 'Local Brisbane plumber'];
+const heroTrust = ['Certified & insured', 'Same-day response where available', 'Clear upfront pricing', 'Local to Birkdale & the bay'];
 
 const services = [
   { icon: 'drain', img: '/assets/blocked-drain.jpg', t: 'Blocked Drains', d: 'Sinks, showers, toilets and sewer lines cleared fast.' },
-  { icon: 'hotwater', img: '/assets/hot-water.jpg', t: 'Hot Water', d: 'Repairs, replacements and new installs — electric and gas.' },
-  { icon: 'tap', img: '/assets/leaking-tap.jpg', t: 'Leaking Taps', d: 'Dripping taps, running toilets and cisterns sorted.' },
+  { icon: 'hotwater', img: '/assets/hot-water.jpg', t: 'Hot Water', d: 'Repairs, replacements and new installs for electric and gas systems.' },
+  { icon: 'tap', img: '/assets/leaking-tap.jpg', t: 'Leaking Taps', d: 'Dripping taps, running toilets and cistern issues sorted.' },
   { icon: 'leak', img: '/assets/leaking-pipe.jpg', t: 'Leaking Pipes', d: 'Burst and leaking pipes located and repaired properly.' },
-  { icon: 'gas', img: '/assets/gas-fitting.jpg', t: 'Gas Fitting', d: 'Gas appliances and lines connected safely and to code.' },
-  { icon: 'bolt', img: '/assets/emergency-plumber.jpg', t: 'Emergency Plumber', d: 'Fast local help when something goes wrong — 7 days.' },
+  { icon: 'gas', img: '/assets/gas-fitting.jpg', t: 'Gas Fitting', d: 'Gas appliance connections and gas line work completed safely.' },
+  { icon: 'bolt', img: '/assets/emergency-plumber.jpg', t: 'Emergency Plumbing', d: 'Fast local help for urgent leaks, blockages and plumbing issues.' },
 ];
 
 const trustCards = [
-  { icon: 'shield', t: 'Licensed & insured' },
+  { icon: 'shield', t: 'Certified & insured' },
   { icon: 'dollar', t: 'Upfront pricing' },
-  { icon: 'bolt', t: 'Same-day response' },
-  { icon: 'check', t: 'Lifetime labour warranty' },
-  { icon: 'pin', t: 'Local Brisbane plumber' },
-  { icon: 'quote', t: 'Seniors discount' },
+  { icon: 'bolt', t: 'Same-day availability' },
+  { icon: 'pin', t: 'Local Birkdale plumber' },
+  { icon: 'check', t: 'Clean, respectful work' },
+  { icon: 'insured', t: 'Public liability insured' },
 ];
 
-const suburbs = ['Brisbane', 'Birkdale', 'Redlands', 'Wynnum', 'Manly', 'Carindale', 'Cleveland', 'Capalaba'];
+const suburbs = ['Birkdale', 'Wellington Point', 'Cleveland', 'Capalaba', 'Victoria Point', 'Wynnum', 'Manly', 'Redlands'];
 
 // NOTE: business offers — confirm these are accurate/honoured before going live.
 const offers = [
@@ -35,35 +35,36 @@ const offers = [
   { n: '03', t: 'Free Garden Tap', d: 'A complimentary garden tap replacement with any booked service.' },
 ];
 
-// SAMPLE reviews — placeholder layout only. Replace with real Google reviews.
-const reviews = [
-  { name: 'Jason R.', suburb: 'Wynnum', rating: 5, text: 'Turned up same day, gave a clear price upfront and fixed our hot water fast. Tidy and professional.' },
-  { name: 'Priya M.', suburb: 'Cleveland', rating: 5, text: 'Blocked drain sorted in under an hour. Friendly, explained everything and no hidden costs.' },
-  { name: 'Dave K.', suburb: 'Capalaba', rating: 5, text: 'Great local plumber. Quoted before starting, cleaned up after and the leak has not come back.' },
+// Trust standards shown until real Google reviews exist (no fabricated reviews).
+const trustExpect = [
+  { icon: 'quote', t: 'Clear communication', d: 'Straight answers, clear options and pricing before work starts.' },
+  { icon: 'check', t: 'Tidy workmanship', d: 'We respect your home and clean up properly after the job.' },
+  { icon: 'pin', t: 'Reliable local service', d: 'Based near Birkdale and servicing Bayside Brisbane and the Redlands.' },
+  { icon: 'shield', t: 'Practical solutions', d: "We focus on fixing the issue properly, not selling what you don't need." },
 ];
 
 const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/assets/gas-fitting.jpg', '/assets/emergency-plumber.jpg'];
 ---
 <Layout
-  title="S&W Plumbing | Same-Day Plumber Brisbane & Bayside"
-  description="Professional, reliable, local plumbing across Brisbane and Bayside. Same-day service for blocked drains, leaking taps, hot water, gas fitting and emergency repairs. Upfront pricing — call 0432 292 371."
+  title="S&W Plumbing | Local Plumber Birkdale & Bayside Brisbane"
+  description="Fast local plumbing across Birkdale, Bayside Brisbane and the Redlands. Leaks, taps, toilets, hot water, blocked drains and urgent repairs with clear pricing before work starts."
 >
   <!-- ===== 1. HERO ===== -->
   <section class="hero">
     <div class="hero__inner container">
       <div class="hero__copy">
-        <div class="hero__badge"><span class="hero__badge-dot"></span> Same-day &amp; emergency plumbing</div>
-        <h1 class="hero__title">Professional. Reliable. <span class="hl">Local plumbing.</span></h1>
+        <div class="hero__badge"><span class="hero__badge-dot"></span> Birkdale &amp; Bayside Brisbane Plumber</div>
+        <h1 class="hero__title">Fast <span class="hl">local plumbing</span>, done properly.</h1>
         <p class="hero__sub">
-          Same-day Brisbane plumbing for blocked drains, leaking taps, toilets, hot water, gas fitting
-          and emergency repairs — done properly, priced upfront.
+          Leaks, taps, toilets, hot water, blocked drains and urgent repairs — handled by a local
+          plumber with clear pricing before work starts.
         </p>
         <div class="hero__ctas">
-          <CallButton size="lg" label="Call Now" />
-          <a href="#enquiry" class="btn-ghost-l">Get a Quote</a>
+          <CallButton size="lg" />
+          <a href="#enquiry" class="btn-ghost-l">Get a quote</a>
         </div>
         <ul class="hero__trust">
-          {heroTrust.map((t) => <li><Icon name="check" size={15} stroke="#0077C8" /> {t}</li>)}
+          {heroTrust.map((t) => <li><Icon name="check" size={15} stroke="#00A651" /> {t}</li>)}
         </ul>
       </div>
 
@@ -73,7 +74,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
         <div class="hero__imgcard">
           <AssetImg src="/assets/hero-plumber-home.jpg" alt="S&W plumber greeting a homeowner at a Brisbane home" eager />
           <span class="hero__fbadge hero__fbadge--tl"><span class="dot"></span> Same-day service</span>
-          <span class="hero__fbadge hero__fbadge--br">Licensed &amp; insured · Brisbane local</span>
+          <span class="hero__fbadge hero__fbadge--br">Licensed &amp; insured · Birkdale local</span>
         </div>
       </div>
     </div>
@@ -83,10 +84,16 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   <div class="bookwrap">
     <div id="enquiry" class="bookcard container">
       <div class="bookcard__head">
-        <h2 class="bookcard__title">Tell us your problem</h2>
-        <p class="bookcard__sub">Fast local response — send the details and we'll get right back to you, or call now.</p>
+        <span class="bookcard__eyebrow">Free quote</span>
+        <h2 class="bookcard__title">Tell us what's going on</h2>
+        <p class="bookcard__sub">Send the details and we'll get back to you as soon as possible. For urgent jobs, call now.</p>
       </div>
       <ContactForm submitLabel="Get My Quote" compact />
+      <ul class="bookcard__trust">
+        <li><Icon name="check" size={14} stroke="#00A651" /> Fast response</li>
+        <li><Icon name="check" size={14} stroke="#00A651" /> Local plumber</li>
+        <li><Icon name="check" size={14} stroke="#00A651" /> Upfront pricing</li>
+      </ul>
     </div>
   </div>
 
@@ -94,12 +101,15 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   <section class="emerg">
     <div class="container emerg__inner">
       <div class="emerg__text">
-        <div class="emerg__k"><Icon name="bolt" size={26} stroke="#FFFFFF" /> 24/7 Emergency Plumbing Service</div>
-        <p>7 days a week — fast local help when you need it most.</p>
+        <span class="emerg__badge"><Icon name="bolt" size={24} stroke="#19C463" /></span>
+        <div>
+          <div class="emerg__k">24/7 Emergency Plumbing Service</div>
+          <p class="emerg__sub">7 days a week — fast local help when you need it most.</p>
+        </div>
       </div>
       <div class="emerg__ctas">
         <a href={business.phoneHref} class="btn-orange"><Icon name="phone" size={18} /> Call Now</a>
-        <a href="/#enquiry" class="btn-outline-l">Book Online</a>
+        <a href="/#enquiry" class="btn-outline-l">Get a Quote</a>
       </div>
     </div>
   </section>
@@ -110,6 +120,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
       <div class="head head--center">
         <div class="eyebrow">What we do</div>
         <h2 class="h2">Plumbing services across Brisbane &amp; Bayside</h2>
+        <p class="head__sub">From urgent repairs to everyday maintenance — one local team for the lot, priced upfront.</p>
       </div>
       <div class="svc__grid" data-anim-children>
         {
@@ -122,7 +133,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
               <div class="svc__body">
                 <h3 class="svc__t">{s.t}</h3>
                 <p class="svc__d">{s.d}</p>
-                <span class="svc__link">Book now <Icon name="arrow" size={13} stroke="#F58220" /></span>
+                <span class="svc__link">Book now <Icon name="arrow" size={13} stroke="#00A651" /></span>
               </div>
             </a>
           ))
@@ -148,7 +159,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
           {
             trustCards.map((c) => (
               <div class="why__card">
-                <span class="why__icon"><Icon name={c.icon} size={18} stroke="#0077C8" /></span>
+                <span class="why__icon"><Icon name={c.icon} size={18} stroke="#00A651" /></span>
                 <span class="why__t">{c.t}</span>
               </div>
             ))
@@ -166,7 +177,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
     <span class="ecta__overlay"></span>
     <div class="container ecta__inner">
       <h2 class="ecta__t">Need a plumber today?</h2>
-      <p class="ecta__d">Fast local help for leaks, blockages, hot water and urgent repairs.</p>
+      <p class="ecta__d">Fast local help across Birkdale, Bayside Brisbane and the Redlands.</p>
       <div class="ecta__ctas">
         <a href={business.phoneHref} class="btn-orange btn--xl"><Icon name="phone" size={20} /> Call {business.phone}</a>
         <a href="/#enquiry" class="btn-outline-l btn--xl">Get Quote</a>
@@ -220,38 +231,33 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
     </div>
   </section>
 
-  <!-- ===== 9. REVIEWS (image + cards) ===== -->
+  <!-- ===== 9. WHAT YOU CAN EXPECT (trust, not fake reviews) ===== -->
   <section class="section reviews" id="reviews" style="background:var(--bg-2)">
     <div class="container reviews__inner">
       <div class="reviews__media">
-        <AssetImg src="/assets/testimonial-homeowner.jpg" alt="Happy S&W Plumbing customer at home" class="reviews__img" />
+        <AssetImg src="/assets/testimonial-homeowner.jpg" alt="S&W plumber talking with a local homeowner at the door" class="reviews__img" />
         <div class="reviews__stat">
-          <div class="reviews__stars" aria-hidden="true">
-            {Array.from({ length: 5 }).map(() => <Icon name="star" size={18} stroke="#F58220" />)}
-          </div>
-          <span>Loved by local homeowners</span>
+          <span class="reviews__dot"></span>
+          <span>Local &amp; trusted · Birkdale</span>
         </div>
       </div>
       <div class="reviews__col">
-        <div class="eyebrow">Reviews</div>
-        <h2 class="h2 reviews__h">What local customers say</h2>
-        <p class="reviews__note">Example layout — real Google reviews will be shown here as they come in.</p>
-        <div class="reviews__grid" data-anim-children>
+        <div class="eyebrow">Local standards</div>
+        <h2 class="h2 reviews__h">What you can expect from S&amp;W Plumbing</h2>
+        <div class="expect__grid" data-anim-children>
           {
-            reviews.map((r) => (
-              <figure class="review">
-                <div class="review__stars" aria-label={`${r.rating} out of 5`}>
-                  {Array.from({ length: r.rating }).map(() => <Icon name="star" size={15} stroke="#F58220" />)}
+            trustExpect.map((c) => (
+              <div class="expect">
+                <span class="expect__icon"><Icon name={c.icon} size={18} stroke="#00A651" /></span>
+                <div>
+                  <h3 class="expect__t">{c.t}</h3>
+                  <p class="expect__d">{c.d}</p>
                 </div>
-                <blockquote>{r.text}</blockquote>
-                <figcaption>
-                  <span class="review__name">{r.name}</span>
-                  <span class="review__suburb">{r.suburb}</span>
-                </figcaption>
-              </figure>
+              </div>
             ))
           }
         </div>
+        <p class="reviews__note">Real customer reviews will be added once available.</p>
       </div>
     </div>
   </section>
@@ -270,7 +276,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
     display: inline-flex; align-items: center; gap: 10px;
     background: var(--orange); color: #fff; font-weight: 700; font-size: 1.05rem;
     padding: 15px 28px; border-radius: 999px;
-    box-shadow: 0 10px 24px -12px rgba(245, 130, 32, 0.6);
+    box-shadow: 0 10px 24px -12px rgba(0, 166, 81, 0.6);
     transition: background 0.25s, transform 0.25s;
   }
   .btn-orange:hover { background: var(--orange-dark); transform: translateY(-2px); }
@@ -290,9 +296,10 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   .btn-outline-l:hover { border-color: #fff; background: rgba(255, 255, 255, 0.1); }
   .btn--xl { font-size: 1.15rem; padding: 18px 34px; }
 
-  .head { margin-bottom: 44px; }
+  .head { margin-bottom: 48px; }
   .head--center { text-align: center; max-width: 720px; margin-inline: auto; }
   .head .eyebrow { margin-bottom: 14px; }
+  .head__sub { margin-top: 14px; font-size: 16px; color: var(--muted-2); line-height: 1.6; max-width: 54ch; margin-inline: auto; }
 
   /* ---- 1. HERO ---- */
   .hero {
@@ -300,7 +307,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
     overflow: hidden;
     color: var(--ink);
     padding: calc(clamp(96px, 13vh, 150px) + 24px) var(--pad-x) clamp(90px, 12vw, 150px);
-    background: linear-gradient(135deg, #f5faff 0%, #ffffff 45%, #eaf5ff 100%);
+    background: linear-gradient(135deg, #f5faff 0%, #ffffff 45%, #eaf8f0 100%);
   }
   .hero__inner {
     position: relative;
@@ -345,17 +352,17 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   }
   .hero__accent--blue {
     width: 62%; height: 78%; right: -6%; top: -8%;
-    background: radial-gradient(circle at 50% 50%, rgba(0, 119, 200, 0.22), transparent 70%);
+    background: radial-gradient(circle at 50% 50%, rgba(0, 166, 81, 0.22), transparent 70%);
   }
   .hero__accent--orange {
     width: 38%; height: 40%; left: -4%; bottom: -6%;
-    background: radial-gradient(circle at 50% 50%, rgba(245, 130, 32, 0.2), transparent 70%);
+    background: radial-gradient(circle at 50% 50%, rgba(0, 166, 81, 0.2), transparent 70%);
   }
   .hero__imgcard {
     position: relative; z-index: 1;
     aspect-ratio: 5 / 4;
     border-radius: 26px; overflow: hidden;
-    box-shadow: 0 40px 80px -40px rgba(8, 35, 63, 0.5);
+    box-shadow: 0 40px 80px -40px rgba(5, 7, 8, 0.5);
     border: 5px solid #fff;
   }
   @media (max-width: 940px) { .hero__imgcard { aspect-ratio: 16 / 11; } }
@@ -364,7 +371,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(255, 255, 255, 0.95); color: var(--ink);
     font-size: 12.5px; font-weight: 700; padding: 9px 14px; border-radius: 999px;
-    box-shadow: 0 12px 24px -14px rgba(8, 35, 63, 0.5);
+    box-shadow: 0 12px 24px -14px rgba(5, 7, 8, 0.5);
   }
   .hero__fbadge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
   .hero__fbadge--tl { top: 16px; left: 16px; }
@@ -375,23 +382,44 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   .bookcard {
     background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--blue);
     border-radius: 24px; padding: clamp(24px, 3vw, 36px); max-width: 900px;
-    box-shadow: 0 40px 80px -44px rgba(8, 35, 63, 0.4);
+    box-shadow: 0 40px 80px -44px rgba(5, 7, 8, 0.4);
     scroll-margin-top: 120px;
   }
-  .bookcard__head { margin-bottom: 18px; }
-  .bookcard__title {
-    font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; color: var(--navy); letter-spacing: -0.01em;
+  .bookcard__head { margin-bottom: 20px; }
+  .bookcard__eyebrow {
+    display: inline-block; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 800; color: var(--green-dark); background: var(--green-light);
+    padding: 5px 11px; border-radius: 999px; margin-bottom: 12px;
   }
-  .bookcard__sub { margin-top: 6px; font-size: 14.5px; color: var(--muted-2); }
+  .bookcard__title {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; color: var(--ink); letter-spacing: -0.01em; line-height: 1.1;
+  }
+  .bookcard__sub { margin-top: 8px; font-size: 14.5px; color: var(--muted-2); line-height: 1.5; max-width: 46ch; }
+  .bookcard__trust {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 10px 24px;
+    margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line);
+  }
+  .bookcard__trust li { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 600; color: var(--muted); }
 
   /* ---- 3. EMERGENCY STRIP ---- */
-  .emerg { background: var(--blue); color: #fff; padding: clamp(22px, 3vw, 30px) var(--pad-x); }
-  .emerg__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
-  .emerg__k {
-    display: inline-flex; align-items: center; gap: 12px;
-    font-family: var(--font-display); font-weight: 700; font-size: clamp(1.2rem, 3vw, 1.7rem); letter-spacing: -0.01em;
+  .emerg {
+    background: linear-gradient(100deg, var(--black) 0%, var(--charcoal) 58%, #0e2c1e 100%);
+    color: #fff;
+    padding: clamp(26px, 3.4vw, 38px) var(--pad-x);
+    border-top: 2px solid var(--green);
   }
-  .emerg__text p { margin-top: 4px; font-size: 15px; color: rgba(255, 255, 255, 0.92); }
+  .emerg__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+  .emerg__text { display: flex; align-items: center; gap: 16px; }
+  .emerg__badge {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 52px; height: 52px; border-radius: 14px;
+    background: rgba(25, 196, 99, 0.14); border: 1px solid rgba(25, 196, 99, 0.35); color: var(--green-bright);
+  }
+  .emerg__k {
+    font-family: var(--font-body); font-weight: 800;
+    font-size: clamp(1.2rem, 2.6vw, 1.6rem); letter-spacing: -0.01em; line-height: 1.2;
+  }
+  .emerg__sub { margin-top: 3px; font-size: 14.5px; color: rgba(255, 255, 255, 0.7); }
   .emerg__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 
   /* ---- 4. SERVICES GRID ---- */
@@ -400,22 +428,28 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   @media (max-width: 560px) { .svc__grid { grid-template-columns: 1fr; } }
   .svc__card {
     display: block; background: var(--card); border: 1px solid var(--line);
-    border-radius: 20px; overflow: hidden;
-    transition: transform 0.3s var(--ease-quint), box-shadow 0.3s, border-color 0.3s;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 12px 30px -24px rgba(16, 20, 18, 0.5);
+    transition: transform 0.35s var(--ease-quint), box-shadow 0.35s, border-color 0.35s;
   }
   .svc__card:hover {
-    transform: translateY(-5px); border-color: var(--blue);
-    box-shadow: 0 30px 54px -30px rgba(8, 35, 63, 0.4);
+    transform: translateY(-6px); border-color: rgba(0, 166, 81, 0.55);
+    box-shadow: 0 34px 60px -34px rgba(11, 40, 26, 0.55);
   }
-  .svc__media { position: relative; height: 220px; overflow: hidden; }
-  @media (max-width: 560px) { .svc__media { height: 180px; } }
-  .svc__media :global(img) { transition: transform 0.6s var(--ease-quint); }
-  .svc__card:hover .svc__media :global(img) { transform: scale(1.06); }
+  .svc__media { position: relative; height: 210px; overflow: hidden; }
+  @media (max-width: 560px) { .svc__media { height: 190px; } }
+  .svc__media :global(img) { transition: transform 0.7s var(--ease-quint); }
+  .svc__card:hover .svc__media :global(img) { transform: scale(1.07); }
+  /* subtle bottom gradient so the image feels composed, not just placed */
+  .svc__media::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to top, rgba(5, 7, 8, 0.5) 0%, rgba(5, 7, 8, 0.12) 30%, transparent 55%);
+  }
   .svc__badge {
-    position: absolute; top: 14px; left: 14px;
+    position: absolute; top: 14px; left: 14px; z-index: 2;
     display: inline-flex; align-items: center; justify-content: center;
-    width: 44px; height: 44px; border-radius: 12px; background: var(--blue); color: #fff;
-    box-shadow: 0 10px 20px -10px rgba(0, 119, 200, 0.7);
+    width: 44px; height: 44px; border-radius: 12px; background: var(--green); color: #fff;
+    box-shadow: 0 8px 18px -8px rgba(0, 166, 81, 0.8);
   }
   .svc__body { padding: 22px 22px 24px; }
   .svc__t { font-family: var(--font-display); font-weight: 600; font-size: 1.35rem; color: var(--navy); margin-bottom: 8px; }
@@ -429,7 +463,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   @media (max-width: 900px) { .why__inner { grid-template-columns: 1fr; } }
   .why__media {
     border-radius: 24px; overflow: hidden; aspect-ratio: 4 / 3;
-    box-shadow: 0 40px 70px -40px rgba(8, 35, 63, 0.45); border: 5px solid #fff;
+    box-shadow: 0 40px 70px -40px rgba(5, 7, 8, 0.45); border: 5px solid #fff;
   }
   .why__img { height: 100%; }
   .why__title { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.8rem, 4vw, 2.7rem); color: var(--ink); letter-spacing: -0.02em; margin: 12px 0 12px; max-width: 18ch; }
@@ -454,7 +488,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   .ecta__media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
   .ecta__overlay {
     position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(180deg, rgba(8, 35, 63, 0.82), rgba(8, 35, 63, 0.9));
+    background: linear-gradient(180deg, rgba(5, 7, 8, 0.82), rgba(5, 7, 8, 0.9));
   }
   .ecta__inner { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
   .ecta__t { font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 5vw, 3.4rem); color: #fff; letter-spacing: -0.02em; }
@@ -476,7 +510,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   .local__ctas { display: flex; flex-wrap: wrap; gap: 14px; }
   .local__media {
     border-radius: 24px; overflow: hidden; aspect-ratio: 4 / 3;
-    box-shadow: 0 40px 70px -40px rgba(8, 35, 63, 0.45); border: 5px solid #fff;
+    box-shadow: 0 40px 70px -40px rgba(5, 7, 8, 0.45); border: 5px solid #fff;
   }
   .local__img { height: 100%; }
 
@@ -486,7 +520,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   .offer {
     position: relative; background: var(--card); border: 1px solid var(--line);
     border-top: 3px solid var(--orange); border-radius: var(--radius-lg); padding: 32px 30px;
-    box-shadow: 0 20px 40px -34px rgba(8, 35, 63, 0.32);
+    box-shadow: 0 20px 40px -34px rgba(5, 7, 8, 0.32);
   }
   .offer__badge {
     display: inline-flex; align-items: center; justify-content: center;
@@ -503,27 +537,32 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   @media (max-width: 900px) { .reviews__inner { grid-template-columns: 1fr; } }
   .reviews__media {
     position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 4 / 5;
-    box-shadow: 0 40px 70px -40px rgba(8, 35, 63, 0.45); border: 5px solid #fff;
+    box-shadow: 0 40px 70px -40px rgba(5, 7, 8, 0.45); border: 5px solid #fff;
   }
   @media (max-width: 900px) { .reviews__media { aspect-ratio: 16 / 10; } }
   .reviews__img { height: 100%; }
   .reviews__stat {
     position: absolute; left: 16px; bottom: 16px; z-index: 2;
-    display: inline-flex; flex-direction: column; gap: 4px;
-    background: rgba(255, 255, 255, 0.96); padding: 12px 16px; border-radius: 14px;
-    box-shadow: 0 14px 28px -16px rgba(8, 35, 63, 0.5);
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255, 255, 255, 0.96); padding: 10px 15px; border-radius: 999px;
+    box-shadow: 0 14px 28px -16px rgba(5, 7, 8, 0.5);
   }
-  .reviews__stat span { font-size: 12.5px; font-weight: 700; color: var(--navy); }
-  .reviews__stars { display: inline-flex; gap: 2px; }
-  .reviews__h { margin: 10px 0 8px; }
-  .reviews__note { font-size: 13.5px; color: var(--faint); margin-bottom: 22px; }
-  .reviews__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 620px) { .reviews__grid { grid-template-columns: 1fr; } }
-  .review { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
-  .review__stars { display: inline-flex; gap: 2px; margin-bottom: 12px; }
-  .review blockquote { font-size: 14.5px; line-height: 1.6; color: var(--muted); margin-bottom: 14px; }
-  .review__name { display: block; font-family: var(--font-display); font-weight: 700; color: var(--navy); }
-  .review__suburb { font-size: 13px; color: var(--muted-2); }
+  .reviews__stat span { font-size: 12.5px; font-weight: 700; color: var(--ink); }
+  .reviews__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+  .reviews__h { margin: 10px 0 20px; max-width: 20ch; }
+  .reviews__note { font-size: 13px; color: var(--faint); margin-top: 18px; }
+  .expect__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 620px) { .expect__grid { grid-template-columns: 1fr; } }
+  .expect {
+    display: flex; align-items: flex-start; gap: 13px;
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;
+  }
+  .expect__icon {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 38px; height: 38px; border-radius: 10px; background: var(--green-light); color: var(--green);
+  }
+  .expect__t { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--ink); margin-bottom: 5px; }
+  .expect__d { font-size: 13.5px; color: var(--muted-2); line-height: 1.55; }
 
   /* ---- 10. FOOTER IMAGE STRIP ---- */
   .fstrip { display: grid; grid-template-columns: repeat(4, 1fr); }
