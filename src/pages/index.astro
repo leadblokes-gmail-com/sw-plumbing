@@ -28,13 +28,6 @@ const trustCards = [
 
 const suburbs = ['Birkdale', 'Wellington Point', 'Cleveland', 'Capalaba', 'Victoria Point', 'Wynnum', 'Manly', 'Redlands'];
 
-// NOTE: business offers — confirm these are accurate/honoured before going live.
-const offers = [
-  { n: '01', t: 'Free Call Out', d: 'No call-out fee when we do the job — you only pay for the work.' },
-  { n: '02', t: 'Thursday Special', d: 'Book a standard job on a Thursday and save on labour.' },
-  { n: '03', t: 'Free Garden Tap', d: 'A complimentary garden tap replacement with any booked service.' },
-];
-
 // Trust standards shown until real Google reviews exist (no fabricated reviews).
 const trustExpect = [
   { icon: 'quote', t: 'Clear communication', d: 'Straight answers, clear options and pricing before work starts.' },
@@ -205,28 +198,6 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
       </div>
       <div class="local__media">
         <AssetImg src="/assets/brisbane-service-van.jpg" alt="S&W Plumbing service van in a Brisbane suburb" class="local__img" />
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 8. OFFERS ===== -->
-  <section class="section offers" id="discounts">
-    <div class="container">
-      <div class="head head--center">
-        <div class="eyebrow">Current offers</div>
-        <h2 class="h2">Discounts &amp; specials</h2>
-      </div>
-      <div class="offers__grid" data-anim-children>
-        {
-          offers.map((o) => (
-            <div class="offer">
-              <span class="offer__badge">{o.n}</span>
-              <h3 class="offer__t">{o.t}</h3>
-              <p class="offer__d">{o.d}</p>
-              <span class="offer__fine">Not redeemable with other offers.</span>
-            </div>
-          ))
-        }
       </div>
     </div>
   </section>
