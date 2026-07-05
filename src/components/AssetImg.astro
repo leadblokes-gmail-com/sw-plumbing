@@ -12,6 +12,9 @@ interface Props {
   eager?: boolean;
 }
 const { src, alt, class: cls = '', eager = false } = Astro.props;
+// Version tag busts any stale CDN/browser cache of the old (PNG-as-jpg) files
+// that some browsers cached before the images were re-encoded to real JPEG.
+const versionedSrc = src.startsWith('/assets/') ? `${src}?v=2` : src;
 // Clean, text-free premium fallback: a charcoal→green tile with a subtle
 // centred droplet. Shown only if the real photo at `src` is missing — never
 // exposes filenames or "drop your photo here" UI.
@@ -19,7 +22,7 @@ const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><d
 const placeholder = `data:image/svg+xml,${encodeURIComponent(svg)}`;
 ---
 <img
-  src={src}
+  src={versionedSrc}
   alt={alt}
   loading={eager ? 'eager' : 'lazy'}
   decoding="async"

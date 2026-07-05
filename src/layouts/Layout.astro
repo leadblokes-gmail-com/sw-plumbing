@@ -20,7 +20,7 @@ interface Props {
 const { title, description, canonical, intro = false, schema = [] } = Astro.props;
 
 const canonicalURL = new URL(canonical ?? Astro.url.pathname, Astro.site).href;
-const ogImage = new URL('/assets/team-plumbers.jpg', Astro.site).href;
+const ogImage = new URL('/assets/team-plumbers.jpg?v=2', Astro.site).href;
 
 // Site-wide LocalBusiness (Plumber) schema with areaServed.
 const localBusiness = {
