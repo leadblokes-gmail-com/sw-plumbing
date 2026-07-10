@@ -3,9 +3,13 @@ import Icon from './Icon.astro';
 import { business } from '../data/site';
 ---
 <div class="callbar">
-  <a href={business.phoneHref} aria-label={`Call S & W Plumbing on ${business.phone}`}>
-    <Icon name="phone" size={22} />
-    Call {business.phone}
+  <a href="/services" class="callbar__services">
+    <Icon name="maintenance" size={19} stroke="currentColor" />
+    Services
+  </a>
+  <a href={business.phoneHref} class="callbar__call" aria-label={`Call S & W Plumbing on ${business.phone}`}>
+    <Icon name="phone" size={20} />
+    Call Now
   </a>
 </div>
 
@@ -16,26 +20,40 @@ import { business } from '../data/site';
     left: 0;
     width: 100%;
     z-index: 110;
-    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-top: 1px solid var(--line);
     display: none;
+    gap: 10px;
   }
   .callbar a {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 11px;
-    width: 100%;
+    gap: 9px;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  /* Call is the dominant target */
+  .callbar__call {
+    flex: 1 1 62%;
     background: var(--green-bright);
     color: #06231a;
-    font-weight: 800;
-    font-size: 1.12rem;
-    padding: 16px;
-    border-radius: 12px;
-    letter-spacing: -0.01em;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 20px -10px rgba(0, 166, 81, 0.7);
+  }
+  /* Services is the smaller secondary */
+  .callbar__services {
+    flex: 0 0 34%;
+    background: var(--ink-750);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    font-size: 1rem;
+    font-weight: 700;
   }
   @media (max-width: 860px) {
     .callbar {

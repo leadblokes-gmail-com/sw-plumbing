@@ -96,6 +96,44 @@ function progressBar() {
   onCleanup(() => window.removeEventListener('scroll', onScroll));
 }
 
+/** Signature scroll pipe — a green water-flow line that fills as the page scrolls
+ *  and connects the sections. Fixed rail; progress = page scroll fraction. */
+function signaturePipe() {
+  const wrap = document.getElementById('swp-pipe');
+  if (!wrap) return;
+  const flow = document.getElementById('swp-pipe-flow');
+  const head = document.getElementById('swp-pipe-head');
+  const setProgress = (p: number) => {
+    p = Math.max(0, Math.min(1, p));
+    if (flow) flow.style.strokeDashoffset = String(1 - p);
+    if (head) head.style.top = p * 100 + '%';
+  };
+  // Reduced motion → show a calm, fully-drawn pipe (no moving head).
+  if (reduce) {
+    setProgress(1);
+    return;
+  }
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    setProgress(h > 0 ? window.scrollY / h : 0);
+  };
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+  onCleanup(() => {
+    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('resize', onScroll);
+  });
+}
+
 /** Cinematic drifting canvas (the soft lime blobs behind hero / CTA). */
 function startCanvas(id: string) {
   const canvas = document.getElementById(id) as HTMLCanvasElement | null;
@@ -432,6 +470,7 @@ function init() {
   const introPlaying = intro();
   navCondense();
   progressBar();
+  signaturePipe();
   startCanvas('swp-hero-canvas');
   startCanvas('swp-cta-canvas');
   pointerFx();

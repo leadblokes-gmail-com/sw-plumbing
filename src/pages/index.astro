@@ -6,15 +6,16 @@ import AssetImg from '../components/AssetImg.astro';
 import Icon from '../components/Icon.astro';
 import { business } from '../data/site';
 
-const heroTrust = ['Licensed QBCC plumber', 'Fast local response', 'Clear upfront pricing', 'Local to Birkdale & the bay'];
+const heroTrust = ['Licensed QBCC Plumber', 'Fast Local Response', 'Upfront Pricing', 'Birkdale Local'];
 
+// Icon-led service cards — the six things people actually call a plumber for.
 const services = [
-  { icon: 'drain', img: '/assets/blocked-drain.jpg', t: 'Blocked Drains', d: 'Sinks, showers, toilets and sewer lines cleared fast.' },
-  { icon: 'hotwater', img: '/assets/hot-water.jpg', t: 'Hot Water', d: 'Repairs, replacements and new installs for hot water systems.' },
-  { icon: 'tap', img: '/assets/leaking-tap.jpg', t: 'Leaking Taps', d: 'Dripping taps, running toilets and cistern issues sorted.' },
-  { icon: 'leak', img: '/assets/leaking-pipe.jpg', t: 'Leaking Pipes', d: 'Burst and leaking pipes located and repaired properly.' },
-  { icon: 'maintenance', img: '/assets/plumber-homeowner.jpg', t: 'General Maintenance', d: 'Ongoing repairs and the everyday jobs that keep a place running.' },
-  { icon: 'bolt', img: '/assets/emergency-plumber.jpg', t: 'Emergency Plumbing', d: 'Fast local help for urgent leaks, blockages and plumbing issues.' },
+  { icon: 'drain', t: 'Blocked Drains', d: 'Blocked sinks, toilets, showers and stormwater lines cleared fast — before a small blockage turns into a big mess.' },
+  { icon: 'tap', t: 'Leaking Taps & Toilets', d: 'Dripping taps and running toilets fixed properly — stop the wasted water and the creeping water bill.' },
+  { icon: 'hotwater', t: 'Hot Water Systems', d: 'No hot water? Repairs, replacements and new installs — back to hot showers, often the same visit.' },
+  { icon: 'leak', t: 'Burst Pipes', d: 'Burst or leaking pipe? We isolate it fast, stop the damage and repair it right the first time.' },
+  { icon: 'maintenance', t: 'General Plumbing', d: 'Taps, toilets, pressure, fittings and the everyday jobs — done cleanly and charged fairly.' },
+  { icon: 'shield', t: 'Maintenance Plumbing', d: 'Ongoing care for homes, rentals and real estate — we catch the small stuff before it costs you big.' },
 ];
 
 const trustCards = [
@@ -26,35 +27,46 @@ const trustCards = [
   { icon: 'check', t: 'No job too big or small' },
 ];
 
-const suburbs = ['Birkdale', 'Wellington Point', 'Cleveland', 'Capalaba', 'Victoria Point', 'Wynnum', 'Manly', 'Redlands'];
+const suburbs = ['Birkdale', 'Wellington Point', 'Cleveland', 'Capalaba', 'Victoria Point', 'Wynnum', 'Manly', 'Thornlands', 'Alexandra Hills', 'Redlands'];
 
-// Trust standards shown until real Google reviews exist (no fabricated reviews).
+// "Plumbing without the runaround" — the trust promise shown until real Google
+// reviews exist (no fabricated testimonials).
 const trustExpect = [
-  { icon: 'quote', t: 'Clear communication', d: 'Straight answers, clear options and pricing before work starts.' },
-  { icon: 'check', t: 'Tidy workmanship', d: 'We respect your home and clean up properly after the job.' },
-  { icon: 'pin', t: 'Reliable local service', d: 'Based near Birkdale and servicing Bayside Brisbane and the Redlands.' },
-  { icon: 'shield', t: 'Practical solutions', d: "We focus on fixing the issue properly, not selling what you don't need." },
+  { icon: 'quote', t: 'Clear communication', d: 'Straight answers and honest options — you always know what’s happening and why.' },
+  { icon: 'check', t: 'Tidy workmanship', d: 'Boots off, drop sheets down, mess cleaned up. We leave your place better than we found it.' },
+  { icon: 'dollar', t: 'Upfront pricing', d: 'You get a clear price before any work starts — no nasty surprises on the invoice.' },
+  { icon: 'pin', t: 'Local reliability', d: 'A Birkdale local who turns up when booked and stands behind the work — every job.' },
 ];
 
 const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/assets/leaking-pipe.jpg', '/assets/emergency-plumber.jpg'];
 ---
 <Layout
-  title="S&W Plumbing | Local Plumber Birkdale & Bayside Brisbane"
-  description="Fast local plumbing across Birkdale, Bayside Brisbane and the Redlands. Leaks, taps, toilets, hot water, blocked drains and urgent repairs with clear pricing before work starts."
+  title="S&W Plumbing | Local Plumber Birkdale, Bayside Brisbane & Redlands"
+  description="Licensed local plumber in Birkdale servicing Bayside Brisbane & the Redlands — Wellington Point, Cleveland, Capalaba, Wynnum, Manly, Victoria Point. Blocked drains, leaking taps, hot water, burst pipes & maintenance. Upfront pricing. Call 0432 292 371."
 >
+  <!-- Signature scroll pipe: a green water-flow line that fills as you scroll,
+       connecting the sections. Desktop-only + reduced-motion safe (see motion.ts). -->
+  <div class="pipeflow" id="swp-pipe" aria-hidden="true">
+    <svg class="pipe__svg" viewBox="0 0 24 1000" preserveAspectRatio="none">
+      <line x1="12" y1="14" x2="12" y2="986" class="pipe__track" />
+      <line x1="12" y1="14" x2="12" y2="986" class="pipe__flow" id="swp-pipe-flow" pathLength="1" />
+    </svg>
+    <span class="pipe__head" id="swp-pipe-head"></span>
+  </div>
+
   <!-- ===== 1. HERO ===== -->
   <section class="hero">
     <div class="hero__inner container">
       <div class="hero__copy">
         <div class="hero__badge"><span class="hero__badge-dot"></span> Birkdale &amp; Bayside Brisbane Plumber</div>
-        <h1 class="hero__title">Fast <span class="hl">local plumbing</span>, done properly.</h1>
+        <h1 class="hero__title">Bayside plumbing done <span class="hl">fast, clean and properly.</span></h1>
         <p class="hero__sub">
-          Leaks, taps, toilets, hot water, blocked drains and urgent repairs — handled by a local
-          plumber with clear pricing before work starts.
+          Blocked drain? Leaking tap? No hot water? S&amp;W Plumbing handles urgent repairs and everyday
+          plumbing across Birkdale, Bayside Brisbane and the Redlands — with clear pricing before work starts.
         </p>
         <div class="hero__ctas">
-          <CallButton size="lg" />
-          <a href="#enquiry" class="btn-ghost-l">Get a quote</a>
+          <CallButton size="lg" label="Call S&W Now" />
+          <a href="/services" class="btn-ghost-l">View Services</a>
         </div>
         <ul class="hero__trust">
           {heroTrust.map((t) => <li><Icon name="check" size={15} stroke="#00A651" /> {t}</li>)}
@@ -118,16 +130,12 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
       <div class="svc__grid" data-anim-children>
         {
           services.map((s) => (
-            <a href="/services" class="svc__card">
-              <div class="svc__media">
-                <AssetImg src={s.img} alt={`${s.t} — S&W Plumbing`} />
-                <span class="svc__badge"><Icon name={s.icon} size={20} stroke="#FFFFFF" /></span>
-              </div>
-              <div class="svc__body">
-                <h3 class="svc__t">{s.t}</h3>
-                <p class="svc__d">{s.d}</p>
-                <span class="svc__link">Book now <Icon name="arrow" size={13} stroke="#00A651" /></span>
-              </div>
+            <a href="/services" class="svc__card" data-tilt>
+              <span class="svc__glow" aria-hidden="true"></span>
+              <span class="svc__icon"><Icon name={s.icon} size={26} stroke="#00A651" /></span>
+              <h3 class="svc__t">{s.t}</h3>
+              <p class="svc__d">{s.d}</p>
+              <span class="svc__link">Learn more <Icon name="arrow" size={13} stroke="#00A651" /></span>
             </a>
           ))
         }
@@ -170,11 +178,12 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
     <span class="ecta__overlay"></span>
     <div class="container ecta__inner">
       <h2 class="ecta__t">Need a plumber today?</h2>
-      <p class="ecta__d">Fast local help across Birkdale, Bayside Brisbane and the Redlands.</p>
+      <p class="ecta__d">For burst pipes, blocked toilets, major leaks or no hot water, calling is the fastest way to get help.</p>
       <div class="ecta__ctas">
-        <a href={business.phoneHref} class="btn-orange btn--xl"><Icon name="phone" size={20} /> Call {business.phone}</a>
+        <CallButton size="xl" label="Call S&W Now" pulse />
         <a href="/#enquiry" class="btn-outline-l btn--xl">Get Quote</a>
       </div>
+      <p class="ecta__note">Available for urgent plumbing across Birkdale, Bayside Brisbane and the Redlands.</p>
     </div>
   </section>
 
@@ -182,11 +191,12 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   <section class="section local">
     <div class="container local__inner">
       <div class="local__copy">
-        <div class="eyebrow">Local &amp; trusted</div>
-        <h2 class="h2 local__title">Servicing Brisbane &amp; the surrounding suburbs</h2>
+        <div class="eyebrow">Areas we service</div>
+        <h2 class="h2 local__title">Your local plumber across Birkdale, Bayside Brisbane &amp; the Redlands</h2>
         <p class="local__d">
-          Our vans are out across Brisbane and Bayside every day. Wherever you are, you'll get a local
-          plumber who knows the area and turns up when booked.
+          Based in Birkdale, S&amp;W Plumbing provides reliable plumbing across the bay and Redlands —
+          Wellington Point, Cleveland, Capalaba, Wynnum, Manly, Victoria Point, Thornlands and nearby.
+          A local who knows the area and turns up when booked.
         </p>
         <div class="local__chips">
           {suburbs.map((s) => <span class="chip">{s}</span>)}
@@ -213,8 +223,8 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
         </div>
       </div>
       <div class="reviews__col">
-        <div class="eyebrow">Local standards</div>
-        <h2 class="h2 reviews__h">What you can expect from S&amp;W Plumbing</h2>
+        <div class="eyebrow">Why homeowners call us back</div>
+        <h2 class="h2 reviews__h">Plumbing without the runaround.</h2>
         <div class="expect__grid" data-anim-children>
           {
             trustExpect.map((c) => (
@@ -228,7 +238,7 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
             ))
           }
         </div>
-        <p class="reviews__note">Real customer reviews will be added once available.</p>
+        <p class="reviews__note"><Icon name="quote" size={15} stroke="#00A651" /> Google reviews coming soon as S&amp;W continues serving local homes and businesses.</p>
       </div>
     </div>
   </section>
@@ -242,6 +252,46 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
 </Layout>
 
 <style>
+  /* ---- signature scroll pipe ---- */
+  .pipeflow {
+    position: fixed;
+    left: clamp(14px, 2.4vw, 34px);
+    top: 0;
+    width: 22px;
+    height: 100vh;
+    z-index: 40;
+    pointer-events: none;
+    display: none;
+  }
+  /* Only show where there's whitespace beside the 1200px container. */
+  @media (min-width: 1280px) {
+    .pipeflow { display: block; }
+  }
+  .pipe__svg { width: 100%; height: 100%; overflow: visible; }
+  .pipe__track {
+    stroke: rgba(0, 166, 81, 0.14);
+    stroke-width: 3; stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .pipe__flow {
+    stroke: var(--green-bright);
+    stroke-width: 3; stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1; /* filled by scroll via motion.ts */
+    filter: drop-shadow(0 0 5px rgba(25, 196, 99, 0.7));
+  }
+  .pipe__head {
+    position: absolute; left: 50%; top: 0;
+    transform: translate(-50%, -50%);
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--green-bright);
+    box-shadow: 0 0 12px 3px rgba(25, 196, 99, 0.75), 0 0 26px 7px rgba(25, 196, 99, 0.32);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pipe__head { display: none; }
+  }
+
   /* ---- buttons ---- */
   .btn-orange {
     display: inline-flex; align-items: center; gap: 10px;
@@ -393,39 +443,40 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   .emerg__sub { margin-top: 3px; font-size: 14.5px; color: rgba(255, 255, 255, 0.7); }
   .emerg__ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 
-  /* ---- 4. SERVICES GRID ---- */
+  /* ---- 4. SERVICES GRID (icon-led premium cards) ---- */
   .svc__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   @media (max-width: 900px) { .svc__grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 560px) { .svc__grid { grid-template-columns: 1fr; } }
   .svc__card {
-    display: block; background: var(--card); border: 1px solid var(--line);
-    border-radius: 18px; overflow: hidden;
+    position: relative; isolation: isolate; display: flex; flex-direction: column;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; padding: 28px 26px 26px; overflow: hidden;
     box-shadow: 0 12px 30px -24px rgba(16, 20, 18, 0.5);
     transition: transform 0.35s var(--ease-quint), box-shadow 0.35s, border-color 0.35s;
   }
   .svc__card:hover {
     transform: translateY(-6px); border-color: rgba(0, 166, 81, 0.55);
-    box-shadow: 0 34px 60px -34px rgba(11, 40, 26, 0.55);
+    box-shadow: 0 34px 64px -34px rgba(11, 40, 26, 0.6);
   }
-  .svc__media { position: relative; height: 210px; overflow: hidden; }
-  @media (max-width: 560px) { .svc__media { height: 190px; } }
-  .svc__media :global(img) { transition: transform 0.7s var(--ease-quint); }
-  .svc__card:hover .svc__media :global(img) { transform: scale(1.07); }
-  /* subtle bottom gradient so the image feels composed, not just placed */
-  .svc__media::after {
-    content: ''; position: absolute; inset: 0; pointer-events: none;
-    background: linear-gradient(to top, rgba(5, 7, 8, 0.5) 0%, rgba(5, 7, 8, 0.12) 30%, transparent 55%);
+  /* green accent glow that blooms on hover */
+  .svc__glow {
+    position: absolute; z-index: -1; top: -40%; right: -30%;
+    width: 70%; height: 90%; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 166, 81, 0.16), transparent 68%);
+    opacity: 0; transition: opacity 0.4s var(--ease-quint);
   }
-  .svc__badge {
-    position: absolute; top: 14px; left: 14px; z-index: 2;
+  .svc__card:hover .svc__glow { opacity: 1; }
+  .svc__icon {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 44px; height: 44px; border-radius: 12px; background: var(--green); color: #fff;
-    box-shadow: 0 8px 18px -8px rgba(0, 166, 81, 0.8);
+    width: 54px; height: 54px; border-radius: 14px; margin-bottom: 20px;
+    background: var(--lime-10); border: 1px solid rgba(0, 166, 81, 0.22); color: var(--lime);
+    transition: transform 0.35s var(--ease-quint), background 0.35s;
   }
-  .svc__body { padding: 22px 22px 24px; }
-  .svc__t { font-family: var(--font-display); font-weight: 600; font-size: 1.35rem; color: var(--navy); margin-bottom: 8px; }
-  .svc__d { font-size: 14.5px; color: var(--muted-2); line-height: 1.6; margin-bottom: 14px; }
-  .svc__link { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 700; color: var(--orange-dark); }
+  .svc__card:hover .svc__icon { transform: translateY(-2px) scale(1.05); background: var(--lime-12); }
+  .svc__t { font-family: var(--font-display); font-weight: 600; font-size: 1.32rem; color: var(--navy); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .svc__d { font-size: 14.5px; color: var(--muted-2); line-height: 1.62; margin-bottom: 18px; }
+  .svc__link { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 700; color: var(--green-dark); margin-top: auto; transition: gap 0.25s var(--ease-quint); }
+  .svc__card:hover .svc__link { gap: 11px; }
 
   /* ---- 5. WHY ---- */
   .why__inner {
@@ -465,6 +516,14 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   .ecta__t { font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 5vw, 3.4rem); color: #fff; letter-spacing: -0.02em; }
   .ecta__d { margin: 14px auto 28px; font-size: clamp(1.05rem, 2.2vw, 1.3rem); color: rgba(255, 255, 255, 0.85); max-width: 46ch; }
   .ecta__ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .ecta__note {
+    margin: 22px auto 0; font-size: 14px; color: rgba(255, 255, 255, 0.62);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .ecta__note::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green-bright); box-shadow: 0 0 10px var(--green-bright);
+  }
 
   /* ---- 7. LOCAL / BRISBANE ---- */
   .local__inner {
