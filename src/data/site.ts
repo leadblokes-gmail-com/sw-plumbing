@@ -98,8 +98,8 @@ export const services: Service[] = [
     blurb: 'The ongoing odd jobs that keep your home or business running.',
     details: [
       'General repairs & odd jobs',
-      'Ongoing property maintenance',
-      'Rentals & landlords looked after',
+      'Water filter supply & installation',
+      'Rentals, landlords & real estate looked after',
     ],
   },
   {
@@ -141,7 +141,7 @@ export const problems = [
 export const faqs = [
   {
     q: 'What plumbing services do you offer?',
-    a: 'Blocked drains and toilets, burst pipes and leaks, hot water repairs and installs, taps, toilets and cisterns, bathroom and kitchen renovations, roof and gutter leaks, and general maintenance plumbing for homes, rentals and small businesses.',
+    a: 'Blocked drains and toilets, burst pipes and leaks, hot water repairs and installs, taps, toilets and cisterns, bathroom and kitchen renovations, roof and gutter leaks, water filter installs, leak detection, and general maintenance for homes, rentals, real estate and commercial properties.',
   },
   {
     q: 'Do you service my suburb?',
@@ -188,7 +188,7 @@ export const credentials = [
     body: 'Fully licensed QBCC plumber, so the work is done to code and to standard.',
   },
   {
-    icon: 'insured',
+    icon: 'dollar',
     title: 'Payment plans available',
     body: 'Spread the cost of larger jobs with finance through Elantis Premium Funding.',
   },
