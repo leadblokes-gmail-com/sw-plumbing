@@ -10,19 +10,19 @@ export const business = {
   tagline: "Bayside Brisbane's plumbing, done properly.",
   phone: '0432 292 371',
   phoneHref: 'tel:0432292371',
-  email: 'swplumbing@gmail.com',
-  emailHref: 'mailto:swplumbing@gmail.com',
+  email: 'SWPlumbing73@gmail.com',
+  emailHref: 'mailto:SWPlumbing73@gmail.com',
   baseSuburb: 'Birkdale',
   state: 'QLD',
   region: 'Bayside Brisbane & the Redlands',
   facebook: 'https://www.facebook.com/people/S-W-Plumbing/61555117598812/',
-  hours: 'Call to arrange',
+  hours: 'Mon–Fri 7am–5pm · Sat by appointment',
+  afterHours: 'Limited after-hours available — call to arrange.',
 
-  // ⚠️ TODO (real data needed from client): fill these to remove the placeholders.
-  // When null, the site renders honestly ("Licensed & qualified") instead of
-  // showing a visible [bracket]. See README → "Real-data checklist".
-  licence: null as string | null, // TODO: real plumbing licence number
-  abn: null as string | null, // TODO: real ABN
+  // Real business details (from client onboarding).
+  licence: 'QBCC PD25587' as string | null, // QBCC licence number
+  abn: '69 792 955 926' as string | null, // ABN
+  finance: 'Elantis Premium Funding', // payment-plan provider
 } as const;
 
 export const nav = [
@@ -73,7 +73,7 @@ export const services: Service[] = [
     short: 'Repairs & installs — back to hot showers.',
     blurb: 'Repairs and installs — back to hot showers without the wait.',
     details: [
-      'Electric & gas system repairs',
+      'Electric & heat-pump system repairs',
       'New system supply & installation',
       'Leaking tanks & no-hot-water call-outs',
     ],
@@ -88,18 +88,6 @@ export const services: Service[] = [
       'Dripping taps & worn washers',
       'Running & leaking toilets & cisterns',
       'Mixer & tapware replacement',
-    ],
-  },
-  {
-    icon: 'gas',
-    title: 'Gas fitting & appliances',
-    homeTitle: 'Gas fitting',
-    short: 'Certified gas work, done safely and to code.',
-    blurb: 'Gas appliances and fittings handled safely and to code.',
-    details: [
-      'Gas cooktops & appliance connections',
-      'Gas hot water & line installs',
-      'Gas leak checks & safety',
     ],
   },
   {
@@ -153,7 +141,7 @@ export const problems = [
 export const faqs = [
   {
     q: 'What plumbing services do you offer?',
-    a: 'Blocked drains and toilets, burst pipes and leaks, hot water repairs and installs, taps, toilets and cisterns, gas fitting, roof and gutter leaks, and general maintenance plumbing for homes, rentals and small businesses.',
+    a: 'Blocked drains and toilets, burst pipes and leaks, hot water repairs and installs, taps, toilets and cisterns, bathroom and kitchen renovations, roof and gutter leaks, and general maintenance plumbing for homes, rentals and small businesses.',
   },
   {
     q: 'Do you service my suburb?',
@@ -195,9 +183,14 @@ export const credentials = [
     body: 'Based near Birkdale and working across Bayside Brisbane and the Redlands.',
   },
   {
+    icon: 'shield',
+    title: 'Licensed & qualified',
+    body: 'Fully licensed QBCC plumber, so the work is done to code and to standard.',
+  },
+  {
     icon: 'insured',
-    title: 'Business details available on request',
-    body: 'Licence and insurance details can be provided when you get in touch.',
+    title: 'Payment plans available',
+    body: 'Spread the cost of larger jobs with finance through Elantis Premium Funding.',
   },
 ];
 
@@ -256,8 +249,8 @@ export const serviceOptions = [
   'Leaking Pipe',
   'Blocked Drain',
   'Hot Water',
-  'Gas Fitting',
-  'Appliance Installation',
+  'Bathroom / Kitchen Reno',
+  'Roof & Gutter',
   'Emergency Plumbing',
   'Other',
 ];

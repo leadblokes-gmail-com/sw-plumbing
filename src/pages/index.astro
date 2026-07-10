@@ -6,21 +6,21 @@ import AssetImg from '../components/AssetImg.astro';
 import Icon from '../components/Icon.astro';
 import { business } from '../data/site';
 
-const heroTrust = ['Certified & insured', 'Same-day response where available', 'Clear upfront pricing', 'Local to Birkdale & the bay'];
+const heroTrust = ['Licensed QBCC plumber', 'Fast local response', 'Clear upfront pricing', 'Local to Birkdale & the bay'];
 
 const services = [
   { icon: 'drain', img: '/assets/blocked-drain.jpg', t: 'Blocked Drains', d: 'Sinks, showers, toilets and sewer lines cleared fast.' },
-  { icon: 'hotwater', img: '/assets/hot-water.jpg', t: 'Hot Water', d: 'Repairs, replacements and new installs for electric and gas systems.' },
+  { icon: 'hotwater', img: '/assets/hot-water.jpg', t: 'Hot Water', d: 'Repairs, replacements and new installs for hot water systems.' },
   { icon: 'tap', img: '/assets/leaking-tap.jpg', t: 'Leaking Taps', d: 'Dripping taps, running toilets and cistern issues sorted.' },
   { icon: 'leak', img: '/assets/leaking-pipe.jpg', t: 'Leaking Pipes', d: 'Burst and leaking pipes located and repaired properly.' },
-  { icon: 'gas', img: '/assets/gas-fitting.jpg', t: 'Gas Fitting', d: 'Gas appliance connections and gas line work completed safely.' },
+  { icon: 'maintenance', img: '/assets/plumber-homeowner.jpg', t: 'General Maintenance', d: 'Ongoing repairs and the everyday jobs that keep a place running.' },
   { icon: 'bolt', img: '/assets/emergency-plumber.jpg', t: 'Emergency Plumbing', d: 'Fast local help for urgent leaks, blockages and plumbing issues.' },
 ];
 
 const trustCards = [
-  { icon: 'shield', t: 'Certified & insured' },
+  { icon: 'shield', t: 'Licensed QBCC plumber' },
   { icon: 'dollar', t: 'Upfront pricing' },
-  { icon: 'bolt', t: 'Same-day availability' },
+  { icon: 'bolt', t: 'Payment plans available' },
   { icon: 'pin', t: 'Local Birkdale plumber' },
   { icon: 'check', t: 'Clean, respectful work' },
   { icon: 'insured', t: 'Public liability insured' },
@@ -36,7 +36,7 @@ const trustExpect = [
   { icon: 'shield', t: 'Practical solutions', d: "We focus on fixing the issue properly, not selling what you don't need." },
 ];
 
-const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/assets/gas-fitting.jpg', '/assets/emergency-plumber.jpg'];
+const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/assets/leaking-pipe.jpg', '/assets/emergency-plumber.jpg'];
 ---
 <Layout
   title="S&W Plumbing | Local Plumber Birkdale & Bayside Brisbane"
@@ -66,8 +66,8 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
         <span class="hero__accent hero__accent--orange"></span>
         <div class="hero__imgcard">
           <AssetImg src="/assets/hero-plumber-home.jpg" alt="S&W plumber greeting a homeowner at a Brisbane home" eager />
-          <span class="hero__fbadge hero__fbadge--tl"><span class="dot"></span> Same-day service</span>
-          <span class="hero__fbadge hero__fbadge--br">Licensed &amp; insured · Birkdale local</span>
+          <span class="hero__fbadge hero__fbadge--tl"><span class="dot"></span> Fast local response</span>
+          <span class="hero__fbadge hero__fbadge--br">Licensed QBCC plumber · Birkdale local</span>
         </div>
       </div>
     </div>
@@ -96,8 +96,8 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
       <div class="emerg__text">
         <span class="emerg__badge"><Icon name="bolt" size={24} stroke="#19C463" /></span>
         <div>
-          <div class="emerg__k">24/7 Emergency Plumbing Service</div>
-          <p class="emerg__sub">7 days a week — fast local help when you need it most.</p>
+          <div class="emerg__k">After-Hours Emergency Help</div>
+          <p class="emerg__sub">Mon–Fri 7am–5pm · Sat by appointment · limited after-hours — call and we'll sort a time.</p>
         </div>
       </div>
       <div class="emerg__ctas">

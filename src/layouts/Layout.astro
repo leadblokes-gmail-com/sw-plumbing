@@ -29,7 +29,7 @@ const localBusiness = {
   '@id': `${Astro.site}#business`,
   name: business.name,
   description:
-    'Local plumbing for Birkdale, Bayside Brisbane and the Redlands — blocked drains, burst pipes, hot water, taps, toilets, gas fitting and general maintenance.',
+    'Local plumbing for Birkdale, Bayside Brisbane and the Redlands — blocked drains, burst pipes, hot water, taps, toilets, bathroom renos, roof & gutter and general maintenance.',
   url: Astro.site,
   telephone: '+61432292371',
   email: business.email,
@@ -42,6 +42,14 @@ const localBusiness = {
     postalCode: '4159',
     addressCountry: 'AU',
   },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '07:00',
+      closes: '17:00',
+    },
+  ],
   areaServed: suburbs.map((s) => ({ '@type': 'City', name: `${s.name}, QLD` })),
   sameAs: [business.facebook],
 };
