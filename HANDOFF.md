@@ -50,18 +50,22 @@ General maintenance · Hot water systems · Burst pipes · **Bathroom/kitchen re
 
 ---
 
-## 🚨 Copy fixes still needed (site vs reality)
-1. **Email** → change everywhere to `SWPlumbing73@gmail.com`.
-2. **"24/7 Emergency" / "Same-day · 7 days a week"** banners on the live site → **overclaims.** Reality is Mon–Fri 7am–5pm, Sat by appt, after-hours *limited*. Change to e.g. "After-hours available — call for the fastest time."
-3. **Remove Gas fitting** from services (they don't do it).
-4. Add real **ABN (69 792 955 926)** and **QBCC licence PD25587** to footer + trust/proof areas (currently "TBC" placeholders).
-5. Add **Elantis Premium Funding** as a "finance / payment options" trust point.
-6. **Reviews are FAKE placeholders** (Sarah/Matt/Emily) — must be replaced with real Google reviews before relying on them (Australian Consumer Law risk on fake testimonials). They want a Google reviews feed.
+## ✅ Copy fixes — DONE (commit af550f4, 2026-07-11)
+1. ~~Email~~ → now `SWPlumbing73@gmail.com` everywhere (site.ts, contact-page mailto, JSON-LD).
+2. ~~24/7 / same-day / 7-days overclaims~~ → replaced with real hours (Mon–Fri 7am–5pm · Sat by appointment · limited after-hours) in hero, emergency strip, nav bar, footer and contact page. `openingHoursSpecification` added to LocalBusiness schema.
+3. ~~Gas fitting~~ → removed everywhere (service, FAQ, quote dropdown, meta descriptions, home card, footer thumbs). Home card swapped to **General Maintenance**.
+4. ~~ABN / QBCC~~ → real `QBCC PD25587` + `ABN 69 792 955 926` set in `business` (site.ts); flow automatically into the footer via `credentialLine` and the "Licensed & qualified" credential card.
+5. ~~Elantis~~ → added as a **"Payment plans available"** credential/trust card and `business.finance`.
+
+## 🚨 Still needs real data from client (blocked — don't fabricate)
+- **Reviews** — the `reviews` array in `site.ts` is intentionally **EMPTY** (no fake testimonials; the Reviews block auto-hides). Paste real Google/Facebook reviews here to switch it on. They want a Google reviews feed. *(Note: the "Sarah/Matt/Emily" fakes from the old handoff are already gone.)*
+- **Google rating** — set `googleRating` in `site.ts` once a Google Business Profile is live.
 
 ## 📸 Assets still needed from client
-- Real **owner photo** (the current "founder photo" is a screenshot of a mockup — looks broken; swap it). 
-- Real **job photos** + **before/after** + **van** photos (they said they'll supply).
+- Real **owner photo** — the About page already shows an honest **"Owner photo to be added"** placeholder (the old broken mockup screenshot is gone). Drop in the real photo when supplied.
+- Real **job photos** + **before/after** + **van** photos → add to the `jobs` array in `site.ts` (currently empty; JobGallery auto-hides).
 - Logo (needs designing).
+- `gas-fitting.jpg` still sits unused in `public/assets/` — harmless; delete whenever.
 
 ## Requested features from onboarding (check these exist)
 Click-to-call ✓ · Service-area map ✓ · Photo gallery ✓ · Before/after photos ✓ · **Google reviews feed** (needs real reviews) · **Finance/payment options** (add Elantis) · Sticky mobile call bar ✓. Pages: Home, Services, About, Service Areas, Reviews, Contact. Main goal = phone calls.
