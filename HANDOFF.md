@@ -69,9 +69,16 @@ All data above verified against the client's scanned sheet (JOB #LB-7976, 26 Jun
 
 ## 📸 Assets still needed from client
 - Real **owner photo** — the About page already shows an honest **"Owner photo to be added"** placeholder (the old broken mockup screenshot is gone). Drop in the real photo when supplied.
-- Real **job photos** + **before/after** + **van** photos → add to the `jobs` array in `site.ts` (currently empty; JobGallery auto-hides).
+- **All fabricated-branding mock-up photos removed → branded placeholders (2026-07-11).** `AssetImg` auto-shows a charcoal→green droplet placeholder when a file is missing, so **just drop the real JPEG into `public/assets/` under the same filename — no code change.** Files to supply:
+  - `hero-plumber-home.jpg` — homepage hero (van + plumber + homeowner style shot)
+  - `team-plumbers.jpg` — "Why S&W" section **and** the social/OG share image (repoint `ogImage` in `Layout.astro` back to it once real)
+  - `brisbane-service-van.jpg` — "Local & trusted" section (client CAN supply a van photo)
+  - `testimonial-homeowner.jpg` — reviews/doorstep image
+  - `plumber-homeowner.jpg` — General Maintenance service card
+  - (`AssetImg` cache version is now `?v=3`; bump if you replace a file and it looks cached.)
+- Real **job photos** + **before/after** → add to the `jobs` array in `site.ts` (currently empty; JobGallery auto-hides).
 - Logo (needs designing).
-- `gas-fitting.jpg` still sits unused in `public/assets/` — harmless; delete whenever.
+- Kept as generic (unbranded) illustration, fine to leave: `blocked-drain.jpg`, `hot-water.jpg`, `leaking-tap.jpg`, `leaking-pipe.jpg`, `emergency-plumber.jpg`. `gas-fitting.jpg` is unused — delete whenever.
 
 ## Requested features from onboarding (status vs the sheet)
 - Ticked & built: Click-to-call ✓ · Service-area map ✓ · Before/after photos (component ready, `jobs` array empty) ✓ · Finance/payment options (Elantis) ✓ · Sticky mobile call bar ✓ · Google reviews feed (needs real reviews + a GBP — client **doesn't have a Google Business Profile yet**).
