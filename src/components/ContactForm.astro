@@ -1,8 +1,10 @@
 ---
 import Icon from './Icon.astro';
 import { serviceOptions, business } from '../data/site';
-// One documented config value. Set PUBLIC_FORMSPREE_ENDPOINT in .env (see README).
-const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
+// Submissions POST to our own serverless endpoint (/api/quote), which stores the
+// lead in Postgres and sends an instant email alert. Overridable via env if ever
+// needed, but the default is the built-in backend.
+const endpoint = import.meta.env.PUBLIC_QUOTE_ENDPOINT ?? '/api/quote';
 
 interface Props {
   submitLabel?: string;
