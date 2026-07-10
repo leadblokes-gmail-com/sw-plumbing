@@ -8,7 +8,7 @@ Production marketing website for **S & W Plumbing** (Birkdale / bayside Brisbane
 - **GitHub repo:** https://github.com/leadblokes-gmail-com/sw-plumbing  (branch `main`)
 - **Live site (Vercel):** https://sw-plumbing-leadblockes.vercel.app  (public, HTTP 200)
 - **Vercel team/project:** Leadblockes → `sw-plumbing`. Connected to the GitHub repo — **every `git push` to `main` auto-redeploys.** Deployment Protection (login wall) is OFF so the public can see it.
-- **Contact form:** posts to a configurable endpoint via `PUBLIC_FORMSPREE_ENDPOINT` env var (set in `.env` and in Vercel → Project → Settings → Environment Variables). Falls back to "call us" if unset.
+- **Quote/contact form → real backend (2026-07-11):** posts to `POST /api/quote` (Astro serverless via `@astrojs/vercel`, `output: 'hybrid'`), which stores the lead in **Neon Postgres** and sends an **instant email** (Resend) + a **weekly Monday-7am digest** (Vercel cron `0 21 * * 0`). Endpoints in `src/pages/api/`, helpers in `src/lib/{leads,email}.ts`. **One-time setup required — see `BACKEND-SETUP.md`** (create DB, create Resend key, add env vars, redeploy). Until set up, the form degrades to "please call us". Formspree is no longer used.
 
 ## How to run / build / deploy
 ```bash
