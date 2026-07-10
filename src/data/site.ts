@@ -213,6 +213,59 @@ export const suburbs = [
 ];
 
 /**
+ * Full service area, grouped into regions for the tabbed Service Areas page.
+ * Covers ~40km south-east of Birkdale (the client's stated service radius:
+ * "40km Brisbane South East"). The `suburbs` array above stays the map's core
+ * pins; this is the complete written list. `note` shows under a region when set.
+ */
+export const serviceAreaGroups: { region: string; blurb: string; note?: string; suburbs: string[] }[] = [
+  {
+    region: 'Redlands Coast',
+    blurb: 'Our home turf — based in Birkdale and right across the Redlands.',
+    suburbs: [
+      'Birkdale', 'Wellington Point', 'Ormiston', 'Cleveland', 'Thornlands',
+      'Victoria Point', 'Redland Bay', 'Alexandra Hills', 'Capalaba', 'Thorneside',
+      'Sheldon', 'Mount Cotton',
+    ],
+  },
+  {
+    region: 'Bayside Brisbane',
+    blurb: 'The bay suburbs just north and west of the Redlands.',
+    suburbs: [
+      'Wynnum', 'Wynnum West', 'Manly', 'Manly West', 'Lota', 'Hemmant',
+      'Tingalpa', 'Wakerley', 'Gumdale', 'Chandler', 'Belmont',
+    ],
+  },
+  {
+    region: 'Brisbane South-East',
+    blurb: 'Across the eastern and south-eastern Brisbane suburbs.',
+    suburbs: [
+      'Carindale', 'Carina', 'Cannon Hill', 'Camp Hill', 'Coorparoo', 'Morningside',
+      'Bulimba', 'Murarrie', 'Mansfield', 'Mount Gravatt', 'Upper Mount Gravatt',
+      'Wishart', 'Rochedale', 'Holland Park',
+    ],
+  },
+  {
+    region: 'Logan & Southern',
+    blurb: 'Down through the northern Logan corridor.',
+    suburbs: [
+      'Rochedale South', 'Underwood', 'Springwood', 'Daisy Hill', 'Shailer Park',
+      'Cornubia', 'Loganholme', 'Slacks Creek', 'Tanah Merah', 'Waterford',
+      'Bethania', 'Beenleigh', 'Eagleby',
+    ],
+  },
+  {
+    region: 'Bay Islands',
+    blurb: 'Southern Moreton Bay islands — by arrangement.',
+    note: 'Island jobs are serviced by arrangement — give us a call so we can plan the ferry and the day.',
+    suburbs: [
+      'Coochiemudlo Island', 'Russell Island', 'Macleay Island', 'Lamb Island',
+      'Karragarra Island', 'North Stradbroke Island (Minjerribah)',
+    ],
+  },
+];
+
+/**
  * Customer reviews. EMPTY by design — this is a new business with no reviews yet
  * (see About page copy). The Reviews component auto-hides while this is empty so
  * we never ship fake social proof. Paste real Google/Facebook reviews here to
