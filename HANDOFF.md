@@ -57,6 +57,12 @@ General maintenance · Hot water systems · Burst pipes · **Bathroom/kitchen re
 4. ~~ABN / QBCC~~ → real `QBCC PD25587` + `ABN 69 792 955 926` set in `business` (site.ts); flow automatically into the footer via `credentialLine` and the "Licensed & qualified" credential card.
 5. ~~Elantis~~ → added as a **"Payment plans available"** credential/trust card and `business.finance`.
 
+## ✅ Reconciled against the signed onboarding sheet (commit after af550f4, 2026-07-11)
+All data above verified against the client's scanned sheet (JOB #LB-7976, 26 Jun 2026). Additional changes:
+6. **Insurance claim REMOVED.** The sheet's "Licences, insurances, memberships, guarantees" box lists **only "Elantis Premium Funding"** — no public liability, no membership, no guarantee. So the "Public liability insured" home trust card was replaced with **"No job too big or small"**, and no insurance claim remains site-wide. **Do not re-add insurance/insured claims until the client actually provides a policy.** (QBCC licence is the only verified credential.)
+7. **Differentiators** (their words): "Approachable, honest, no job too big or small" woven into the About hero + story.
+8. **Target work they want MORE of** (real estate / water filters): added *water filter installs* + *real estate / commercial* to services data + FAQ.
+
 ## 🚨 Still needs real data from client (blocked — don't fabricate)
 - **Reviews** — the `reviews` array in `site.ts` is intentionally **EMPTY** (no fake testimonials; the Reviews block auto-hides). Paste real Google/Facebook reviews here to switch it on. They want a Google reviews feed. *(Note: the "Sarah/Matt/Emily" fakes from the old handoff are already gone.)*
 - **Google rating** — set `googleRating` in `site.ts` once a Google Business Profile is live.
@@ -67,8 +73,11 @@ General maintenance · Hot water systems · Burst pipes · **Bathroom/kitchen re
 - Logo (needs designing).
 - `gas-fitting.jpg` still sits unused in `public/assets/` — harmless; delete whenever.
 
-## Requested features from onboarding (check these exist)
-Click-to-call ✓ · Service-area map ✓ · Photo gallery ✓ · Before/after photos ✓ · **Google reviews feed** (needs real reviews) · **Finance/payment options** (add Elantis) · Sticky mobile call bar ✓. Pages: Home, Services, About, Service Areas, Reviews, Contact. Main goal = phone calls.
+## Requested features from onboarding (status vs the sheet)
+- Ticked & built: Click-to-call ✓ · Service-area map ✓ · Before/after photos (component ready, `jobs` array empty) ✓ · Finance/payment options (Elantis) ✓ · Sticky mobile call bar ✓ · Google reviews feed (needs real reviews + a GBP — client **doesn't have a Google Business Profile yet**).
+- **NOT ticked by client** (so we didn't add): Online quote/booking form, Live chat, WhatsApp button, **Emergency call-out banner** (note: the home page still has a softened "After-Hours Emergency Help" strip — fine given they do limited after-hours, but it wasn't a requested feature).
+- **Pages ticked:** Home ✓ Services ✓ About ✓ Service Areas ✓ Contact ✓ **Reviews/testimonials** — ⚠️ *no dedicated `reviews.astro` page exists yet*; reviews currently render as an auto-hiding section on Home/About. Build a proper Reviews page once there are real reviews to fill it.
+- Look & feel + wording: client said **"No, need it written"** and left look/feel blank — all copy is ours; keep it approachable/honest per their differentiator. Main goal = **phone calls** ("Call now").
 
 ## Notes / gotchas
 - Windows + PowerShell. `gh` CLI is **not** logged in — but GitHub pushes work via the cached Git Credential Manager token, and the repo is under the **leadblokes-gmail-com** GitHub account.
