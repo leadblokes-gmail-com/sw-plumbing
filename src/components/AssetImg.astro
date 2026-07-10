@@ -14,7 +14,7 @@ interface Props {
 const { src, alt, class: cls = '', eager = false } = Astro.props;
 // Version tag busts any stale CDN/browser cache of the old (PNG-as-jpg) files
 // that some browsers cached before the images were re-encoded to real JPEG.
-const versionedSrc = src.startsWith('/assets/') ? `${src}?v=2` : src;
+const versionedSrc = src.startsWith('/assets/') ? `${src}?v=3` : src;
 // Clean, text-free premium fallback: a charcoal→green tile with a subtle
 // centred droplet. Shown only if the real photo at `src` is missing — never
 // exposes filenames or "drop your photo here" UI.
