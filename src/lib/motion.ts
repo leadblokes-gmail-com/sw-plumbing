@@ -365,30 +365,30 @@ function initGsap(introPlaying: boolean) {
   const wl = document.getElementById('swp-waterline');
   if (wl) gsap.fromTo(wl, { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: 'power3.inOut', delay: dly + 0.5 });
 
-  // generic single reveals — snappy so content never lingers invisible
+  // generic single reveals — fire as soon as the element edges into view
   gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
     gsap.fromTo(
       el,
-      { opacity: 0, y: 26 },
-      { opacity: 1, y: 0, duration: 0.6, ease: EASE, scrollTrigger: { trigger: el, start: 'top 94%' } }
+      { opacity: 0, y: 22 },
+      { opacity: 1, y: 0, duration: 0.55, ease: EASE, scrollTrigger: { trigger: el, start: 'top 98%', once: true } }
     );
   });
 
   // staggered children groups (trust strip, service cards, etc.)
-  // Trigger early + short stagger + `once` so every card lands quickly and STAYS
-  // visible even on fast scroll (fixes cards getting stuck faded/empty).
+  // Fire early (top edge just entering) + tight stagger + `once` so every card
+  // lands almost immediately and STAYS visible even on fast scroll.
   gsap.utils.toArray<HTMLElement>('[data-anim-children]').forEach((group) => {
     const kids = Array.from(group.children) as HTMLElement[];
     gsap.fromTo(
       kids,
-      { opacity: 0, y: 22 },
+      { opacity: 0, y: 18 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.5,
+        duration: 0.45,
         ease: EASE,
-        stagger: 0.05,
-        scrollTrigger: { trigger: group, start: 'top 92%', once: true },
+        stagger: 0.04,
+        scrollTrigger: { trigger: group, start: 'top 97%', once: true },
       }
     );
   });
