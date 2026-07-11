@@ -329,8 +329,20 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
     position: relative;
     overflow: hidden;
     color: var(--ink);
-    padding: calc(clamp(96px, 13vh, 150px) + 24px) var(--pad-x) clamp(90px, 12vw, 150px);
-    background: linear-gradient(135deg, #f5faff 0%, #ffffff 45%, #eaf8f0 100%);
+    padding: calc(clamp(100px, 13vh, 160px) + 24px) var(--pad-x) clamp(96px, 12vw, 160px);
+    background:
+      radial-gradient(78% 62% at 88% -5%, rgba(0, 166, 81, 0.12), transparent 60%),
+      linear-gradient(135deg, #f6faf8 0%, #ffffff 48%, #eaf8f0 100%);
+  }
+  /* subtle blueprint grid, faded — plumbing "plans" texture */
+  .hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(16, 20, 18, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 20, 18, 0.04) 1px, transparent 1px);
+    background-size: 46px 46px;
+    -webkit-mask-image: radial-gradient(72% 82% at 28% 26%, #000 0%, transparent 74%);
+    mask-image: radial-gradient(72% 82% at 28% 26%, #000 0%, transparent 74%);
   }
   .hero__inner {
     position: relative;
@@ -352,21 +364,28 @@ const footerThumbs = ['/assets/blocked-drain.jpg', '/assets/hot-water.jpg', '/as
   .hero__badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
   .hero__title {
     font-family: var(--font-display); font-weight: 600;
-    font-size: clamp(2.5rem, 6vw, 4.4rem); line-height: 1.02; letter-spacing: -0.025em;
-    color: var(--ink); max-width: 15ch;
+    font-size: clamp(2.8rem, 6.6vw, 5.1rem); line-height: 0.98; letter-spacing: -0.035em;
+    color: var(--ink); max-width: 16ch;
   }
-  .hero__title .hl { color: var(--blue); }
+  .hero__title .hl {
+    color: var(--green);
+    text-shadow: 0 6px 30px rgba(0, 166, 81, 0.28);
+  }
   .hero__sub {
-    margin-top: 20px; font-size: clamp(1.05rem, 2vw, 1.25rem); color: var(--muted);
-    max-width: 48ch; line-height: 1.6;
+    margin-top: 22px; font-size: clamp(1.08rem, 2vw, 1.3rem); color: var(--muted);
+    max-width: 50ch; line-height: 1.62;
   }
-  .hero__ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
   .hero__trust {
-    list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px;
-    margin-top: 30px; max-width: 460px;
+    list-style: none; display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 34px; max-width: 540px;
   }
   .hero__trust li {
-    display: flex; align-items: center; gap: 9px; font-size: 14.5px; font-weight: 600; color: var(--text);
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255, 255, 255, 0.8); border: 1px solid var(--line);
+    border-radius: 999px; padding: 9px 15px;
+    font-size: 13.5px; font-weight: 700; color: var(--ink);
+    box-shadow: var(--shadow-sm); backdrop-filter: blur(4px);
   }
   /* hero visual */
   .hero__visual { position: relative; }
