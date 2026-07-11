@@ -2,41 +2,32 @@
 /**
  * S & W Plumbing logo.
  *
- * Default: a sharp, built-in SVG lockup (green pipe-droplet mark + wordmark) that
- * scales perfectly and adapts to light/dark. If the client's own logo image is
- * saved at /assets/sw-plumbing-logo.png it overrides the built-in mark.
+ * Default: a clean built-in wordmark that mirrors the client's brand — a bold
+ * green "S&W" stacked over a black, tracked "PLUMBING". Scales perfectly and
+ * adapts to light/dark. If the client's own logo image is saved at
+ * /assets/sw-plumbing-logo.png it overrides the built-in wordmark automatically.
  *
  * `chip` sits the logo on a light rounded pill — used on dark backgrounds (footer).
  */
 interface Props {
-  size?: number; // rendered height in px of the mark
+  size?: number; // rendered cap-height of "S&W" in px (drives the whole lockup)
   chip?: boolean;
 }
-const { size = 34, chip = false } = Astro.props;
+const { size = 30, chip = false } = Astro.props;
 ---
 <span class:list={['logo', { 'logo--chip': chip }]} style={`--logo-h:${size}px`}>
   <img
     src="/assets/sw-plumbing-logo.png"
     alt="S & W Plumbing logo"
     class="logo__img"
-    height={size}
+    height={size * 1.4}
     decoding="async"
     onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';"
   />
-  <!-- Built-in SVG lockup — shown unless a client logo image is present -->
+  <!-- Built-in wordmark — shown unless a client logo image is present -->
   <span class="logo__lockup" style="display:inline-flex">
-    <svg class="logo__mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <rect x="1.2" y="1.2" width="37.6" height="37.6" rx="11" fill="var(--green)" />
-      <!-- water droplet -->
-      <path d="M20 9.5s7.2 8 7.2 13.2a7.2 7.2 0 0 1-14.4 0C12.8 17.5 20 9.5 20 9.5Z" fill="#fff" />
-      <!-- pipe/flow accent -->
-      <path d="M20 18.5v7.5" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" />
-      <circle cx="20" cy="22.4" r="1.9" fill="var(--green)" />
-    </svg>
-    <span class="logo__word">
-      <span class="logo__sw">S&amp;W</span>
-      <span class="logo__pl">PLUMBING</span>
-    </span>
+    <span class="logo__sw">S&amp;W</span>
+    <span class="logo__pl">PLUMBING</span>
   </span>
 </span>
 
@@ -44,7 +35,6 @@ const { size = 34, chip = false } = Astro.props;
   .logo {
     display: inline-flex;
     align-items: center;
-    color: var(--forest);
     line-height: 1;
   }
   .logo__img {
@@ -55,42 +45,33 @@ const { size = 34, chip = false } = Astro.props;
   .logo--chip .logo__img,
   .logo--chip .logo__lockup {
     background: #fff;
-    padding: 8px 16px;
+    padding: 9px 16px;
     border-radius: 12px;
   }
-  /* --- built-in lockup --- */
+  /* --- built-in wordmark --- */
   .logo__lockup {
     display: inline-flex;
-    align-items: center;
-    gap: 11px;
-  }
-  .logo__mark {
-    width: var(--logo-h);
-    height: var(--logo-h);
-    flex-shrink: 0;
-    filter: drop-shadow(0 6px 14px rgba(0, 166, 81, 0.28));
-  }
-  .logo__word {
-    display: inline-flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 2px;
+    align-items: center;
+    line-height: 0.88;
   }
   .logo__sw {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: calc(var(--logo-h) * 0.62);
-    letter-spacing: -0.02em;
+    font-size: var(--logo-h);
+    letter-spacing: -0.03em;
     color: var(--green);
-    line-height: 0.92;
+    line-height: 0.86;
   }
   .logo__pl {
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: calc(var(--logo-h) * 0.235);
-    letter-spacing: 0.32em;
-    text-indent: 0.32em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    /* size + tracking tuned so PLUMBING spans about the same width as S&W */
+    font-size: calc(var(--logo-h) * 0.315);
+    letter-spacing: 0.2em;
+    text-indent: 0.2em; /* keep it visually centred despite trailing tracking */
     color: var(--ink);
     line-height: 1;
+    margin-top: calc(var(--logo-h) * 0.04);
   }
 </style>
