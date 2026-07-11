@@ -2,10 +2,10 @@
 /**
  * S & W Plumbing logo.
  *
- * Renders the real brand logo image from /assets/logo.png when it exists; until
- * the file is dropped in, it gracefully falls back to the built-in droplet
- * wordmark so nothing ever breaks. Save the logo to public/assets/logo.png and
- * it appears everywhere (nav + footer) automatically.
+ * Renders the real brand logo image from /assets/sw-plumbing-logo.png when it
+ * exists; until the file is dropped in, it gracefully falls back to the built-in
+ * droplet wordmark so nothing ever breaks. Save the logo to
+ * public/assets/sw-plumbing-logo.png and it appears everywhere (nav + footer).
  *
  * `chip` sits the logo on a light rounded pill — use it on dark backgrounds (the
  * footer) so the black "PLUMBING" text stays readable with a single logo file.
@@ -19,14 +19,14 @@ const h = Math.round((size * 38) / 34); // fallback wordmark keeps its aspect ra
 ---
 <span class:list={['logo', { 'logo--chip': chip }]}>
   <img
-    src="/assets/logo.png"
-    alt="S & W Plumbing"
+    src="/assets/sw-plumbing-logo.png"
+    alt="S & W Plumbing logo"
     class="logo__img"
     height={size}
     decoding="async"
     onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';"
   />
-  <!-- Fallback wordmark — only shown if /assets/logo.png isn't there yet -->
+  <!-- Fallback wordmark — only shown if /assets/sw-plumbing-logo.png isn't there yet -->
   <span class="logo__fallback" style="display:none">
     <svg width={size} height={h} viewBox="0 0 34 38" fill="none" aria-hidden="true">
       <path
