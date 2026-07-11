@@ -180,7 +180,7 @@ h3 {
 
 .section {
   position: relative;
-  padding: clamp(64px, 9vw, 132px) var(--pad-x);
+  padding: clamp(56px, 7vw, 104px) var(--pad-x);
   border-top: 1px solid var(--line);
 }
 

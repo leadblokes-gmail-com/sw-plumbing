@@ -365,28 +365,30 @@ function initGsap(introPlaying: boolean) {
   const wl = document.getElementById('swp-waterline');
   if (wl) gsap.fromTo(wl, { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: 'power3.inOut', delay: dly + 0.5 });
 
-  // generic single reveals
+  // generic single reveals — snappy so content never lingers invisible
   gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
     gsap.fromTo(
       el,
-      { opacity: 0, y: 44 },
-      { opacity: 1, y: 0, duration: 0.95, ease: EASE, scrollTrigger: { trigger: el, start: 'top 86%' } }
+      { opacity: 0, y: 26 },
+      { opacity: 1, y: 0, duration: 0.6, ease: EASE, scrollTrigger: { trigger: el, start: 'top 94%' } }
     );
   });
 
   // staggered children groups (trust strip, service cards, etc.)
+  // Trigger early + short stagger + `once` so every card lands quickly and STAYS
+  // visible even on fast scroll (fixes cards getting stuck faded/empty).
   gsap.utils.toArray<HTMLElement>('[data-anim-children]').forEach((group) => {
     const kids = Array.from(group.children) as HTMLElement[];
     gsap.fromTo(
       kids,
-      { opacity: 0, y: 40 },
+      { opacity: 0, y: 22 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: 0.5,
         ease: EASE,
-        stagger: 0.08,
-        scrollTrigger: { trigger: group, start: 'top 85%' },
+        stagger: 0.05,
+        scrollTrigger: { trigger: group, start: 'top 92%', once: true },
       }
     );
   });

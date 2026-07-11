@@ -65,7 +65,7 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
   </button>
 
   <p id="swp-form-note" class="form__note" role="status" aria-live="polite">
-    <span class="form__note-dot">●</span> For urgent issues, call <strong>0432&nbsp;292&nbsp;371</strong> — it's the fastest way to get sorted.
+    <span class="form__note-dot">●</span> For urgent issues, call <strong>0432&nbsp;292&nbsp;371</strong>. It's the fastest way to get sorted.
   </p>
 </form>
 
@@ -290,14 +290,14 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
       e.preventDefault();
       // honeypot → silently "succeed" without sending
       if (form._gotcha && form._gotcha.value) {
-        showNote('✓ Thanks — we\'ll be in touch.', 'is-success');
+        showNote('✓ Thanks, we\'ll be in touch.', 'is-success');
         form.reset();
         return;
       }
       if (!validate()) return;
 
       const fallback =
-        'Couldn\'t send just now — please call <a href="' +
+        'Couldn\'t send just now. Please call <a href="' +
         phoneHref +
         '">' +
         phone +
@@ -307,7 +307,7 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
         // TODO(dev): set PUBLIC_FORMSPREE_ENDPOINT in .env for a proper backend.
         // Until then, fall back to the visitor's own email client (mailto) so the
         // enquiry is never silently lost.
-        const subject = encodeURIComponent('Plumbing enquiry — ' + (form.service.value || 'S&W Plumbing'));
+        const subject = encodeURIComponent('Plumbing enquiry: ' + (form.service.value || 'S&W Plumbing'));
         const body = encodeURIComponent(
           'Name: ' + form.name.value +
             '\nPhone: ' + form.phone.value +
@@ -317,7 +317,7 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
         );
         window.location.href = 'mailto:' + businessEmail + '?subject=' + subject + '&body=' + body;
         showNote(
-          '✓ Opening your email app to send — or call <a href="' + phoneHref + '">' + phone + '</a> for the fastest response.',
+          '✓ Opening your email app to send, or call <a href="' + phoneHref + '">' + phone + '</a> for the fastest response.',
           'is-success'
         );
         return;
@@ -332,7 +332,7 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
           body: new FormData(form),
         });
         if (res.ok) {
-          showNote('✓ Thanks — we\'ve got it and will be in touch shortly.', 'is-success');
+          showNote('✓ Thanks, we\'ve got it and will be in touch shortly.', 'is-success');
           form.reset();
         } else {
           showNote(fallback, 'is-error');
