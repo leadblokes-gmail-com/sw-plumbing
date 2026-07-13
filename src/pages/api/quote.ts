@@ -7,6 +7,7 @@
 import type { APIRoute } from 'astro';
 import { ensureSchema, insertLead } from '../../lib/leads';
 import { sendInstantAlert, type Attachment } from '../../lib/email';
+import { sendToAirtable } from '../../lib/airtable';
 
 export const prerender = false;
 
@@ -41,7 +42,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   // Store the lead. If the DB write fails, surface an error so the form shows the
   // "please call us" fallback instead of silently losing the enquiry.
-  let saved: { id: number };
+  let saved: { id: number; created_at: string };
   try {
     await ensureSchema();
     saved = await insertLead({
@@ -56,6 +57,15 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   } catch (err) {
     console.error('[quote] DB write failed:', err);
     return json({ ok: false, error: 'server' }, 500);
+  }
+
+  // Mirror the lead into Airtable so the client can view/manage it in a grid + phone
+  // app. Best effort — never fail the request if it hiccups; the lead is safe in the
+  // DB. No-ops entirely until AIRTABLE_TOKEN is set.
+  try {
+    await sendToAirtable({ name, phone, suburb, service, message, createdAt: saved.created_at });
+  } catch (err) {
+    console.error('[quote] airtable write failed (lead still saved):', err);
   }
 
   // Optional photo → forward as an attachment on the instant alert (best effort).
