@@ -325,17 +325,31 @@ const { submitLabel = 'Send message', compact = false } = Astro.props;
 
       submit.setAttribute('disabled', 'true');
       submit.querySelector('.form__submit-label').textContent = 'Sending…';
+
+      // A Google Sheets (Apps Script) endpoint can't send CORS headers, so we post
+      // the row with mode:'no-cors' and confirm optimistically (text fields only).
+      const isSheet = /script\.google\.com/.test(endpoint);
       try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: new FormData(form),
-        });
-        if (res.ok) {
+        if (isSheet) {
+          const params = new URLSearchParams();
+          ['name', 'phone', 'suburb', 'service', 'message'].forEach((k) =>
+            params.append(k, (form[k] && form[k].value) || '')
+          );
+          await fetch(endpoint, { method: 'POST', mode: 'no-cors', body: params });
           showNote('✓ Thanks, we\'ve got it and will be in touch shortly.', 'is-success');
           form.reset();
         } else {
-          showNote(fallback, 'is-error');
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: new FormData(form),
+          });
+          if (res.ok) {
+            showNote('✓ Thanks, we\'ve got it and will be in touch shortly.', 'is-success');
+            form.reset();
+          } else {
+            showNote(fallback, 'is-error');
+          }
         }
       } catch (err) {
         showNote(fallback, 'is-error');
